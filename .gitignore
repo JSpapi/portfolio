@@ -1,0 +1,25 @@
+# Secrets — never commit
+**/.env
+**/.env.local
+**/.env*.local
+
+# Go build artifacts
+**/server
+**/server.exe
+**/*.exe
+
+# Node / Next.js
+**/node_modules/
+**/.next/
+**/out/
+**/build/
+*.tsbuildinfo
+**/next-env.d.ts
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
+
+# Temp
+/tmp/

@@ -1,0 +1,173 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: theme("colors.ink.DEFAULT");
+  color: theme("colors.paper.DEFAULT");
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* Subtle warm grain + vignette for atmosphere, not a flat black. */
+  background-image:
+    radial-gradient(
+      120% 80% at 50% -10%,
+      rgba(232, 161, 58, 0.06) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      100% 60% at 100% 100%,
+      rgba(124, 154, 109, 0.04) 0%,
+      transparent 50%
+    );
+  background-attachment: fixed;
+}
+
+/* Fine hairline grid texture in the far background. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(theme("colors.ink.line") 1px, transparent 1px),
+    linear-gradient(90deg, theme("colors.ink.line") 1px, transparent 1px);
+  background-size: 64px 64px;
+  opacity: 0.15;
+  mask-image: radial-gradient(120% 100% at 50% 0%, black 0%, transparent 75%);
+}
+
+::selection {
+  background: theme("colors.amber.DEFAULT");
+  color: theme("colors.ink.DEFAULT");
+}
+
+/* Slim, on-theme scrollbar. */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: theme("colors.ink.DEFAULT");
+}
+::-webkit-scrollbar-thumb {
+  background: theme("colors.ink.line");
+  border-radius: 999px;
+  border: 2px solid theme("colors.ink.DEFAULT");
+}
+::-webkit-scrollbar-thumb:hover {
+  background: theme("colors.paper.faint");
+}
+
+/* Reusable label — small monospace uppercase kicker. */
+.kicker {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: theme("colors.amber.DEFAULT");
+}
+
+/* Content container. */
+.wrap {
+  width: 100%;
+  max-width: 68rem;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+/* --- Prose (blog + private markdown) --- */
+.prose-editorial {
+  color: theme("colors.paper.DEFAULT");
+  line-height: 1.75;
+  font-size: 1.05rem;
+}
+.prose-editorial > * + * {
+  margin-top: 1.35em;
+}
+.prose-editorial h2 {
+  font-family: var(--font-serif);
+  font-size: 1.9rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-top: 2.4em;
+  color: theme("colors.paper.DEFAULT");
+}
+.prose-editorial h3 {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  margin-top: 1.8em;
+  color: theme("colors.paper.DEFAULT");
+}
+.prose-editorial a {
+  color: theme("colors.amber.DEFAULT");
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+.prose-editorial a:hover {
+  color: theme("colors.amber.soft");
+}
+.prose-editorial strong {
+  color: theme("colors.paper.DEFAULT");
+  font-weight: 650;
+}
+.prose-editorial ul,
+.prose-editorial ol {
+  padding-left: 1.4em;
+}
+.prose-editorial ul {
+  list-style: none;
+}
+.prose-editorial ul > li {
+  position: relative;
+}
+.prose-editorial ul > li::before {
+  content: "›";
+  position: absolute;
+  left: -1.2em;
+  color: theme("colors.amber.DEFAULT");
+}
+.prose-editorial ol {
+  list-style: decimal;
+}
+.prose-editorial blockquote {
+  border-left: 2px solid theme("colors.amber.DEFAULT");
+  padding-left: 1.2em;
+  color: theme("colors.paper.dim");
+  font-style: italic;
+}
+.prose-editorial :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  background: theme("colors.ink.raised");
+  border: 1px solid theme("colors.ink.line");
+  padding: 0.12em 0.4em;
+  border-radius: 4px;
+  color: theme("colors.amber.soft");
+}
+.prose-editorial pre {
+  background: theme("colors.ink.soft") !important;
+  border: 1px solid theme("colors.ink.line");
+  border-radius: 10px;
+  padding: 1.1rem 1.25rem !important;
+  overflow-x: auto;
+  font-size: 0.86rem;
+}
+.prose-editorial img {
+  border-radius: 10px;
+  border: 1px solid theme("colors.ink.line");
+}
+.prose-editorial hr {
+  border: none;
+  border-top: 1px solid theme("colors.ink.line");
+}
