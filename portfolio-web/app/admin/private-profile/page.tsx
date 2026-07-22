@@ -94,6 +94,7 @@ export default function PrivateProfileAdminPage() {
         <div className="mt-3">
           <MediaUploader
             slug="private/resume"
+            accept="application/pdf"
             onInsert={(snippet) => {
               // Extract the URL from the generated markdown/HTML snippet.
               const m = /\((https?:[^)]+)\)|src="([^"]+)"/.exec(snippet);
@@ -102,8 +103,7 @@ export default function PrivateProfileAdminPage() {
             }}
           />
           <p className="mt-1 font-mono text-[11px] text-paper-faint">
-            Note: PDFs upload only if the API accepts application/pdf; otherwise
-            paste a URL above.
+            Upload a PDF (max 20MB) or paste a URL above.
           </p>
         </div>
       </Block>

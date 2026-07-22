@@ -16,9 +16,11 @@ interface UploadResult {
 export function MediaUploader({
   slug,
   onInsert,
+  accept = "image/jpeg,image/png,image/webp,image/gif,video/mp4",
 }: {
   slug: string;
   onInsert: (snippet: string) => void;
+  accept?: string;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
@@ -39,6 +41,8 @@ export function MediaUploader({
       const r = await api.upload<UploadResult>("/api/admin/upload", form);
       const snippet = r.mime_type.startsWith("video/")
         ? `\n<video controls width="100%" preload="metadata">\n  <source src="${r.url}" type="video/mp4">\n</video>\n`
+        : r.mime_type === "application/pdf"
+        ? `\n[${file.name}](${r.url})\n`
         : `\n![${file.name}](${r.url})\n`;
       onInsert(snippet);
     } catch (err) {
@@ -81,7 +85,7 @@ export function MediaUploader({
       <input
         ref={inputRef}
         type="file"
-        accept="image/jpeg,image/png,image/webp,image/gif,video/mp4"
+        accept={accept}
         className="hidden"
         onChange={(e) => {
           const f = e.target.files?.[0];

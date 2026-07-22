@@ -15,6 +15,7 @@ import (
 const (
 	maxImageBytes = 10 << 20 // 10 MB
 	maxVideoBytes = 50 << 20 // 50 MB
+	maxDocBytes   = 20 << 20 // 20 MB (resume PDF)
 )
 
 var (
@@ -22,6 +23,7 @@ var (
 		"image/jpeg": true, "image/png": true, "image/webp": true, "image/gif": true,
 	}
 	allowedVideo = map[string]bool{"video/mp4": true}
+	allowedDoc   = map[string]bool{"application/pdf": true}
 )
 
 // Upload streams a multipart file to R2 and records a media row. The file bytes
@@ -47,7 +49,8 @@ func (h *Handler) Upload(c *gin.Context) {
 	mime := fileHeader.Header.Get("Content-Type")
 	isImage := allowedImage[mime]
 	isVideo := allowedVideo[mime]
-	if !isImage && !isVideo {
+	isDoc := allowedDoc[mime]
+	if !isImage && !isVideo && !isDoc {
 		c.JSON(http.StatusUnsupportedMediaType, gin.H{"error": "unsupported file type"})
 		return
 	}
@@ -57,6 +60,10 @@ func (h *Handler) Upload(c *gin.Context) {
 	}
 	if isVideo && fileHeader.Size > maxVideoBytes {
 		c.JSON(http.StatusRequestEntityTooLarge, gin.H{"error": "video exceeds 50MB"})
+		return
+	}
+	if isDoc && fileHeader.Size > maxDocBytes {
+		c.JSON(http.StatusRequestEntityTooLarge, gin.H{"error": "document exceeds 20MB"})
 		return
 	}
 
