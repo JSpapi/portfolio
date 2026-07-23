@@ -165,7 +165,7 @@ func (h *Handler) Unlock(c *gin.Context) {
 		return
 	}
 
-	c.SetSameSite(http.SameSiteLaxMode)
+	c.SetSameSite(cookieSameSite())
 	c.SetCookie("access_session", rawSession, int(sessExpiry.Seconds()), "/", "", cookieSecure(), true)
 	c.JSON(http.StatusOK, gin.H{"ok": true})
 }
@@ -176,7 +176,7 @@ func (h *Handler) AccessLogout(c *gin.Context) {
 		hash := service.Sha256Hex(raw)
 		_ = h.Q.ClearSessionByHash(c.Request.Context(), &hash)
 	}
-	c.SetSameSite(http.SameSiteLaxMode)
+	c.SetSameSite(cookieSameSite())
 	c.SetCookie("access_session", "", -1, "/", "", cookieSecure(), true)
 	c.JSON(http.StatusOK, gin.H{"ok": true})
 }

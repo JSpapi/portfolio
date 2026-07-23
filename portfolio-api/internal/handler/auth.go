@@ -23,6 +23,18 @@ func cookieSecure() bool {
 	return os.Getenv("COOKIE_INSECURE") != "1"
 }
 
+// cookieSameSite chooses the SameSite mode. The frontend (Vercel) and API (Fly)
+// live on different domains, so the auth/session cookies must ride cross-site
+// requests. In production (Secure/HTTPS) that requires SameSite=None. Locally
+// (COOKIE_INSECURE=1, plain http) browsers reject None-without-Secure, so we
+// fall back to Lax, which is fine because local dev is effectively same-site.
+func cookieSameSite() http.SameSite {
+	if cookieSecure() {
+		return http.SameSiteNoneMode
+	}
+	return http.SameSiteLaxMode
+}
+
 // Login validates credentials and sets the admin JWT cookie.
 func (h *Handler) Login(c *gin.Context) {
 	var req loginReq
@@ -48,14 +60,14 @@ func (h *Handler) Login(c *gin.Context) {
 		return
 	}
 
-	c.SetSameSite(http.SameSiteStrictMode)
+	c.SetSameSite(cookieSameSite())
 	c.SetCookie("token", token, int(exp.Seconds()), "/", "", cookieSecure(), true)
 	c.JSON(http.StatusOK, gin.H{"id": user.ID, "email": user.Email, "role": user.Role})
 }
 
 // Logout clears the admin JWT cookie.
 func (h *Handler) Logout(c *gin.Context) {
-	c.SetSameSite(http.SameSiteStrictMode)
+	c.SetSameSite(cookieSameSite())
 	c.SetCookie("token", "", -1, "/", "", cookieSecure(), true)
 	c.JSON(http.StatusOK, gin.H{"ok": true})
 }
