@@ -1,7 +1,7 @@
 # fly.toml — Fly.io deployment config for the portfolio API.
 # Set secrets with: flyctl secrets set JWT_SECRET=... ADMIN_PASSWORD=... etc.
-app = "portfolio-api"
-primary_region = "fra"
+app = "jspapi-portfolio-api"
+primary_region = "nrt"
 
 [build]
   dockerfile = "Dockerfile"
@@ -26,4 +26,4 @@ primary_region = "fra"
 [[vm]]
   cpu_kind = "shared"
   cpus = 1
-  memory_mb = 256
+  memory_mb = 512
