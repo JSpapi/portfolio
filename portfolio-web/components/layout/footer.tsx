@@ -8,7 +8,11 @@ export function Footer() {
         <div className="font-mono text-xs text-paper-faint">
           <span className="text-amber">$</span> built with go · next.js · postgres
           · r2
-          <br />© {year} axror — all rights reserved
+          <br />© {year}{" "}
+          <span className="text-paper">
+            <span className="text-amber">JS</span>papi.dev
+          </span>{" "}
+          — all rights reserved
         </div>
         <div className="flex items-center gap-5 font-mono text-xs">
           <a
