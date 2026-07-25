@@ -46,29 +46,29 @@ export default function PrivateProfileAdminPage() {
   }
 
   if (!loaded)
-    return <p className="font-mono text-sm text-paper-faint">loading…</p>;
+    return <p className="font-mono text-sm text-foreground-faint">loading…</p>;
 
   return (
     <div className="max-w-3xl">
       <div className="flex items-center justify-between">
-        <h1 className="font-serif text-3xl tracking-tight text-paper">
+        <h1 className="font-serif text-3xl tracking-tight text-foreground">
           Private profile
         </h1>
         <div className="flex items-center gap-4">
           {note && (
-            <span className="font-mono text-sm text-moss">{note}</span>
+            <span className="font-mono text-sm text-highlight">{note}</span>
           )}
           <button
             disabled={saving}
             onClick={save}
-            className="rounded-full bg-amber px-6 py-2.5 font-mono text-sm text-ink disabled:opacity-50"
+            className="rounded-full bg-accent px-6 py-2.5 font-mono text-sm text-background disabled:opacity-50"
           >
             {saving ? "saving…" : "save"}
           </button>
         </div>
       </div>
-      <p className="mt-2 text-paper-dim">
-        This is the gated content shown on <code className="text-amber">/private</code>.
+      <p className="mt-2 text-foreground-dim">
+        This is the gated content shown on <code className="text-accent">/private</code>.
         Markdown supported.
       </p>
 
@@ -89,7 +89,7 @@ export default function PrivateProfileAdminPage() {
           value={resumeUrl}
           onChange={(e) => setResumeUrl(e.target.value)}
           placeholder="https://…/resume.pdf (or upload below)"
-          className="w-full rounded-lg border border-ink-line bg-ink px-3 py-2 font-mono text-sm text-paper placeholder:text-paper-faint focus:border-amber focus:outline-none"
+          className="w-full rounded-lg border border-border bg-background px-3 py-2 font-mono text-sm text-foreground placeholder:text-foreground-faint focus:border-accent focus:outline-none"
         />
         <div className="mt-3">
           <MediaUploader
@@ -102,7 +102,7 @@ export default function PrivateProfileAdminPage() {
               if (url) setResumeUrl(url);
             }}
           />
-          <p className="mt-1 font-mono text-[11px] text-paper-faint">
+          <p className="mt-1 font-mono text-[11px] text-foreground-faint">
             Upload a PDF (max 20MB) or paste a URL above.
           </p>
         </div>
@@ -129,7 +129,7 @@ export default function PrivateProfileAdminPage() {
               />
               <button
                 onClick={() => setRefs(refs.filter((_, j) => j !== i))}
-                className="rounded border border-ink-line px-3 font-mono text-xs text-[#ff6b6b]"
+                className="rounded border border-border px-3 font-mono text-xs text-[#ff6b6b]"
               >
                 ✕
               </button>
@@ -139,7 +139,7 @@ export default function PrivateProfileAdminPage() {
             onClick={() =>
               setRefs([...refs, { name: "", relation: "", contact: "" }])
             }
-            className="rounded border border-ink-line px-4 py-2 font-mono text-xs text-paper-dim hover:text-paper"
+            className="rounded border border-border px-4 py-2 font-mono text-xs text-foreground-dim hover:text-foreground"
           >
             + add reference
           </button>
@@ -162,7 +162,7 @@ function Block({
 }) {
   return (
     <section className="mt-8">
-      <div className="mb-3 font-mono text-xs uppercase tracking-wider text-paper-faint">
+      <div className="mb-3 font-mono text-xs uppercase tracking-wider text-foreground-faint">
         {label}
       </div>
       {children}
@@ -184,7 +184,7 @@ function Area({
       value={v}
       onChange={(e) => set(e.target.value)}
       rows={rows}
-      className="w-full resize-y rounded-lg border border-ink-line bg-ink-soft px-4 py-3 font-mono text-sm leading-relaxed text-paper focus:border-amber focus:outline-none"
+      className="w-full resize-y rounded-lg border border-border bg-surface px-4 py-3 font-mono text-sm leading-relaxed text-foreground focus:border-accent focus:outline-none"
     />
   );
 }
@@ -203,7 +203,7 @@ function RefInp({
       value={v}
       onChange={(e) => set(e.target.value)}
       placeholder={ph}
-      className="rounded border border-ink-line bg-ink px-3 py-2 font-mono text-xs text-paper placeholder:text-paper-faint focus:border-amber focus:outline-none"
+      className="rounded border border-border bg-background px-3 py-2 font-mono text-xs text-foreground placeholder:text-foreground-faint focus:border-accent focus:outline-none"
     />
   );
 }

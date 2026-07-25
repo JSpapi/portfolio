@@ -92,45 +92,45 @@ export default function AdminProjectsPage() {
   return (
     <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
       <div>
-        <h1 className="font-serif text-3xl tracking-tight text-paper">
+        <h1 className="font-serif text-3xl tracking-tight text-foreground">
           Projects
         </h1>
         <div className="mt-6 space-y-3">
           {projects.length === 0 && (
-            <p className="font-mono text-sm text-paper-faint">
+            <p className="font-mono text-sm text-foreground-faint">
               No projects yet.
             </p>
           )}
           {projects.map((p) => (
             <div
               key={p.id}
-              className="flex items-center gap-3 rounded-lg border border-ink-line bg-ink-soft px-5 py-4"
+              className="flex items-center gap-3 rounded-lg border border-border bg-surface px-5 py-4"
             >
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="truncate font-serif text-lg text-paper">
+                  <span className="truncate font-serif text-lg text-foreground">
                     {p.title}
                   </span>
                   {p.featured && (
-                    <span className="rounded border border-amber/40 bg-amber/10 px-1.5 py-0.5 font-mono text-[9px] uppercase text-amber">
+                    <span className="rounded border border-accent/40 bg-accent/10 px-1.5 py-0.5 font-mono text-[9px] uppercase text-accent">
                       featured
                     </span>
                   )}
                 </div>
-                <div className="font-mono text-xs text-paper-faint">
+                <div className="font-mono text-xs text-foreground-faint">
                   {p.slug}
                 </div>
               </div>
               <div className="flex gap-2 font-mono text-xs">
                 <button
                   onClick={() => edit(p)}
-                  className="rounded border border-ink-line px-3 py-1.5 text-paper-dim hover:text-paper"
+                  className="rounded border border-border px-3 py-1.5 text-foreground-dim hover:text-foreground"
                 >
                   edit
                 </button>
                 <button
                   onClick={() => del(p.slug)}
-                  className="rounded border border-ink-line px-3 py-1.5 text-[#ff6b6b] hover:bg-[#ff6b6b]/10"
+                  className="rounded border border-border px-3 py-1.5 text-[#ff6b6b] hover:bg-[#ff6b6b]/10"
                 >
                   del
                 </button>
@@ -140,8 +140,8 @@ export default function AdminProjectsPage() {
         </div>
       </div>
 
-      <aside className="rounded-xl border border-ink-line bg-ink-soft p-6">
-        <h2 className="font-mono text-sm uppercase tracking-wider text-paper-faint">
+      <aside className="rounded-xl border border-border bg-surface p-6">
+        <h2 className="font-mono text-sm uppercase tracking-wider text-foreground-faint">
           {editingSlug ? `edit ${editingSlug}` : "new project"}
         </h2>
         <div className="mt-4 space-y-3">
@@ -161,7 +161,7 @@ export default function AdminProjectsPage() {
             onChange={(e) => setDraft({ ...draft, description: e.target.value })}
             placeholder="description"
             rows={3}
-            className="w-full resize-none rounded-lg border border-ink-line bg-ink px-3 py-2 text-sm text-paper placeholder:text-paper-faint focus:border-amber focus:outline-none"
+            className="w-full resize-none rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-foreground-faint focus:border-accent focus:outline-none"
           />
           <Inp
             v={draft.tags}
@@ -178,14 +178,14 @@ export default function AdminProjectsPage() {
             set={(v) => setDraft({ ...draft, url_repo: v })}
             ph="https://github.com/… (optional)"
           />
-          <label className="flex items-center gap-2 font-mono text-xs text-paper-dim">
+          <label className="flex items-center gap-2 font-mono text-xs text-foreground-dim">
             <input
               type="checkbox"
               checked={draft.featured}
               onChange={(e) =>
                 setDraft({ ...draft, featured: e.target.checked })
               }
-              className="accent-amber"
+              className="accent-accent"
             />
             featured
           </label>
@@ -198,7 +198,7 @@ export default function AdminProjectsPage() {
         <div className="mt-5 flex gap-2">
           <button
             onClick={submit}
-            className="rounded-full bg-amber px-5 py-2 font-mono text-sm text-ink"
+            className="rounded-full bg-accent px-5 py-2 font-mono text-sm text-background"
           >
             {editingSlug ? "update" : "create"}
           </button>
@@ -208,7 +208,7 @@ export default function AdminProjectsPage() {
                 setEditingSlug(null);
                 setDraft(empty);
               }}
-              className="rounded-full border border-ink-line px-5 py-2 font-mono text-sm text-paper-dim"
+              className="rounded-full border border-border px-5 py-2 font-mono text-sm text-foreground-dim"
             >
               cancel
             </button>
@@ -236,7 +236,7 @@ function Inp({
       disabled={disabled}
       onChange={(e) => set(e.target.value)}
       placeholder={ph}
-      className="w-full rounded-lg border border-ink-line bg-ink px-3 py-2 font-mono text-sm text-paper placeholder:text-paper-faint focus:border-amber focus:outline-none disabled:opacity-60"
+      className="w-full rounded-lg border border-border bg-background px-3 py-2 font-mono text-sm text-foreground placeholder:text-foreground-faint focus:border-accent focus:outline-none disabled:opacity-60"
     />
   );
 }

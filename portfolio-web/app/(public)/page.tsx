@@ -27,20 +27,20 @@ export default async function HomePage() {
       <section className="relative pt-14 pb-14 sm:pt-24 lg:pt-32 sm:pb-16">
         <p className="kicker animate-fade-up">
           full-stack engineer{" "}
-          <span className="text-paper-faint">
+          <span className="text-foreground-faint">
             · typescript · node · react · go
           </span>
         </p>
         <h1
-          className="mt-5 max-w-3xl font-serif text-[2.6rem] leading-[1.05] tracking-tightest text-paper animate-fade-up sm:mt-6 sm:text-6xl sm:leading-[1.02] lg:text-7xl"
+          className="mt-5 max-w-3xl font-serif text-[2.6rem] leading-[1.05] tracking-tightest text-foreground animate-fade-up sm:mt-6 sm:text-6xl sm:leading-[1.02] lg:text-7xl"
           style={{ animationDelay: "80ms" }}
         >
           I build the{" "}
-          <em className="italic text-amber">quiet machinery</em> behind
+          <em className="italic text-accent">quiet machinery</em> behind
           products people rely on every day.
         </h1>
         <p
-          className="mt-6 max-w-xl text-base leading-relaxed text-paper-dim animate-fade-up sm:mt-8 sm:text-lg"
+          className="mt-6 max-w-xl text-base leading-relaxed text-foreground-dim animate-fade-up sm:mt-8 sm:text-lg"
           style={{ animationDelay: "160ms" }}
         >
           Right now I&apos;m shipping features across the web app of one of
@@ -56,7 +56,7 @@ export default async function HomePage() {
         >
           <Link
             href="/blog"
-            className="group inline-flex items-center justify-center gap-2 rounded-full bg-amber px-6 py-3.5 font-mono text-sm text-ink transition-transform hover:-translate-y-0.5 sm:py-3"
+            className="group inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3.5 font-mono text-sm text-background transition-transform hover:-translate-y-0.5 sm:py-3"
           >
             read the log
             <span className="transition-transform group-hover:translate-x-1">
@@ -65,7 +65,7 @@ export default async function HomePage() {
           </Link>
           <Link
             href="/projects"
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-ink-line px-6 py-3.5 font-mono text-sm text-paper transition-colors hover:border-paper-faint sm:py-3"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-border px-6 py-3.5 font-mono text-sm text-foreground transition-colors hover:border-foreground-faint sm:py-3"
           >
             see the work
           </Link>
@@ -78,19 +78,19 @@ export default async function HomePage() {
           className="relative my-8 animate-fade-up"
           style={{ animationDelay: "320ms" }}
         >
-          <div className="overflow-hidden rounded-xl border border-ink-line bg-ink-soft">
-            <div className="flex items-center gap-2 border-b border-ink-line px-4 py-2.5">
+          <div className="overflow-hidden rounded-xl border border-border bg-surface">
+            <div className="flex items-center gap-2 border-b border-border px-4 py-2.5">
               <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]" />
               <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />
               <span className="h-2.5 w-2.5 rounded-full bg-[#27c93f]" />
-              <span className="ml-2 font-mono text-xs text-paper-faint">
+              <span className="ml-2 font-mono text-xs text-foreground-faint">
                 ~/now — currently working on
               </span>
             </div>
-            <div className="px-5 py-5 font-mono text-sm leading-relaxed text-paper">
-              <span className="text-moss">➜</span>{" "}
-              <span className="text-paper-dim">{now.body}</span>
-              <span className="animate-blink ml-1 text-amber">▊</span>
+            <div className="px-5 py-5 font-mono text-sm leading-relaxed text-foreground">
+              <span className="text-highlight">➜</span>{" "}
+              <span className="text-foreground-dim">{now.body}</span>
+              <span className="animate-blink ml-1 text-accent">▊</span>
             </div>
           </div>
         </section>
@@ -99,23 +99,23 @@ export default async function HomePage() {
       {/* Latest posts */}
       <section className="mt-14 sm:mt-20">
         <div className="flex items-baseline justify-between gap-4">
-          <h2 className="font-serif text-2xl tracking-tight text-paper">
+          <h2 className="font-serif text-2xl tracking-tight text-foreground">
             Latest field notes
           </h2>
           <Link
             href="/blog"
-            className="font-mono text-sm text-paper-dim transition-colors hover:text-amber"
+            className="font-mono text-sm text-foreground-dim transition-colors hover:text-accent"
           >
             all posts →
           </Link>
         </div>
 
         {posts.length === 0 ? (
-          <p className="mt-8 font-mono text-sm text-paper-faint">
+          <p className="mt-8 font-mono text-sm text-foreground-faint">
             No posts yet. The first entry is being written.
           </p>
         ) : (
-          <div className="mt-8 grid gap-px overflow-hidden rounded-xl border border-ink-line bg-ink-line sm:grid-cols-1">
+          <div className="mt-8 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-1">
             {posts.map((p) => (
               <PostCard key={p.id} post={p} />
             ))}

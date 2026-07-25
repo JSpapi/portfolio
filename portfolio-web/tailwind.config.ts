@@ -8,24 +8,25 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Deep warm charcoal base with a single amber accent — "terminal editorial".
-        ink: {
-          DEFAULT: "#0d0c0b",
-          soft: "#151311",
-          raised: "#1c1a17",
-          line: "#2a2723",
+        // Semantic color tokens — all resolve to CSS variables in globals.css
+        // (:root). To re-theme the app, edit those variables, NOT this file.
+        // rgb(var(--x) / <alpha-value>) makes opacity modifiers (e.g.
+        // bg-accent/40) work. Naming follows the common shadcn/ui convention.
+        background: "rgb(var(--bg) / <alpha-value>)",
+        surface: "rgb(var(--surface) / <alpha-value>)",
+        raised: "rgb(var(--raised) / <alpha-value>)",
+        border: "rgb(var(--border) / <alpha-value>)",
+        foreground: {
+          DEFAULT: "rgb(var(--text) / <alpha-value>)",
+          dim: "rgb(var(--text-dim) / <alpha-value>)",
+          faint: "rgb(var(--text-faint) / <alpha-value>)",
         },
-        paper: {
-          DEFAULT: "#f4efe6", // warm off-white text
-          dim: "#a8a196",
-          faint: "#6f685e",
+        accent: {
+          DEFAULT: "rgb(var(--accent) / <alpha-value>)",
+          soft: "rgb(var(--accent-soft) / <alpha-value>)",
+          deep: "rgb(var(--accent-deep) / <alpha-value>)",
         },
-        amber: {
-          DEFAULT: "#e8a13a",
-          soft: "#f0c17a",
-          deep: "#b97a1e",
-        },
-        moss: "#7c9a6d", // secondary accent for success/tags
+        highlight: "rgb(var(--highlight) / <alpha-value>)",
       },
       fontFamily: {
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],

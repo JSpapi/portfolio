@@ -30,15 +30,15 @@ export default function AdminNowPage() {
 
   return (
     <div className="max-w-2xl">
-      <h1 className="font-serif text-3xl tracking-tight text-paper">
+      <h1 className="font-serif text-3xl tracking-tight text-foreground">
         Currently working on
       </h1>
-      <p className="mt-2 text-paper-dim">
+      <p className="mt-2 text-foreground-dim">
         One line shown on the homepage terminal widget.
       </p>
 
       {!loaded ? (
-        <p className="mt-8 font-mono text-sm text-paper-faint">loading…</p>
+        <p className="mt-8 font-mono text-sm text-foreground-faint">loading…</p>
       ) : (
         <div className="mt-8">
           <textarea
@@ -48,18 +48,18 @@ export default function AdminNowPage() {
               setSaved(false);
             }}
             rows={4}
-            className="w-full resize-none rounded-lg border border-ink-line bg-ink-soft px-4 py-3 font-mono text-sm text-paper focus:border-amber focus:outline-none"
+            className="w-full resize-none rounded-lg border border-border bg-surface px-4 py-3 font-mono text-sm text-foreground focus:border-accent focus:outline-none"
           />
           <div className="mt-4 flex items-center gap-4">
             <button
               disabled={saving}
               onClick={save}
-              className="rounded-full bg-amber px-6 py-2.5 font-mono text-sm text-ink disabled:opacity-50"
+              className="rounded-full bg-accent px-6 py-2.5 font-mono text-sm text-background disabled:opacity-50"
             >
               {saving ? "saving…" : "save"}
             </button>
             {saved && (
-              <span className="font-mono text-sm text-moss">✓ saved</span>
+              <span className="font-mono text-sm text-highlight">✓ saved</span>
             )}
           </div>
         </div>

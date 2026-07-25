@@ -37,20 +37,20 @@ export default async function TagPage({
     <div className="wrap max-w-3xl pt-14 sm:pt-20">
       <Link
         href="/blog"
-        className="font-mono text-sm text-paper-dim transition-colors hover:text-amber"
+        className="font-mono text-sm text-foreground-dim transition-colors hover:text-accent"
       >
         ← all posts
       </Link>
-      <h1 className="mt-6 font-serif text-3xl tracking-tightest text-paper sm:text-4xl">
-        Tagged <span className="text-amber">#{decoded}</span>
+      <h1 className="mt-6 font-serif text-3xl tracking-tightest text-foreground sm:text-4xl">
+        Tagged <span className="text-accent">#{decoded}</span>
       </h1>
 
       {list.posts.length === 0 ? (
-        <p className="mt-12 font-mono text-sm text-paper-faint">
+        <p className="mt-12 font-mono text-sm text-foreground-faint">
           No posts under this tag.
         </p>
       ) : (
-        <div className="mt-10 grid gap-px overflow-hidden rounded-xl border border-ink-line bg-ink-line">
+        <div className="mt-10 grid gap-px overflow-hidden rounded-xl border border-border bg-border">
           {list.posts.map((p) => (
             <PostCard key={p.id} post={p} />
           ))}

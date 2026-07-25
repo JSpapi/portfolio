@@ -15,7 +15,7 @@ const components: Components = {
       src={typeof src === "string" ? src : ""}
       alt={alt ?? ""}
       loading="lazy"
-      className="my-8 w-full rounded-lg border border-ink-line"
+      className="my-8 w-full rounded-lg border border-border"
     />
   ),
 
@@ -24,7 +24,7 @@ const components: Components = {
     <video
       controls
       preload="metadata"
-      className="my-8 max-h-[480px] w-full rounded-lg border border-ink-line"
+      className="my-8 max-h-[480px] w-full rounded-lg border border-border"
       {...(props as React.VideoHTMLAttributes<HTMLVideoElement>)}
     />
   ),

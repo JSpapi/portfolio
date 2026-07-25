@@ -87,7 +87,7 @@ export function MobileNav() {
   return (
     <nav
       aria-label="Primary"
-      className="fixed inset-x-0 bottom-0 z-50 border-t border-ink-line bg-ink/95 backdrop-blur-md lg:hidden"
+      className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-background/95 backdrop-blur-md lg:hidden"
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       <ul className="mx-auto flex max-w-md items-stretch justify-around">
@@ -99,10 +99,10 @@ export function MobileNav() {
                 href={it.href}
                 aria-current={active ? "page" : undefined}
                 className={`flex h-16 flex-col items-center justify-center gap-1 text-[11px] font-mono transition-colors ${
-                  active ? "text-amber" : "text-paper-faint"
+                  active ? "text-accent" : "text-foreground-faint"
                 }`}
               >
-                <span className={active ? "text-amber" : "text-paper-dim"}>
+                <span className={active ? "text-accent" : "text-foreground-dim"}>
                   {it.icon(active)}
                 </span>
                 {it.label}

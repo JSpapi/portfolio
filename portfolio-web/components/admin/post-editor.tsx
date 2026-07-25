@@ -69,27 +69,27 @@ export function PostEditor({ existing }: { existing?: Post }) {
   return (
     <div>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="font-serif text-2xl tracking-tight text-paper sm:text-3xl">
+        <h1 className="font-serif text-2xl tracking-tight text-foreground sm:text-3xl">
           {isEdit ? "Edit post" : "New post"}
         </h1>
         <div className="flex flex-wrap items-center gap-2 font-mono text-sm">
           <button
             onClick={() => setPreview((p) => !p)}
-            className="rounded border border-ink-line px-4 py-2 text-paper-dim hover:text-paper"
+            className="rounded border border-border px-4 py-2 text-foreground-dim hover:text-foreground"
           >
             {preview ? "write" : "preview"}
           </button>
           <button
             disabled={saving}
             onClick={() => save(false)}
-            className="rounded border border-ink-line px-4 py-2 text-paper hover:bg-ink-raised disabled:opacity-50"
+            className="rounded border border-border px-4 py-2 text-foreground hover:bg-raised disabled:opacity-50"
           >
             save draft
           </button>
           <button
             disabled={saving}
             onClick={() => save(true)}
-            className="rounded-full bg-amber px-5 py-2 text-ink disabled:opacity-50"
+            className="rounded-full bg-accent px-5 py-2 text-background disabled:opacity-50"
           >
             {saving ? "…" : "save & publish"}
           </button>
@@ -109,18 +109,18 @@ export function PostEditor({ existing }: { existing?: Post }) {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Post title"
-            className="w-full bg-transparent font-serif text-3xl text-paper placeholder:text-paper-faint focus:outline-none"
+            className="w-full bg-transparent font-serif text-3xl text-foreground placeholder:text-foreground-faint focus:outline-none"
           />
           <textarea
             value={summary}
             onChange={(e) => setSummary(e.target.value)}
             placeholder="Short summary (shown on the list page)…"
             rows={2}
-            className="w-full resize-none rounded-lg border border-ink-line bg-ink-soft px-4 py-3 text-paper placeholder:text-paper-faint focus:border-amber focus:outline-none"
+            className="w-full resize-none rounded-lg border border-border bg-surface px-4 py-3 text-foreground placeholder:text-foreground-faint focus:border-accent focus:outline-none"
           />
 
           {preview ? (
-            <div className="min-h-[400px] rounded-lg border border-ink-line bg-ink-soft p-6">
+            <div className="min-h-[400px] rounded-lg border border-border bg-surface p-6">
               <MDRenderer body={body || "_Nothing to preview yet._"} />
             </div>
           ) : (
@@ -130,7 +130,7 @@ export function PostEditor({ existing }: { existing?: Post }) {
               onChange={(e) => setBody(e.target.value)}
               placeholder="Write in Markdown…"
               rows={22}
-              className="w-full resize-y rounded-lg border border-ink-line bg-ink-soft px-4 py-3 font-mono text-sm leading-relaxed text-paper placeholder:text-paper-faint focus:border-amber focus:outline-none"
+              className="w-full resize-y rounded-lg border border-border bg-surface px-4 py-3 font-mono text-sm leading-relaxed text-foreground placeholder:text-foreground-faint focus:border-accent focus:outline-none"
             />
           )}
         </div>
@@ -155,8 +155,8 @@ export function PostEditor({ existing }: { existing?: Post }) {
                   onClick={() => setType(t)}
                   className={`rounded border px-3 py-2 font-mono text-xs transition-colors ${
                     type === t
-                      ? "border-amber bg-amber/10 text-amber"
-                      : "border-ink-line text-paper-dim hover:text-paper"
+                      ? "border-accent bg-accent/10 text-accent"
+                      : "border-border text-foreground-dim hover:text-foreground"
                   }`}
                 >
                   {t}
@@ -183,20 +183,20 @@ export function PostEditor({ existing }: { existing?: Post }) {
       <style jsx>{`
         :global(.input-mono) {
           width: 100%;
-          background: #0d0c0b;
-          border: 1px solid #2a2723;
+          background: #0b1120;
+          border: 1px solid #243049;
           border-radius: 8px;
           padding: 0.6rem 0.8rem;
-          color: #f4efe6;
+          color: #e6edf6;
           font-family: var(--font-mono);
           font-size: 0.85rem;
         }
         :global(.input-mono:focus) {
           outline: none;
-          border-color: #e8a13a;
+          border-color: #3b82f6;
         }
         :global(.input-mono::placeholder) {
-          color: #6f685e;
+          color: #6b7a96;
         }
       `}</style>
     </div>
@@ -211,8 +211,8 @@ function Panel({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-lg border border-ink-line bg-ink-soft p-4">
-      <div className="mb-3 font-mono text-xs uppercase tracking-wider text-paper-faint">
+    <div className="rounded-lg border border-border bg-surface p-4">
+      <div className="mb-3 font-mono text-xs uppercase tracking-wider text-foreground-faint">
         {label}
       </div>
       {children}

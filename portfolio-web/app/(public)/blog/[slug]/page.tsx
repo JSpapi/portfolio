@@ -51,22 +51,22 @@ export default async function PostPage({
     <article className="wrap max-w-3xl pt-12 sm:pt-16">
       <Link
         href="/blog"
-        className="font-mono text-sm text-paper-dim transition-colors hover:text-amber"
+        className="font-mono text-sm text-foreground-dim transition-colors hover:text-accent"
       >
         ← back to log
       </Link>
 
-      <header className="mt-6 border-b border-ink-line pb-6 sm:mt-8 sm:pb-8">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-xs text-paper-faint">
+      <header className="mt-6 border-b border-border pb-6 sm:mt-8 sm:pb-8">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-xs text-foreground-faint">
           <TypeBadge type={post.type} />
           <span>{formatDate(post.published_at)}</span>
-          <span className="text-ink-line">/</span>
+          <span className="text-border">/</span>
           <span>{post.reading_time} min read</span>
         </div>
-        <h1 className="mt-5 font-serif text-3xl leading-tight tracking-tightest text-paper sm:text-5xl">
+        <h1 className="mt-5 font-serif text-3xl leading-tight tracking-tightest text-foreground sm:text-5xl">
           {post.title}
         </h1>
-        <p className="mt-4 text-base leading-relaxed text-paper-dim sm:text-lg">
+        <p className="mt-4 text-base leading-relaxed text-foreground-dim sm:text-lg">
           {post.summary}
         </p>
       </header>
@@ -76,12 +76,12 @@ export default async function PostPage({
       </div>
 
       {post.tags.length > 0 && (
-        <div className="mt-14 flex flex-wrap gap-2 border-t border-ink-line pt-8">
+        <div className="mt-14 flex flex-wrap gap-2 border-t border-border pt-8">
           {post.tags.map((t) => (
             <Link
               key={t}
               href={`/blog/tags/${encodeURIComponent(t)}`}
-              className="rounded-full border border-ink-line px-3 py-1 font-mono text-xs text-paper-dim transition-colors hover:border-amber hover:text-amber"
+              className="rounded-full border border-border px-3 py-1 font-mono text-xs text-foreground-dim transition-colors hover:border-accent hover:text-accent"
             >
               #{t}
             </Link>

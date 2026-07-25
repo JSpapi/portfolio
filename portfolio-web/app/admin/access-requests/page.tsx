@@ -8,9 +8,9 @@ const filters = ["pending", "approved", "denied", "revoked", "all"] as const;
 type Filter = (typeof filters)[number];
 
 const statusColor: Record<string, string> = {
-  pending: "text-amber border-amber/40 bg-amber/10",
-  approved: "text-moss border-moss/40 bg-moss/10",
-  denied: "text-paper-faint border-ink-line bg-paper/5",
+  pending: "text-accent border-accent/40 bg-accent/10",
+  approved: "text-highlight border-highlight/40 bg-highlight/10",
+  denied: "text-foreground-faint border-border bg-foreground/5",
   revoked: "text-[#ff6b6b] border-[#ff6b6b]/40 bg-[#ff6b6b]/10",
 };
 
@@ -59,10 +59,10 @@ export default function AccessRequestsPage() {
 
   return (
     <div>
-      <h1 className="font-serif text-3xl tracking-tight text-paper">
+      <h1 className="font-serif text-3xl tracking-tight text-foreground">
         Access requests
       </h1>
-      <p className="mt-2 text-paper-dim">
+      <p className="mt-2 text-foreground-dim">
         Approve to email a magic link. Revoke to kill an active session
         instantly.
       </p>
@@ -74,8 +74,8 @@ export default function AccessRequestsPage() {
             onClick={() => setFilter(f)}
             className={`rounded-full border px-3 py-1.5 transition-colors ${
               filter === f
-                ? "border-amber bg-amber/10 text-amber"
-                : "border-ink-line text-paper-dim hover:text-paper"
+                ? "border-accent bg-accent/10 text-accent"
+                : "border-border text-foreground-dim hover:text-foreground"
             }`}
           >
             {f}
@@ -84,15 +84,15 @@ export default function AccessRequestsPage() {
       </div>
 
       {note && (
-        <p className="mt-4 rounded-lg border border-ink-line bg-ink-soft px-4 py-2 font-mono text-sm text-paper-dim">
+        <p className="mt-4 rounded-lg border border-border bg-surface px-4 py-2 font-mono text-sm text-foreground-dim">
           {note}
         </p>
       )}
 
       {loading ? (
-        <p className="mt-8 font-mono text-sm text-paper-faint">loading…</p>
+        <p className="mt-8 font-mono text-sm text-foreground-faint">loading…</p>
       ) : rows.length === 0 ? (
-        <p className="mt-8 font-mono text-sm text-paper-faint">
+        <p className="mt-8 font-mono text-sm text-foreground-faint">
           No {filter === "all" ? "" : filter} requests.
         </p>
       ) : (
@@ -100,12 +100,12 @@ export default function AccessRequestsPage() {
           {rows.map((r) => (
             <div
               key={r.id}
-              className="rounded-xl border border-ink-line bg-ink-soft p-5"
+              className="rounded-xl border border-border bg-surface p-5"
             >
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <div className="flex items-center gap-3">
-                    <span className="font-serif text-lg text-paper">
+                    <span className="font-serif text-lg text-foreground">
                       {r.name}
                     </span>
                     <span
@@ -116,23 +116,23 @@ export default function AccessRequestsPage() {
                       {r.status}
                     </span>
                     {r.has_active_session && (
-                      <span className="rounded border border-moss/40 bg-moss/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-moss">
+                      <span className="rounded border border-highlight/40 bg-highlight/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-highlight">
                         active session
                       </span>
                     )}
                   </div>
                   <a
                     href={`mailto:${r.email}`}
-                    className="mt-1 block font-mono text-sm text-amber"
+                    className="mt-1 block font-mono text-sm text-accent"
                   >
                     {r.email}
                   </a>
                   {r.reason && (
-                    <p className="mt-2 max-w-xl text-sm text-paper-dim">
+                    <p className="mt-2 max-w-xl text-sm text-foreground-dim">
                       {r.reason}
                     </p>
                   )}
-                  <p className="mt-2 font-mono text-xs text-paper-faint">
+                  <p className="mt-2 font-mono text-xs text-foreground-faint">
                     requested {fmt(r.created_at)}
                     {r.decided_at &&
                       ` · decided ${fmt(r.decided_at)} (${r.decided_by})`}
@@ -144,7 +144,7 @@ export default function AccessRequestsPage() {
                     <button
                       disabled={busy === r.id}
                       onClick={() => act(r.id, "approve")}
-                      className="rounded border border-moss/40 px-3 py-1.5 text-moss hover:bg-moss/10 disabled:opacity-50"
+                      className="rounded border border-highlight/40 px-3 py-1.5 text-highlight hover:bg-highlight/10 disabled:opacity-50"
                     >
                       approve
                     </button>
@@ -153,7 +153,7 @@ export default function AccessRequestsPage() {
                     <button
                       disabled={busy === r.id}
                       onClick={() => act(r.id, "approve")}
-                      className="rounded border border-ink-line px-3 py-1.5 text-paper-dim hover:text-paper disabled:opacity-50"
+                      className="rounded border border-border px-3 py-1.5 text-foreground-dim hover:text-foreground disabled:opacity-50"
                     >
                       resend link
                     </button>
@@ -162,7 +162,7 @@ export default function AccessRequestsPage() {
                     <button
                       disabled={busy === r.id}
                       onClick={() => act(r.id, "deny")}
-                      className="rounded border border-ink-line px-3 py-1.5 text-paper-dim hover:text-paper disabled:opacity-50"
+                      className="rounded border border-border px-3 py-1.5 text-foreground-dim hover:text-foreground disabled:opacity-50"
                     >
                       deny
                     </button>

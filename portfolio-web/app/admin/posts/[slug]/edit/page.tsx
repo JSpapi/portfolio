@@ -34,8 +34,8 @@ export default function EditPostPage({
     return <p className="font-mono text-sm text-[#ff6b6b]">{error}</p>;
   if (!post)
     return (
-      <p className="font-mono text-sm text-paper-faint">
-        <span className="animate-blink text-amber">▊</span> loading…
+      <p className="font-mono text-sm text-foreground-faint">
+        <span className="animate-blink text-accent">▊</span> loading…
       </p>
     );
 

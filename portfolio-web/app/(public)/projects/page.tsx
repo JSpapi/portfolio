@@ -27,12 +27,12 @@ export default async function ProjectsPage() {
     <div className="wrap pt-14 sm:pt-20">
       <header className="max-w-2xl">
         <p className="kicker">selected work</p>
-        <h1 className="mt-4 font-serif text-4xl tracking-tightest text-paper sm:text-5xl">
+        <h1 className="mt-4 font-serif text-4xl tracking-tightest text-foreground sm:text-5xl">
           Things I&apos;ve built
         </h1>
-        <p className="mt-4 text-base text-paper-dim sm:text-lg">
+        <p className="mt-4 text-base text-foreground-dim sm:text-lg">
           A few projects worth showing. The full case studies live behind the{" "}
-          <a href="/request-access" className="text-amber underline underline-offset-4">
+          <a href="/request-access" className="text-accent underline underline-offset-4">
             private profile
           </a>
           .
@@ -40,7 +40,7 @@ export default async function ProjectsPage() {
       </header>
 
       {projects.length === 0 ? (
-        <p className="mt-16 font-mono text-sm text-paper-faint">
+        <p className="mt-16 font-mono text-sm text-foreground-faint">
           No projects listed yet.
         </p>
       ) : (
@@ -48,23 +48,23 @@ export default async function ProjectsPage() {
           {projects.map((p, i) => (
             <article
               key={p.id}
-              className="group relative flex flex-col overflow-hidden rounded-xl border border-ink-line bg-ink-soft p-6 transition-colors hover:border-paper-faint/50"
+              className="group relative flex flex-col overflow-hidden rounded-xl border border-border bg-surface p-6 transition-colors hover:border-foreground-faint/50"
             >
               <div className="flex items-start justify-between gap-3">
-                <span className="font-mono text-xs text-paper-faint">
+                <span className="font-mono text-xs text-foreground-faint">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 {p.featured && (
-                  <span className="rounded border border-amber/40 bg-amber/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-amber">
+                  <span className="rounded border border-accent/40 bg-accent/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-accent">
                     featured
                   </span>
                 )}
               </div>
 
-              <h2 className="mt-4 font-serif text-2xl tracking-tight text-paper transition-colors group-hover:text-amber">
+              <h2 className="mt-4 font-serif text-2xl tracking-tight text-foreground transition-colors group-hover:text-accent">
                 {p.title}
               </h2>
-              <p className="mt-3 flex-1 text-[15px] leading-relaxed text-paper-dim">
+              <p className="mt-3 flex-1 text-[15px] leading-relaxed text-foreground-dim">
                 {p.description}
               </p>
 
@@ -73,7 +73,7 @@ export default async function ProjectsPage() {
                   {p.tags.map((t) => (
                     <span
                       key={t}
-                      className="rounded-full border border-ink-line px-2.5 py-0.5 font-mono text-[11px] text-paper-faint"
+                      className="rounded-full border border-border px-2.5 py-0.5 font-mono text-[11px] text-foreground-faint"
                     >
                       {t}
                     </span>
@@ -87,7 +87,7 @@ export default async function ProjectsPage() {
                     href={p.url_live}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-amber transition-colors hover:text-amber-soft"
+                    className="text-accent transition-colors hover:text-accent-soft"
                   >
                     live ↗
                   </a>
@@ -97,7 +97,7 @@ export default async function ProjectsPage() {
                     href={p.url_repo}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-paper-dim transition-colors hover:text-paper"
+                    className="text-foreground-dim transition-colors hover:text-foreground"
                   >
                     code ↗
                   </a>

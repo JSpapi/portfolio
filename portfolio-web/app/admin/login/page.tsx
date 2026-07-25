@@ -29,10 +29,10 @@ export default function AdminLoginPage() {
     <div className="flex min-h-screen items-center justify-center px-6">
       <form
         onSubmit={onSubmit}
-        className="w-full max-w-sm rounded-xl border border-ink-line bg-ink-soft p-8"
+        className="w-full max-w-sm rounded-xl border border-border bg-surface p-8"
       >
-        <div className="font-mono text-sm text-amber">~/admin</div>
-        <h1 className="mt-2 font-serif text-2xl text-paper">Sign in</h1>
+        <div className="font-mono text-sm text-accent">~/admin</div>
+        <h1 className="mt-2 font-serif text-2xl text-foreground">Sign in</h1>
 
         <div className="mt-6 space-y-4">
           <input
@@ -41,7 +41,7 @@ export default function AdminLoginPage() {
             placeholder="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full rounded-lg border border-ink-line bg-ink px-4 py-2.5 font-mono text-sm text-paper placeholder:text-paper-faint focus:border-amber focus:outline-none"
+            className="w-full rounded-lg border border-border bg-background px-4 py-2.5 font-mono text-sm text-foreground placeholder:text-foreground-faint focus:border-accent focus:outline-none"
           />
           <input
             type="password"
@@ -49,7 +49,7 @@ export default function AdminLoginPage() {
             placeholder="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full rounded-lg border border-ink-line bg-ink px-4 py-2.5 font-mono text-sm text-paper placeholder:text-paper-faint focus:border-amber focus:outline-none"
+            className="w-full rounded-lg border border-border bg-background px-4 py-2.5 font-mono text-sm text-foreground placeholder:text-foreground-faint focus:border-accent focus:outline-none"
           />
         </div>
 
@@ -60,7 +60,7 @@ export default function AdminLoginPage() {
         <button
           type="submit"
           disabled={loading}
-          className="mt-6 w-full rounded-full bg-amber px-6 py-2.5 font-mono text-sm text-ink disabled:opacity-60"
+          className="mt-6 w-full rounded-full bg-accent px-6 py-2.5 font-mono text-sm text-background disabled:opacity-60"
         >
           {loading ? "…" : "enter"}
         </button>

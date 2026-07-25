@@ -69,8 +69,8 @@ export function MediaUploader({
         onClick={() => inputRef.current?.click()}
         className={`cursor-pointer rounded-lg border border-dashed px-4 py-6 text-center font-mono text-xs transition-colors ${
           dragging
-            ? "border-amber bg-amber/10 text-amber"
-            : "border-ink-line text-paper-faint hover:border-paper-faint"
+            ? "border-accent bg-accent/10 text-accent"
+            : "border-border text-foreground-faint hover:border-foreground-faint"
         }`}
       >
         {uploading
@@ -78,7 +78,7 @@ export function MediaUploader({
           : dragging
           ? "drop to upload"
           : "drag image / mp4 here, or click"}
-        <div className="mt-1 text-paper-faint/70">
+        <div className="mt-1 text-foreground-faint/70">
           images ≤ 10MB · mp4 ≤ 50MB
         </div>
       </div>

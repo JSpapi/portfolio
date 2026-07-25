@@ -6,7 +6,7 @@ export function PrivateProfileView({ profile }: { profile: PrivateProfile }) {
 
   return (
     <div className="wrap max-w-3xl py-10 sm:py-16">
-      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-ink-line pb-5 sm:pb-6">
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-border pb-5 sm:pb-6">
         <p className="kicker">private profile · confidential</p>
         <form action="/api/private/logout" method="post">
           <LogoutButton />
@@ -18,7 +18,7 @@ export function PrivateProfileView({ profile }: { profile: PrivateProfile }) {
           href={profile.resume_url}
           target="_blank"
           rel="noreferrer"
-          className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full border border-amber/40 bg-amber/10 px-5 py-3 font-mono text-sm text-amber transition-colors hover:bg-amber hover:text-ink sm:w-auto sm:py-2.5"
+          className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-5 py-3 font-mono text-sm text-accent transition-colors hover:bg-accent hover:text-background sm:w-auto sm:py-2.5"
         >
           ↓ download resume (pdf)
         </a>
@@ -44,13 +44,13 @@ export function PrivateProfileView({ profile }: { profile: PrivateProfile }) {
             {refs.map((r, i) => (
               <li
                 key={i}
-                className="rounded-lg border border-ink-line bg-ink-soft p-4"
+                className="rounded-lg border border-border bg-surface p-4"
               >
-                <div className="font-serif text-lg text-paper">{r.name}</div>
-                <div className="font-mono text-xs text-paper-faint">
+                <div className="font-serif text-lg text-foreground">{r.name}</div>
+                <div className="font-mono text-xs text-foreground-faint">
                   {r.relation}
                 </div>
-                <div className="mt-2 font-mono text-sm text-amber">
+                <div className="mt-2 font-mono text-sm text-accent">
                   {r.contact}
                 </div>
               </li>
@@ -71,7 +71,7 @@ function Section({
 }) {
   return (
     <section className="mt-12 sm:mt-14">
-      <h2 className="mb-5 font-mono text-sm uppercase tracking-[0.2em] text-paper-faint sm:mb-6">
+      <h2 className="mb-5 font-mono text-sm uppercase tracking-[0.2em] text-foreground-faint sm:mb-6">
         // {title}
       </h2>
       {children}
@@ -84,7 +84,7 @@ function LogoutButton() {
   return (
     <button
       type="submit"
-      className="font-mono text-xs text-paper-dim transition-colors hover:text-amber"
+      className="font-mono text-xs text-foreground-dim transition-colors hover:text-accent"
     >
       end session ↗
     </button>

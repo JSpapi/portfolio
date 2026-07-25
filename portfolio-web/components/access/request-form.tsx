@@ -29,12 +29,12 @@ export function RequestForm() {
 
   if (state === "done") {
     return (
-      <div className="rounded-xl border border-moss/40 bg-moss/10 p-8 text-center">
-        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-moss/50 font-mono text-xl text-moss">
+      <div className="rounded-xl border border-highlight/40 bg-highlight/10 p-8 text-center">
+        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-highlight/50 font-mono text-xl text-highlight">
           ✓
         </div>
-        <h2 className="mt-5 font-serif text-2xl text-paper">Request received</h2>
-        <p className="mx-auto mt-3 max-w-sm text-paper-dim">
+        <h2 className="mt-5 font-serif text-2xl text-foreground">Request received</h2>
+        <p className="mx-auto mt-3 max-w-sm text-foreground-dim">
           If it&apos;s approved, you&apos;ll get an email with a private link.
           Approvals are manual, so it may take a little while.
         </p>
@@ -45,7 +45,7 @@ export function RequestForm() {
   return (
     <form
       onSubmit={onSubmit}
-      className="rounded-xl border border-ink-line bg-ink-soft p-6 sm:p-8"
+      className="rounded-xl border border-border bg-surface p-6 sm:p-8"
     >
       <div className="space-y-5">
         <Field label="name" htmlFor="name">
@@ -92,7 +92,7 @@ export function RequestForm() {
       <button
         type="submit"
         disabled={state === "submitting"}
-        className="mt-7 w-full rounded-full bg-amber px-6 py-3 font-mono text-sm text-ink transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-7 w-full rounded-full bg-accent px-6 py-3 font-mono text-sm text-background transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {state === "submitting" ? "sending…" : "request access →"}
       </button>
@@ -100,11 +100,11 @@ export function RequestForm() {
       <style jsx>{`
         :global(.input) {
           width: 100%;
-          background: #0d0c0b;
-          border: 1px solid #2a2723;
+          background: #0b1120;
+          border: 1px solid #243049;
           border-radius: 8px;
           padding: 0.8rem 0.9rem;
-          color: #f4efe6;
+          color: #e6edf6;
           font-family: var(--font-sans);
           /* 16px min prevents iOS Safari auto-zoom on focus */
           font-size: 16px;
@@ -112,10 +112,10 @@ export function RequestForm() {
         }
         :global(.input:focus) {
           outline: none;
-          border-color: #e8a13a;
+          border-color: #3b82f6;
         }
         :global(.input::placeholder) {
-          color: #6f685e;
+          color: #6b7a96;
         }
       `}</style>
     </form>
@@ -135,7 +135,7 @@ function Field({
     <div>
       <label
         htmlFor={htmlFor}
-        className="mb-2 block font-mono text-xs uppercase tracking-wider text-paper-faint"
+        className="mb-2 block font-mono text-xs uppercase tracking-wider text-foreground-faint"
       >
         {label}
       </label>

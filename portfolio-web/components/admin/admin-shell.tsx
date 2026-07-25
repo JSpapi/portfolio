@@ -54,8 +54,8 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
   if (!checked || !user) {
     return (
-      <div className="flex min-h-screen items-center justify-center font-mono text-sm text-paper-faint">
-        <span className="animate-blink text-amber">▊</span>
+      <div className="flex min-h-screen items-center justify-center font-mono text-sm text-foreground-faint">
+        <span className="animate-blink text-accent">▊</span>
       </div>
     );
   }
@@ -73,8 +73,8 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             href={n.href}
             className={`whitespace-nowrap rounded px-3 py-1.5 transition-colors ${
               active
-                ? "bg-ink-raised text-amber"
-                : "text-paper-dim hover:bg-ink-raised hover:text-paper"
+                ? "bg-raised text-accent"
+                : "text-foreground-dim hover:bg-raised hover:text-foreground"
             }`}
           >
             {n.label}
@@ -86,10 +86,10 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen">
-      <header className="sticky top-0 z-40 border-b border-ink-line bg-ink/85 backdrop-blur">
+      <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
         <div className="wrap flex h-16 items-center justify-between gap-3">
           <Link href="/admin" className="shrink-0 font-mono text-sm">
-            <span className="text-amber">~/admin</span>
+            <span className="text-accent">~/admin</span>
           </Link>
           {/* Desktop: inline nav. Mobile: only logout here; links scroll below. */}
           <div className="hidden items-center gap-1 font-mono text-sm lg:flex">
@@ -97,7 +97,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           </div>
           <button
             onClick={logout}
-            className="shrink-0 rounded border border-ink-line px-3 py-1.5 font-mono text-sm text-paper-dim transition-colors hover:border-[#ff6b6b]/50 hover:text-[#ff6b6b]"
+            className="shrink-0 rounded border border-border px-3 py-1.5 font-mono text-sm text-foreground-dim transition-colors hover:border-[#ff6b6b]/50 hover:text-[#ff6b6b]"
           >
             logout
           </button>

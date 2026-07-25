@@ -26,7 +26,7 @@ export default async function PrivatePage() {
   if (!res.ok) {
     return (
       <div className="wrap flex min-h-screen items-center justify-center">
-        <p className="font-mono text-sm text-paper-faint">
+        <p className="font-mono text-sm text-foreground-faint">
           Could not load profile. Please try again later.
         </p>
       </div>

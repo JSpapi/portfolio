@@ -39,10 +39,10 @@ export default async function BlogPage({
     <div className="wrap pt-14 sm:pt-20">
       <header className="max-w-2xl">
         <p className="kicker">the working log</p>
-        <h1 className="mt-4 font-serif text-4xl tracking-tightest text-paper sm:text-5xl">
+        <h1 className="mt-4 font-serif text-4xl tracking-tightest text-foreground sm:text-5xl">
           Field notes
         </h1>
-        <p className="mt-4 text-base text-paper-dim sm:text-lg">
+        <p className="mt-4 text-base text-foreground-dim sm:text-lg">
           Raw entries from real work — decisions, dead ends, and the fixes that
           stuck.
         </p>
@@ -54,21 +54,21 @@ export default async function BlogPage({
             <Link
               key={t.tag}
               href={`/blog/tags/${encodeURIComponent(t.tag)}`}
-              className="rounded-full border border-ink-line px-3 py-1 font-mono text-xs text-paper-dim transition-colors hover:border-amber hover:text-amber"
+              className="rounded-full border border-border px-3 py-1 font-mono text-xs text-foreground-dim transition-colors hover:border-accent hover:text-accent"
             >
               #{t.tag}
-              <span className="ml-1.5 text-paper-faint">{t.count}</span>
+              <span className="ml-1.5 text-foreground-faint">{t.count}</span>
             </Link>
           ))}
         </div>
       )}
 
       {list.posts.length === 0 ? (
-        <p className="mt-16 font-mono text-sm text-paper-faint">
+        <p className="mt-16 font-mono text-sm text-foreground-faint">
           Nothing published yet.
         </p>
       ) : (
-        <div className="mt-10 grid gap-px overflow-hidden rounded-xl border border-ink-line bg-ink-line">
+        <div className="mt-10 grid gap-px overflow-hidden rounded-xl border border-border bg-border">
           {list.posts.map((p) => (
             <PostCard key={p.id} post={p} />
           ))}
@@ -80,25 +80,25 @@ export default async function BlogPage({
           {page > 1 ? (
             <Link
               href={`/blog?page=${page - 1}`}
-              className="text-paper-dim hover:text-amber"
+              className="text-foreground-dim hover:text-accent"
             >
               ← newer
             </Link>
           ) : (
-            <span className="text-paper-faint/40">← newer</span>
+            <span className="text-foreground-faint/40">← newer</span>
           )}
-          <span className="text-paper-faint">
+          <span className="text-foreground-faint">
             {page} / {totalPages}
           </span>
           {page < totalPages ? (
             <Link
               href={`/blog?page=${page + 1}`}
-              className="text-paper-dim hover:text-amber"
+              className="text-foreground-dim hover:text-accent"
             >
               older →
             </Link>
           ) : (
-            <span className="text-paper-faint/40">older →</span>
+            <span className="text-foreground-faint/40">older →</span>
           )}
         </nav>
       )}

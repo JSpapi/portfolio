@@ -2,8 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * ─────────────────────────────────────────────────────────────
+ *  THEME COLORS — the ONE place to change the whole palette.
+ *  Values are raw "R G B" channels so Tailwind opacity modifiers
+ *  (e.g. bg-accent/40) work. To re-theme, just edit these lines.
+ *  (A light theme could later be added under a `.light {}` block.)
+ * ─────────────────────────────────────────────────────────────
+ *  Current theme: "Midnight Ink + Electric Blue"
+ */
 :root {
   color-scheme: dark;
+
+  --bg: 11 17 32; /* #0B1120 midnight navy */
+  --surface: 17 26 43; /* #111A2B raised panels */
+  --raised: 27 39 64; /* #1B2740 cards / hover */
+  --border: 36 48 73; /* #243049 hairlines */
+
+  --text: 230 237 246; /* #E6EDF6 primary text */
+  --text-dim: 159 176 201; /* #9FB0C9 muted */
+  --text-faint: 107 122 150; /* #6B7A96 faint labels */
+
+  --accent: 59 130 246; /* #3B82F6 electric blue (primary) */
+  --accent-soft: 96 165 250; /* #60A5FA lighter blue */
+  --accent-deep: 37 99 235; /* #2563EB deep blue */
+
+  --highlight: 96 165 250; /* #60A5FA secondary accent */
 }
 
 html {
@@ -11,21 +35,21 @@ html {
 }
 
 body {
-  background-color: theme("colors.ink.DEFAULT");
-  color: theme("colors.paper.DEFAULT");
+  background-color: rgb(var(--bg));
+  color: rgb(var(--text));
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  /* Subtle warm grain + vignette for atmosphere, not a flat black. */
+  /* Subtle cool glow + vignette for atmosphere, not a flat navy. */
   background-image:
     radial-gradient(
       120% 80% at 50% -10%,
-      rgba(232, 161, 58, 0.06) 0%,
+      rgba(59, 130, 246, 0.08) 0%,
       transparent 55%
     ),
     radial-gradient(
       100% 60% at 100% 100%,
-      rgba(124, 154, 109, 0.04) 0%,
+      rgba(96, 165, 250, 0.05) 0%,
       transparent 50%
     );
   background-attachment: fixed;
@@ -39,16 +63,16 @@ body::before {
   pointer-events: none;
   z-index: 0;
   background-image:
-    linear-gradient(theme("colors.ink.line") 1px, transparent 1px),
-    linear-gradient(90deg, theme("colors.ink.line") 1px, transparent 1px);
+    linear-gradient(rgb(var(--border)) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--border)) 1px, transparent 1px);
   background-size: 64px 64px;
   opacity: 0.15;
   mask-image: radial-gradient(120% 100% at 50% 0%, black 0%, transparent 75%);
 }
 
 ::selection {
-  background: theme("colors.amber.DEFAULT");
-  color: theme("colors.ink.DEFAULT");
+  background: rgb(var(--accent));
+  color: rgb(var(--bg));
 }
 
 /* On phones, force form controls to >=16px so iOS Safari doesn't auto-zoom on
@@ -73,15 +97,15 @@ body {
   height: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: theme("colors.ink.DEFAULT");
+  background: rgb(var(--bg));
 }
 ::-webkit-scrollbar-thumb {
-  background: theme("colors.ink.line");
+  background: rgb(var(--border));
   border-radius: 999px;
-  border: 2px solid theme("colors.ink.DEFAULT");
+  border: 2px solid rgb(var(--bg));
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: theme("colors.paper.faint");
+  background: rgb(var(--text-faint));
 }
 
 /* Reusable label — small monospace uppercase kicker. */
@@ -90,7 +114,7 @@ body {
   font-size: 0.72rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: theme("colors.amber.DEFAULT");
+  color: rgb(var(--accent));
 }
 
 /* Content container. */
@@ -103,7 +127,7 @@ body {
 
 /* --- Prose (blog + private markdown) --- */
 .prose-editorial {
-  color: theme("colors.paper.DEFAULT");
+  color: rgb(var(--text));
   line-height: 1.75;
   font-size: 1.05rem;
 }
@@ -116,25 +140,25 @@ body {
   line-height: 1.15;
   letter-spacing: -0.02em;
   margin-top: 2.4em;
-  color: theme("colors.paper.DEFAULT");
+  color: rgb(var(--text));
 }
 .prose-editorial h3 {
   font-family: var(--font-serif);
   font-size: 1.4rem;
   margin-top: 1.8em;
-  color: theme("colors.paper.DEFAULT");
+  color: rgb(var(--text));
 }
 .prose-editorial a {
-  color: theme("colors.amber.DEFAULT");
+  color: rgb(var(--accent));
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
 }
 .prose-editorial a:hover {
-  color: theme("colors.amber.soft");
+  color: rgb(var(--accent-soft));
 }
 .prose-editorial strong {
-  color: theme("colors.paper.DEFAULT");
+  color: rgb(var(--text));
   font-weight: 650;
 }
 .prose-editorial ul,
@@ -151,29 +175,29 @@ body {
   content: "›";
   position: absolute;
   left: -1.2em;
-  color: theme("colors.amber.DEFAULT");
+  color: rgb(var(--accent));
 }
 .prose-editorial ol {
   list-style: decimal;
 }
 .prose-editorial blockquote {
-  border-left: 2px solid theme("colors.amber.DEFAULT");
+  border-left: 2px solid rgb(var(--accent));
   padding-left: 1.2em;
-  color: theme("colors.paper.dim");
+  color: rgb(var(--text-dim));
   font-style: italic;
 }
 .prose-editorial :not(pre) > code {
   font-family: var(--font-mono);
   font-size: 0.86em;
-  background: theme("colors.ink.raised");
-  border: 1px solid theme("colors.ink.line");
+  background: rgb(var(--raised));
+  border: 1px solid rgb(var(--border));
   padding: 0.12em 0.4em;
   border-radius: 4px;
-  color: theme("colors.amber.soft");
+  color: rgb(var(--accent-soft));
 }
 .prose-editorial pre {
-  background: theme("colors.ink.soft") !important;
-  border: 1px solid theme("colors.ink.line");
+  background: rgb(var(--surface)) !important;
+  border: 1px solid rgb(var(--border));
   border-radius: 10px;
   padding: 1.1rem 1.25rem !important;
   overflow-x: auto;
@@ -184,11 +208,11 @@ body {
   max-width: 100%;
   height: auto;
   border-radius: 10px;
-  border: 1px solid theme("colors.ink.line");
+  border: 1px solid rgb(var(--border));
 }
 .prose-editorial hr {
   border: none;
-  border-top: 1px solid theme("colors.ink.line");
+  border-top: 1px solid rgb(var(--border));
 }
 /* Long unbroken tokens (URLs, long words) must wrap, not force horizontal scroll. */
 .prose-editorial p,

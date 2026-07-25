@@ -1,15 +1,15 @@
 import type { PostType } from "@/lib/types";
 
 const config: Record<PostType, { label: string; className: string }> = {
-  weekly: { label: "weekly", className: "text-amber border-amber/40 bg-amber/10" },
-  daily: { label: "daily", className: "text-moss border-moss/40 bg-moss/10" },
+  weekly: { label: "weekly", className: "text-accent border-accent/40 bg-accent/10" },
+  daily: { label: "daily", className: "text-highlight border-highlight/40 bg-highlight/10" },
   "deep-dive": {
     label: "deep dive",
-    className: "text-paper border-paper-faint/40 bg-paper/5",
+    className: "text-foreground border-foreground-faint/40 bg-foreground/5",
   },
   til: {
     label: "til",
-    className: "text-amber-soft border-amber-soft/30 bg-amber-soft/5",
+    className: "text-accent-soft border-accent-soft/30 bg-accent-soft/5",
   },
 };
 
