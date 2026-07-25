@@ -36,13 +36,13 @@ export default async function BlogPage({
   const totalPages = Math.max(1, Math.ceil(list.total / list.limit));
 
   return (
-    <div className="wrap pt-20">
+    <div className="wrap pt-14 sm:pt-20">
       <header className="max-w-2xl">
         <p className="kicker">the working log</p>
-        <h1 className="mt-4 font-serif text-5xl tracking-tightest text-paper">
+        <h1 className="mt-4 font-serif text-4xl tracking-tightest text-paper sm:text-5xl">
           Field notes
         </h1>
-        <p className="mt-4 text-lg text-paper-dim">
+        <p className="mt-4 text-base text-paper-dim sm:text-lg">
           Raw entries from real work — decisions, dead ends, and the fixes that
           stuck.
         </p>

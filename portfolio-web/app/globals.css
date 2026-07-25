@@ -51,6 +51,22 @@ body::before {
   color: theme("colors.ink.DEFAULT");
 }
 
+/* On phones, force form controls to >=16px so iOS Safari doesn't auto-zoom on
+   focus. Desktop keeps whatever the component sets. */
+@media (max-width: 640px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
+
+/* Never allow the page itself to scroll sideways. */
+html,
+body {
+  overflow-x: hidden;
+}
+
 /* Slim, on-theme scrollbar. */
 ::-webkit-scrollbar {
   width: 10px;
@@ -163,11 +179,41 @@ body::before {
   overflow-x: auto;
   font-size: 0.86rem;
 }
-.prose-editorial img {
+.prose-editorial img,
+.prose-editorial video {
+  max-width: 100%;
+  height: auto;
   border-radius: 10px;
   border: 1px solid theme("colors.ink.line");
 }
 .prose-editorial hr {
   border: none;
   border-top: 1px solid theme("colors.ink.line");
+}
+/* Long unbroken tokens (URLs, long words) must wrap, not force horizontal scroll. */
+.prose-editorial p,
+.prose-editorial li,
+.prose-editorial a {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* --- Mobile prose tuning: comfortable reading on phones --- */
+@media (max-width: 640px) {
+  .prose-editorial {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+  .prose-editorial h2 {
+    font-size: 1.55rem;
+    margin-top: 2em;
+  }
+  .prose-editorial h3 {
+    font-size: 1.25rem;
+  }
+  .prose-editorial pre {
+    padding: 0.9rem 1rem !important;
+    font-size: 0.8rem;
+    border-radius: 8px;
+  }
 }

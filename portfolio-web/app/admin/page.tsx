@@ -127,9 +127,9 @@ export default function AdminDashboard() {
 
 function Stat({ label, value }: { label: string; value: number }) {
   return (
-    <div className="bg-ink-soft p-6">
-      <div className="font-serif text-4xl text-paper">{value}</div>
-      <div className="mt-1 font-mono text-xs uppercase tracking-wider text-paper-faint">
+    <div className="bg-ink-soft p-4 sm:p-6">
+      <div className="font-serif text-3xl text-paper sm:text-4xl">{value}</div>
+      <div className="mt-1 font-mono text-[10px] uppercase tracking-wider text-paper-faint sm:text-xs">
         {label}
       </div>
     </div>

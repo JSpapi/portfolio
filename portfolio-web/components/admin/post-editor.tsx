@@ -68,11 +68,11 @@ export function PostEditor({ existing }: { existing?: Post }) {
 
   return (
     <div>
-      <div className="flex items-center justify-between">
-        <h1 className="font-serif text-3xl tracking-tight text-paper">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <h1 className="font-serif text-2xl tracking-tight text-paper sm:text-3xl">
           {isEdit ? "Edit post" : "New post"}
         </h1>
-        <div className="flex items-center gap-2 font-mono text-sm">
+        <div className="flex flex-wrap items-center gap-2 font-mono text-sm">
           <button
             onClick={() => setPreview((p) => !p)}
             className="rounded border border-ink-line px-4 py-2 text-paper-dim hover:text-paper"

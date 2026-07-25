@@ -103,10 +103,11 @@ export function RequestForm() {
           background: #0d0c0b;
           border: 1px solid #2a2723;
           border-radius: 8px;
-          padding: 0.7rem 0.9rem;
+          padding: 0.8rem 0.9rem;
           color: #f4efe6;
           font-family: var(--font-sans);
-          font-size: 0.95rem;
+          /* 16px min prevents iOS Safari auto-zoom on focus */
+          font-size: 16px;
           transition: border-color 0.15s;
         }
         :global(.input:focus) {

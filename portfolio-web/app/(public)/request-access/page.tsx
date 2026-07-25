@@ -9,12 +9,12 @@ export const metadata: Metadata = {
 
 export default function RequestAccessPage() {
   return (
-    <div className="wrap max-w-xl pt-20">
+    <div className="wrap max-w-xl pt-14 sm:pt-20">
       <p className="kicker">private profile</p>
-      <h1 className="mt-4 font-serif text-5xl leading-[1.05] tracking-tightest text-paper">
+      <h1 className="mt-4 font-serif text-4xl leading-[1.08] tracking-tightest text-paper sm:text-5xl sm:leading-[1.05]">
         Request access
       </h1>
-      <p className="mt-5 text-lg leading-relaxed text-paper-dim">
+      <p className="mt-5 text-base leading-relaxed text-paper-dim sm:text-lg">
         The private page has my full career history, in-depth project case
         studies, availability, and references. It&apos;s meant for recruiters
         and people I know. Tell me a little about you and I&apos;ll approve it

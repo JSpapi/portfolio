@@ -34,14 +34,14 @@ export default async function TagPage({
   }
 
   return (
-    <div className="wrap max-w-3xl pt-20">
+    <div className="wrap max-w-3xl pt-14 sm:pt-20">
       <Link
         href="/blog"
         className="font-mono text-sm text-paper-dim transition-colors hover:text-amber"
       >
         ← all posts
       </Link>
-      <h1 className="mt-6 font-serif text-4xl tracking-tightest text-paper">
+      <h1 className="mt-6 font-serif text-3xl tracking-tightest text-paper sm:text-4xl">
         Tagged <span className="text-amber">#{decoded}</span>
       </h1>
 

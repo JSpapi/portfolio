@@ -3,9 +3,9 @@ import Link from "next/link";
 export function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="mt-32 border-t border-ink-line/70">
-      <div className="wrap flex flex-col gap-6 py-12 sm:flex-row sm:items-center sm:justify-between">
-        <div className="font-mono text-xs text-paper-faint">
+    <footer className="mt-20 border-t border-ink-line/70 sm:mt-32">
+      <div className="wrap flex flex-col gap-6 py-10 sm:flex-row sm:items-center sm:justify-between sm:py-12">
+        <div className="font-mono text-xs leading-relaxed text-paper-faint">
           <span className="text-amber">$</span> built with go · next.js · postgres
           · r2
           <br />© {year}{" "}
@@ -14,7 +14,7 @@ export function Footer() {
           </span>{" "}
           — all rights reserved
         </div>
-        <div className="flex items-center gap-5 font-mono text-xs">
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-3 font-mono text-xs">
           <a
             href="/api/feed.rss"
             className="text-paper-dim transition-colors hover:text-amber"

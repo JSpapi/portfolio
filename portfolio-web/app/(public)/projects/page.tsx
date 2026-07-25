@@ -24,13 +24,13 @@ export default async function ProjectsPage() {
   const projects = await getProjects();
 
   return (
-    <div className="wrap pt-20">
+    <div className="wrap pt-14 sm:pt-20">
       <header className="max-w-2xl">
         <p className="kicker">selected work</p>
-        <h1 className="mt-4 font-serif text-5xl tracking-tightest text-paper">
+        <h1 className="mt-4 font-serif text-4xl tracking-tightest text-paper sm:text-5xl">
           Things I&apos;ve built
         </h1>
-        <p className="mt-4 text-lg text-paper-dim">
+        <p className="mt-4 text-base text-paper-dim sm:text-lg">
           A few projects worth showing. The full case studies live behind the{" "}
           <a href="/request-access" className="text-amber underline underline-offset-4">
             private profile

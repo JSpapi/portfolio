@@ -24,10 +24,15 @@ export default async function HomePage() {
   return (
     <div className="wrap">
       {/* Hero */}
-      <section className="relative pt-24 pb-16 sm:pt-32">
-        <p className="kicker animate-fade-up">full-stack engineer · typescript · node · react · go · flutter</p>
+      <section className="relative pt-14 pb-14 sm:pt-24 lg:pt-32 sm:pb-16">
+        <p className="kicker animate-fade-up">
+          full-stack engineer{" "}
+          <span className="text-paper-faint">
+            · typescript · node · react · go
+          </span>
+        </p>
         <h1
-          className="mt-6 max-w-3xl font-serif text-5xl leading-[1.02] tracking-tightest text-paper animate-fade-up sm:text-7xl"
+          className="mt-5 max-w-3xl font-serif text-[2.6rem] leading-[1.05] tracking-tightest text-paper animate-fade-up sm:mt-6 sm:text-6xl sm:leading-[1.02] lg:text-7xl"
           style={{ animationDelay: "80ms" }}
         >
           I build the{" "}
@@ -35,7 +40,7 @@ export default async function HomePage() {
           products people rely on every day.
         </h1>
         <p
-          className="mt-8 max-w-xl text-lg leading-relaxed text-paper-dim animate-fade-up"
+          className="mt-6 max-w-xl text-base leading-relaxed text-paper-dim animate-fade-up sm:mt-8 sm:text-lg"
           style={{ animationDelay: "160ms" }}
         >
           Right now I&apos;m shipping features across the web app of one of
@@ -46,12 +51,12 @@ export default async function HomePage() {
         </p>
 
         <div
-          className="mt-10 flex flex-wrap items-center gap-4 animate-fade-up"
+          className="mt-8 flex flex-col gap-3 animate-fade-up sm:mt-10 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4"
           style={{ animationDelay: "240ms" }}
         >
           <Link
             href="/blog"
-            className="group inline-flex items-center gap-2 rounded-full bg-amber px-6 py-3 font-mono text-sm text-ink transition-transform hover:-translate-y-0.5"
+            className="group inline-flex items-center justify-center gap-2 rounded-full bg-amber px-6 py-3.5 font-mono text-sm text-ink transition-transform hover:-translate-y-0.5 sm:py-3"
           >
             read the log
             <span className="transition-transform group-hover:translate-x-1">
@@ -60,7 +65,7 @@ export default async function HomePage() {
           </Link>
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 rounded-full border border-ink-line px-6 py-3 font-mono text-sm text-paper transition-colors hover:border-paper-faint"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-ink-line px-6 py-3.5 font-mono text-sm text-paper transition-colors hover:border-paper-faint sm:py-3"
           >
             see the work
           </Link>
@@ -92,8 +97,8 @@ export default async function HomePage() {
       )}
 
       {/* Latest posts */}
-      <section className="mt-20">
-        <div className="flex items-baseline justify-between">
+      <section className="mt-14 sm:mt-20">
+        <div className="flex items-baseline justify-between gap-4">
           <h2 className="font-serif text-2xl tracking-tight text-paper">
             Latest field notes
           </h2>

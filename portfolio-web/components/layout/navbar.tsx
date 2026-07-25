@@ -22,7 +22,8 @@ export function Navbar() {
           <span className="animate-blink text-amber">▊</span>
         </Link>
 
-        <nav className="flex items-center gap-1 font-mono text-sm">
+        {/* Desktop/tablet inline nav; phones use the bottom tab bar instead. */}
+        <nav className="hidden items-center gap-1 font-mono text-sm sm:flex">
           {links.map((l) => (
             <Link
               key={l.href}

@@ -49,12 +49,12 @@ const timeline: { when: string; what: string; detail: string }[] = [
 
 export default function AboutPage() {
   return (
-    <div className="wrap max-w-4xl pt-20">
+    <div className="wrap max-w-4xl pt-14 sm:pt-20">
       <p className="kicker">the short version</p>
-      <h1 className="mt-4 max-w-3xl font-serif text-5xl leading-[1.05] tracking-tightest text-paper sm:text-6xl">
+      <h1 className="mt-4 max-w-3xl font-serif text-[2.4rem] leading-[1.08] tracking-tightest text-paper sm:text-5xl sm:leading-[1.05] lg:text-6xl">
         Engineer who cares about the parts nobody sees.
       </h1>
-      <p className="mt-6 max-w-2xl text-lg leading-relaxed text-paper-dim">
+      <p className="mt-6 max-w-2xl text-base leading-relaxed text-paper-dim sm:text-lg">
         I&apos;m a full-stack engineer who lives in TypeScript — <span className="text-paper">Node.js
         / Express</span> services on the back and Vue/Nuxt or React/Next on the
         front — and also ships real product in PHP/Yii2 and Go. Today I&apos;m
@@ -69,7 +69,7 @@ export default function AboutPage() {
       </p>
 
       {/* Skills */}
-      <section className="mt-20">
+      <section className="mt-14 sm:mt-20">
         <h2 className="font-mono text-sm uppercase tracking-[0.2em] text-paper-faint">
           // stack
         </h2>
@@ -101,14 +101,16 @@ export default function AboutPage() {
           {timeline.map((t, i) => (
             <li
               key={i}
-              className="relative flex gap-6 border-l border-ink-line pb-10 pl-8 last:pb-0"
+              className="relative border-l border-ink-line pb-10 pl-6 last:pb-0 sm:flex sm:gap-6 sm:pl-8"
             >
               <span className="absolute -left-[6px] top-1.5 h-3 w-3 rounded-full border-2 border-amber bg-ink" />
-              <div className="w-20 shrink-0 pt-0.5 font-mono text-xs uppercase tracking-wider text-amber">
+              <div className="pt-0.5 font-mono text-xs uppercase tracking-wider text-amber sm:w-20 sm:shrink-0">
                 {t.when}
               </div>
-              <div>
-                <h3 className="font-serif text-xl text-paper">{t.what}</h3>
+              <div className="mt-1 sm:mt-0">
+                <h3 className="font-serif text-lg text-paper sm:text-xl">
+                  {t.what}
+                </h3>
                 <p className="mt-1 text-paper-dim">{t.detail}</p>
               </div>
             </li>
@@ -117,9 +119,9 @@ export default function AboutPage() {
       </section>
 
       {/* CTA to private profile */}
-      <section className="mt-20 overflow-hidden rounded-2xl border border-amber/30 bg-gradient-to-br from-amber/[0.08] to-transparent p-8 sm:p-10">
+      <section className="mt-14 overflow-hidden rounded-2xl border border-amber/30 bg-gradient-to-br from-amber/[0.08] to-transparent p-6 sm:mt-20 sm:p-10">
         <p className="kicker">for recruiters &amp; close contacts</p>
-        <h2 className="mt-3 font-serif text-3xl tracking-tight text-paper">
+        <h2 className="mt-3 font-serif text-2xl tracking-tight text-paper sm:text-3xl">
           Want the detailed version?
         </h2>
         <p className="mt-3 max-w-xl text-paper-dim">
@@ -129,7 +131,7 @@ export default function AboutPage() {
         </p>
         <Link
           href="/request-access"
-          className="mt-6 inline-flex items-center gap-2 rounded-full bg-amber px-6 py-3 font-mono text-sm text-ink transition-transform hover:-translate-y-0.5"
+          className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-amber px-6 py-3.5 font-mono text-sm text-ink transition-transform hover:-translate-y-0.5 sm:w-auto sm:py-3"
         >
           request access →
         </Link>

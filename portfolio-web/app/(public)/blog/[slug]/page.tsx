@@ -48,7 +48,7 @@ export default async function PostPage({
   if (!post) notFound();
 
   return (
-    <article className="wrap max-w-3xl pt-16">
+    <article className="wrap max-w-3xl pt-12 sm:pt-16">
       <Link
         href="/blog"
         className="font-mono text-sm text-paper-dim transition-colors hover:text-amber"
@@ -56,22 +56,22 @@ export default async function PostPage({
         ← back to log
       </Link>
 
-      <header className="mt-8 border-b border-ink-line pb-8">
-        <div className="flex flex-wrap items-center gap-3 font-mono text-xs text-paper-faint">
+      <header className="mt-6 border-b border-ink-line pb-6 sm:mt-8 sm:pb-8">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-xs text-paper-faint">
           <TypeBadge type={post.type} />
           <span>{formatDate(post.published_at)}</span>
           <span className="text-ink-line">/</span>
           <span>{post.reading_time} min read</span>
         </div>
-        <h1 className="mt-5 font-serif text-4xl leading-tight tracking-tightest text-paper sm:text-5xl">
+        <h1 className="mt-5 font-serif text-3xl leading-tight tracking-tightest text-paper sm:text-5xl">
           {post.title}
         </h1>
-        <p className="mt-4 text-lg leading-relaxed text-paper-dim">
+        <p className="mt-4 text-base leading-relaxed text-paper-dim sm:text-lg">
           {post.summary}
         </p>
       </header>
 
-      <div className="mt-10">
+      <div className="mt-8 sm:mt-10">
         <MDRenderer body={post.body} />
       </div>
 

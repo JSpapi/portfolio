@@ -5,8 +5,8 @@ export function PrivateProfileView({ profile }: { profile: PrivateProfile }) {
   const refs = Array.isArray(profile.references) ? profile.references : [];
 
   return (
-    <div className="wrap max-w-3xl py-16">
-      <div className="flex items-center justify-between border-b border-ink-line pb-6">
+    <div className="wrap max-w-3xl py-10 sm:py-16">
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-ink-line pb-5 sm:pb-6">
         <p className="kicker">private profile · confidential</p>
         <form action="/api/private/logout" method="post">
           <LogoutButton />
@@ -18,7 +18,7 @@ export function PrivateProfileView({ profile }: { profile: PrivateProfile }) {
           href={profile.resume_url}
           target="_blank"
           rel="noreferrer"
-          className="mt-8 inline-flex items-center gap-2 rounded-full border border-amber/40 bg-amber/10 px-5 py-2.5 font-mono text-sm text-amber transition-colors hover:bg-amber hover:text-ink"
+          className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full border border-amber/40 bg-amber/10 px-5 py-3 font-mono text-sm text-amber transition-colors hover:bg-amber hover:text-ink sm:w-auto sm:py-2.5"
         >
           ↓ download resume (pdf)
         </a>
@@ -70,8 +70,8 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section className="mt-14">
-      <h2 className="mb-6 font-mono text-sm uppercase tracking-[0.2em] text-paper-faint">
+    <section className="mt-12 sm:mt-14">
+      <h2 className="mb-5 font-mono text-sm uppercase tracking-[0.2em] text-paper-faint sm:mb-6">
         // {title}
       </h2>
       {children}
