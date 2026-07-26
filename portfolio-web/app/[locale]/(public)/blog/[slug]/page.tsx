@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { apiGet, ApiError } from "@/lib/api";
 import { pickLocalized, type Post } from "@/lib/types";
+import { extractCover } from "@/lib/cover-image";
 import { MDRenderer } from "@/components/blog/md-renderer";
 import { TypeBadge } from "@/components/blog/type-badge";
 
@@ -60,6 +61,12 @@ export default async function PostPage({
   const post = await getPost(slug);
   if (!post) notFound();
 
+  // Lift the first image out of the body → render it as a cover below the
+  // summary, at a moderate size, and drop it from the inline body.
+  const { coverUrl, coverAlt, body } = extractCover(
+    pickLocalized(post.body, locale)
+  );
+
   return (
     <article className="wrap max-w-3xl pt-12 sm:pt-16">
       <Link
@@ -84,8 +91,20 @@ export default async function PostPage({
         </p>
       </header>
 
+      {coverUrl && (
+        <figure className="mt-8 sm:mt-10">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={coverUrl}
+            alt={coverAlt}
+            loading="eager"
+            className="mx-auto max-h-[420px] w-full max-w-[640px] rounded-xl border border-border object-cover"
+          />
+        </figure>
+      )}
+
       <div className="mt-8 sm:mt-10">
-        <MDRenderer body={pickLocalized(post.body, locale)} />
+        <MDRenderer body={body} />
       </div>
 
       {post.tags.length > 0 && (

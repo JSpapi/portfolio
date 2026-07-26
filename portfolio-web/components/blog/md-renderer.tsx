@@ -15,7 +15,7 @@ const components: Components = {
       src={typeof src === "string" ? src : ""}
       alt={alt ?? ""}
       loading="lazy"
-      className="my-8 w-full rounded-lg border border-border"
+      className="mx-auto my-8 max-h-[420px] w-full max-w-[640px] rounded-lg border border-border object-contain"
     />
   ),
 
