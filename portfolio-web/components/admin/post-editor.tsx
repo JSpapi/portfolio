@@ -42,6 +42,16 @@ function locToObj(v: Record<Lang, string>): Localized {
   return o;
 }
 
+/** ISO string -> value for a <input type="datetime-local"> (local time, no seconds). */
+function toLocalInput(iso: string): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(
+    d.getHours()
+  )}:${pad(d.getMinutes())}`;
+}
+
 /** Hydrate the per-language form state from a wire value (object or legacy string). */
 function objToLoc(v: LocalizedField): Record<Lang, string> {
   const o: Record<Lang, string> = { ...emptyLoc };
@@ -70,6 +80,11 @@ export function PostEditor({ existing }: { existing?: Post }) {
     objToLoc(existing?.body)
   );
   const [tags, setTags] = useState((existing?.tags ?? []).join(", "));
+  // Optional custom publish date (datetime-local value). Empty = publish "now".
+  // Pre-filled from an existing post's published_at so editing preserves it.
+  const [publishAt, setPublishAt] = useState(
+    existing?.published_at ? toLocalInput(existing.published_at) : ""
+  );
   const [lang, setLang] = useState<Lang>("en");
   const [preview, setPreview] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -115,7 +130,15 @@ export function PostEditor({ existing }: { existing?: Post }) {
         await api.post("/api/admin/posts", payload);
       }
       if (publish) {
-        await api.put(`/api/admin/posts/${payload.slug}/publish`);
+        if (publishAt) {
+          // Backdate (or forward-date) to the chosen datetime.
+          await api.put(`/api/admin/posts/${payload.slug}/publish-at`, {
+            published_at: new Date(publishAt).toISOString(),
+          });
+        } else {
+          // No custom date → publish "now".
+          await api.put(`/api/admin/posts/${payload.slug}/publish`);
+        }
       }
       router.push("/admin");
       router.refresh();
@@ -260,6 +283,29 @@ export function PostEditor({ existing }: { existing?: Post }) {
                 </button>
               ))}
             </div>
+          </Panel>
+
+          <Panel label="publish date (optional)">
+            <input
+              type="datetime-local"
+              value={publishAt}
+              onChange={(e) => setPublishAt(e.target.value)}
+              className="input-mono"
+            />
+            <p className="mt-2 font-mono text-[11px] leading-relaxed text-foreground-faint">
+              {publishAt
+                ? "Post will be dated to this. Controls list order (newest first)."
+                : "Empty = publish now. Set a past date to backdate an older post."}
+              {publishAt && (
+                <button
+                  type="button"
+                  onClick={() => setPublishAt("")}
+                  className="ml-2 text-accent underline"
+                >
+                  clear
+                </button>
+              )}
+            </p>
           </Panel>
 
           <Panel label="tags (comma-separated)">

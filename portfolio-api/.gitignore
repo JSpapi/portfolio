@@ -1,4 +1,7 @@
 .env
-server
+# The compiled binary at the api root (Dockerfile builds `-o server`).
+# Anchored with a leading slash so it does NOT match the cmd/server/ directory.
+/server
 *.exe
+*.exe~
 /tmp/

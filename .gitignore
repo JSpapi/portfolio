@@ -4,7 +4,9 @@
 **/.env*.local
 
 # Go build artifacts
-**/server
+# The compiled API binary (Dockerfile builds `-o server` at the module root).
+# Full path, NOT `**/server`, so it does not match the cmd/server/ source dir.
+portfolio-api/server
 **/server.exe
 **/*.exe
 **/*.exe~

@@ -325,6 +325,38 @@ func (q *Queries) PublishPost(ctx context.Context, slug string) (Post, error) {
 	return i, err
 }
 
+const setPublishedAt = `-- name: SetPublishedAt :one
+UPDATE posts
+SET published_at = $2, updated_at = NOW()
+WHERE slug = $1
+RETURNING id, slug, type, title, summary, body, tags, reading_time, published_at, created_at, updated_at
+`
+
+type SetPublishedAtParams struct {
+	Slug        string             `json:"slug"`
+	PublishedAt pgtype.Timestamptz `json:"published_at"`
+}
+
+// Publish with an explicit timestamp (used for backdating a post).
+func (q *Queries) SetPublishedAt(ctx context.Context, arg SetPublishedAtParams) (Post, error) {
+	row := q.db.QueryRow(ctx, setPublishedAt, arg.Slug, arg.PublishedAt)
+	var i Post
+	err := row.Scan(
+		&i.ID,
+		&i.Slug,
+		&i.Type,
+		&i.Title,
+		&i.Summary,
+		&i.Body,
+		&i.Tags,
+		&i.ReadingTime,
+		&i.PublishedAt,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
 const tagCounts = `-- name: TagCounts :many
 SELECT unnest(tags) AS tag, COUNT(*) AS count
 FROM posts

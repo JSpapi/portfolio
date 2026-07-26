@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jackc/pgx/v5"
@@ -178,6 +179,41 @@ func (h *Handler) PublishPost(c *gin.Context) {
 			return
 		}
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "could not publish"})
+		return
+	}
+	service.Revalidate("/blog/" + p.Slug)
+	service.Revalidate("/blog")
+	c.JSON(http.StatusOK, gin.H{"slug": p.Slug, "published_at": tsToPtr(p.PublishedAt)})
+}
+
+type publishAtReq struct {
+	PublishedAt string `json:"published_at"` // RFC3339, e.g. 2024-08-15T10:00:00Z
+}
+
+// SetPublishDate publishes a post with an explicit timestamp (backdating).
+// Accepts an RFC3339 datetime; used when the author wants the post dated to when
+// the work happened rather than "now".
+func (h *Handler) SetPublishDate(c *gin.Context) {
+	slug := c.Param("slug")
+	var req publishAtReq
+	if err := c.ShouldBindJSON(&req); err != nil || req.PublishedAt == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "published_at (RFC3339) required"})
+		return
+	}
+	t, err := time.Parse(time.RFC3339, req.PublishedAt)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid published_at (expected RFC3339)"})
+		return
+	}
+	p, err := h.Q.SetPublishedAt(c.Request.Context(), store.SetPublishedAtParams{
+		Slug: slug, PublishedAt: tsFrom(t),
+	})
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "not found"})
+			return
+		}
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "could not set publish date"})
 		return
 	}
 	service.Revalidate("/blog/" + p.Slug)

@@ -57,6 +57,13 @@ SET published_at = NOW(), updated_at = NOW()
 WHERE slug = $1
 RETURNING *;
 
+-- name: SetPublishedAt :one
+-- Publish with an explicit timestamp (used for backdating a post).
+UPDATE posts
+SET published_at = $2, updated_at = NOW()
+WHERE slug = $1
+RETURNING *;
+
 -- name: UnpublishPost :one
 UPDATE posts
 SET published_at = NULL, updated_at = NOW()
