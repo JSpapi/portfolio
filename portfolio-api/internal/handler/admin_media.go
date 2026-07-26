@@ -89,20 +89,25 @@ func (h *Handler) Upload(c *gin.Context) {
 		postID = &id
 	}
 
-	if _, err := h.Q.CreateMedia(c.Request.Context(), store.CreateMediaParams{
+	m, err := h.Q.CreateMedia(c.Request.Context(), store.CreateMediaParams{
 		PostID:    postID,
 		R2Key:     key,
 		Url:       url,
 		MimeType:  mime,
 		SizeBytes: fileHeader.Size,
-	}); err != nil {
+	})
+	if err != nil {
 		// Roll back the R2 object so we don't orphan it.
 		_ = h.R2.Delete(c.Request.Context(), key)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "could not record media"})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"url": url, "mime_type": mime, "size_bytes": fileHeader.Size})
+	// Return the media id so the editor can offer a delete button (removes the
+	// R2 object + this row together via DELETE /api/admin/media/:id).
+	c.JSON(http.StatusOK, gin.H{
+		"id": m.ID, "url": url, "mime_type": mime, "size_bytes": fileHeader.Size,
+	})
 }
 
 // ListMedia lists media attached to a post.

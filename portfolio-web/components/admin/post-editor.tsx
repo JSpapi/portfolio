@@ -42,6 +42,11 @@ function locToObj(v: Record<Lang, string>): Localized {
   return o;
 }
 
+/** Escape a string for safe use inside a RegExp. */
+function escapeRegExp(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 /** ISO string -> value for a <input type="datetime-local"> (local time, no seconds). */
 function toLocalInput(iso: string): string {
   const d = new Date(iso);
@@ -107,6 +112,27 @@ export function PostEditor({ existing }: { existing?: Post }) {
     const start = ta.selectionStart;
     const next = current.slice(0, start) + snippet + current.slice(ta.selectionEnd);
     setBody((b) => ({ ...b, [lang]: next }));
+  }
+
+  // When media is deleted, strip any reference to its URL from every language
+  // body so no broken ![](…) / <video> link is left behind. The same image URL
+  // may have been pasted into EN/RU/UZ, so scrub all three.
+  function removeUrlFromBodies(url: string) {
+    const drop = (text: string): string => {
+      // Remove a whole <video>…</video> block whose <source> points at the url.
+      const videoBlock = new RegExp(
+        `\\n?<video[^>]*>[\\s\\S]*?${escapeRegExp(url)}[\\s\\S]*?</video>\\n?`,
+        "g"
+      );
+      // Remove any single line that contains the url (image, pdf link, bare url).
+      const line = new RegExp(`^.*${escapeRegExp(url)}.*$\\n?`, "gm");
+      return text.replace(videoBlock, "\n").replace(line, "");
+    };
+    setBody((b) => {
+      const next = { ...b };
+      for (const l of LANGS) next[l] = drop(next[l]);
+      return next;
+    });
   }
 
   async function save(publish: boolean) {
@@ -318,7 +344,12 @@ export function PostEditor({ existing }: { existing?: Post }) {
           </Panel>
 
           <Panel label="media (shared across languages)">
-            <MediaUploader slug={slug} onInsert={insertAtCursor} />
+            <MediaUploader
+              slug={slug}
+              onInsert={insertAtCursor}
+              onDelete={removeUrlFromBodies}
+              activeLang={lang}
+            />
           </Panel>
         </aside>
       </div>
