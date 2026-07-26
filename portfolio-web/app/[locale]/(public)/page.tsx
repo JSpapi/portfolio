@@ -1,53 +1,53 @@
-import Link from "next/link";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { apiGet } from "@/lib/api";
-import type { NowWidget, PostList } from "@/lib/types";
+import type { PostList } from "@/lib/types";
 import { PostCard } from "@/components/blog/post-card";
 
-// Homepage is static, rebuilt on deploy; the "now" widget + latest posts
-// tolerate a short revalidation window.
+// Homepage is static, rebuilt on deploy; the latest posts tolerate a short
+// revalidation window.
 export const revalidate = 60;
 
-async function getData() {
-  const [now, latest] = await Promise.allSettled([
-    apiGet<NowWidget>("/api/now"),
-    apiGet<PostList>("/api/posts?limit=3"),
-  ]);
-  return {
-    now: now.status === "fulfilled" ? now.value : null,
-    posts: latest.status === "fulfilled" ? latest.value.posts : [],
-  };
+async function getLatestPosts() {
+  try {
+    const list = await apiGet<PostList>("/api/posts?limit=3");
+    return list.posts;
+  } catch {
+    return [];
+  }
 }
 
-export default async function HomePage() {
-  const { now, posts } = await getData();
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations("home");
+  const posts = await getLatestPosts();
 
   return (
     <div className="wrap">
       {/* Hero */}
       <section className="relative pt-14 pb-14 sm:pt-24 lg:pt-32 sm:pb-16">
         <p className="kicker animate-fade-up">
-          full-stack engineer{" "}
-          <span className="text-foreground-faint">
-            · typescript · node · react · go
-          </span>
+          {t("kickerRole")}{" "}
+          <span className="text-foreground-faint">{t("kickerStack")}</span>
         </p>
         <h1
           className="mt-5 max-w-3xl font-serif text-[2.6rem] leading-[1.05] tracking-tightest text-foreground animate-fade-up sm:mt-6 sm:text-6xl sm:leading-[1.02] lg:text-7xl"
           style={{ animationDelay: "80ms" }}
         >
-          I build the{" "}
-          <em className="italic text-accent">quiet machinery</em> behind
-          products people rely on every day.
+          {t("headlinePre")}{" "}
+          <em className="italic text-accent">{t("headlineAccent")}</em>{" "}
+          {t("headlinePost")}
         </h1>
         <p
           className="mt-6 max-w-xl text-base leading-relaxed text-foreground-dim animate-fade-up sm:mt-8 sm:text-lg"
           style={{ animationDelay: "160ms" }}
         >
-          Right now I&apos;m shipping features across the web app of one of
-          Uzbekistan&apos;s biggest insurers. Before that, ~3 years building an
-          ELD fleet-compliance platform from zero. Front to back: Node.js &amp;
-          Express, Vue &amp; Nuxt, plus PHP/Yii and Go — and a lot of maps. This
-          is my working log.
+          {t("intro")}
         </p>
 
         <div
@@ -58,7 +58,7 @@ export default async function HomePage() {
             href="/blog"
             className="group inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3.5 font-mono text-sm text-background transition-transform hover:-translate-y-0.5 sm:py-3"
           >
-            read the log
+            {t("ctaReadLog")}
             <span className="transition-transform group-hover:translate-x-1">
               →
             </span>
@@ -67,52 +67,51 @@ export default async function HomePage() {
             href="/projects"
             className="inline-flex items-center justify-center gap-2 rounded-full border border-border px-6 py-3.5 font-mono text-sm text-foreground transition-colors hover:border-foreground-faint sm:py-3"
           >
-            see the work
+            {t("ctaSeeWork")}
           </Link>
         </div>
       </section>
 
-      {/* "Currently working on" widget */}
-      {now && (
-        <section
-          className="relative my-8 animate-fade-up"
-          style={{ animationDelay: "320ms" }}
-        >
+      {/* "Currently working on" widget — the body is a translated UI string
+          (rather than the DB value) so it switches with the language. */}
+      <section
+        className="relative my-8 animate-fade-up"
+        style={{ animationDelay: "320ms" }}
+      >
           <div className="overflow-hidden rounded-xl border border-border bg-surface">
             <div className="flex items-center gap-2 border-b border-border px-4 py-2.5">
               <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]" />
               <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />
               <span className="h-2.5 w-2.5 rounded-full bg-[#27c93f]" />
               <span className="ml-2 font-mono text-xs text-foreground-faint">
-                ~/now — currently working on
+                {t("nowLabel")}
               </span>
             </div>
             <div className="px-5 py-5 font-mono text-sm leading-relaxed text-foreground">
               <span className="text-highlight">➜</span>{" "}
-              <span className="text-foreground-dim">{now.body}</span>
+              <span className="text-foreground-dim">{t("nowBody")}</span>
               <span className="animate-blink ml-1 text-accent">▊</span>
             </div>
           </div>
-        </section>
-      )}
+      </section>
 
       {/* Latest posts */}
       <section className="mt-14 sm:mt-20">
         <div className="flex items-baseline justify-between gap-4">
           <h2 className="font-serif text-2xl tracking-tight text-foreground">
-            Latest field notes
+            {t("latestTitle")}
           </h2>
           <Link
             href="/blog"
             className="font-mono text-sm text-foreground-dim transition-colors hover:text-accent"
           >
-            all posts →
+            {t("allPosts")}
           </Link>
         </div>
 
         {posts.length === 0 ? (
           <p className="mt-8 font-mono text-sm text-foreground-faint">
-            No posts yet. The first entry is being written.
+            {t("noPosts")}
           </p>
         ) : (
           <div className="mt-8 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-1">

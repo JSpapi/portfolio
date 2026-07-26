@@ -162,8 +162,8 @@ type PrivateProfile struct {
 type Project struct {
 	ID          uuid.UUID          `json:"id"`
 	Slug        string             `json:"slug"`
-	Title       string             `json:"title"`
-	Description string             `json:"description"`
+	Title       []byte             `json:"title"`
+	Description []byte             `json:"description"`
 	Tags        []string           `json:"tags"`
 	UrlLive     *string            `json:"url_live"`
 	UrlRepo     *string            `json:"url_repo"`

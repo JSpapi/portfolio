@@ -1,0 +1,119 @@
+{
+  "nav": {
+    "home": "home",
+    "blog": "blog",
+    "work": "work",
+    "about": "about",
+    "profile": "profile"
+  },
+  "home": {
+    "kickerRole": "full-stack engineer",
+    "kickerStack": "· typescript · node · react · go",
+    "headlinePre": "I build the",
+    "headlineAccent": "quiet machinery",
+    "headlinePost": "behind products people rely on every day.",
+    "intro": "Right now I'm shipping features across the web app of one of Uzbekistan's biggest insurers. Before that, ~3 years building an ELD fleet-compliance platform from zero. Front to back: Node.js & Express, React & Next, Vue & Nuxt, plus PHP/Yii and Go — and a lot of interactive maps & location features. This is my portfolio and working blog.",
+    "ctaReadLog": "read the blog",
+    "ctaSeeWork": "see the work",
+    "nowLabel": "~/now — currently working on",
+    "nowBody": "At Gross Insurance — shipping features across gross.uz (Vue, Nuxt, PrimeVue + PHP/Yii).",
+    "latestTitle": "Latest field notes",
+    "allPosts": "all posts →",
+    "noPosts": "No posts yet. The first entry is being written."
+  },
+  "blog": {
+    "kicker": "the working blog",
+    "title": "Field notes",
+    "subtitle": "Entries from real work — decisions, dead ends, and the fixes that stuck.",
+    "nothingPublished": "Nothing published yet.",
+    "backToLog": "← back to blog",
+    "minRead": "{minutes} min read",
+    "min": "{minutes} min",
+    "newer": "← newer",
+    "older": "older →",
+    "taggedPre": "Tagged",
+    "allPostsLink": "← all posts",
+    "noTagPosts": "No posts under this tag."
+  },
+  "projects": {
+    "kicker": "selected work",
+    "title": "Things I've built",
+    "subtitlePre": "A few projects worth showing. The full case studies live on my",
+    "subtitleLink": "detailed profile",
+    "featured": "featured",
+    "live": "live ↗",
+    "code": "code ↗",
+    "none": "No projects listed yet."
+  },
+  "about": {
+    "kicker": "the short version",
+    "title": "Engineer who cares about the parts nobody sees.",
+    "intro": "I'm a full-stack engineer who lives in TypeScript — Node.js / Express services on the back and Vue/Nuxt or React/Next on the front — and also ships real product in PHP/Yii2 and Go. Today I'm on the tech team at Gross, one of Uzbekistan's leading insurers, shipping features across their gross.uz web app. Before that I spent ~3 years building an ELD fleet-compliance platform from the ground up — the dashboards fleets live in, plus the Node.js services behind them. I'm happiest deep in maps, real-time data, and code that reads like it was meant to be read. I write here to keep a record of the work — the wins and the stuff that took three tries.",
+    "stackHeading": "// stack",
+    "trajectoryHeading": "// trajectory",
+    "timeline": [
+      {
+        "when": "now",
+        "what": "Full-stack Engineer · Gross Insurance",
+        "detail": "On the tech team of one of Uzbekistan's top insurers, shipping end-to-end features on the gross.uz web app and its customer cabinet — Vue 3 + Nuxt + PrimeVue on the front, PHP/Yii2 + PostgreSQL on the back."
+      },
+      {
+        "when": "~3 yrs",
+        "what": "Full-stack Engineer · Primex",
+        "detail": "Built the Logitex ELD fleet-compliance platform from zero — dashboard, landing, and backend. Lead frontend on the dashboard (#1 contributor); built the Node.js/Express email-document and integration services."
+      },
+      {
+        "when": "focus",
+        "what": "Maps, real-time & full-stack",
+        "detail": "TypeScript everywhere — Node.js/Express services and Vue/Nuxt & React/Next front-ends; also ship in PHP/Yii2 and Go. Live tracking, ORS routing, Nominatim geocoding, geofencing; a bit of Flutter/Dart on mobile."
+      }
+    ],
+    "ctaKicker": "for recruiters & close contacts",
+    "ctaTitle": "Want the detailed version?",
+    "ctaBody": "My full CV, deep project breakdowns, availability, and references live on my detailed profile. It's private — ask for a link and I'll approve it personally.",
+    "ctaButton": "view my profile →"
+  },
+  "requestAccess": {
+    "kicker": "my detailed profile",
+    "title": "The full story",
+    "intro1": "Beyond what's on this site, I keep a detailed profile with my full career history, in-depth project stories, availability, and references. To respect everyone's privacy, it's not public — but I'm happy to share it. It's mainly for recruiters, hiring managers, and people I know.",
+    "intro2": "Just leave your details below and I'll send you a private link.",
+    "step1": "you fill in the short form below",
+    "step2": "I get notified and take a quick look",
+    "step3": "I email you a private link to the profile",
+    "form": {
+      "name": "name",
+      "namePlaceholder": "Jane Doe",
+      "email": "email",
+      "emailPlaceholder": "you@company.com",
+      "reason": "why do you want access?",
+      "reasonPlaceholder": "e.g. HR at Acme, considering you for a backend role.",
+      "submit": "send me the link →",
+      "submitting": "sending…",
+      "error": "Something went wrong.",
+      "doneTitle": "Request received",
+      "doneBody": "If it's approved, you'll get an email with a private link. Approvals are manual, so it may take a little while."
+    }
+  },
+  "footer": {
+    "builtWith": "built with go · next.js · postgres · r2",
+    "rights": "all rights reserved",
+    "rss": "rss",
+    "profile": "profile",
+    "github": "github",
+    "linkedin": "linkedin",
+    "telegram": "telegram",
+    "instagram": "instagram"
+  },
+  "notFound": {
+    "title": "Not here.",
+    "terminal": "$ cat page.txt · no such file or directory",
+    "back": "← back home"
+  },
+  "lang": {
+    "label": "Language",
+    "ru": "Русский",
+    "en": "English",
+    "uz": "O'zbekcha"
+  }
+}

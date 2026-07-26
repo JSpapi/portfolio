@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"encoding/json"
 	"errors"
 	"net/http"
 
@@ -12,15 +13,31 @@ import (
 	"github.com/axror/portfolio-api/internal/store"
 )
 
+// Title/Description are localized objects: { "en": ..., "ru": ..., "uz": ... }.
 type projectWriteReq struct {
-	Slug        string   `json:"slug"`
-	Title       string   `json:"title"`
-	Description string   `json:"description"`
-	Tags        []string `json:"tags"`
-	URLLive     *string  `json:"url_live"`
-	URLRepo     *string  `json:"url_repo"`
-	Featured    bool     `json:"featured"`
-	SortOrder   int32    `json:"sort_order"`
+	Slug        string          `json:"slug"`
+	Title       json.RawMessage `json:"title"`
+	Description json.RawMessage `json:"description"`
+	Tags        []string        `json:"tags"`
+	URLLive     *string         `json:"url_live"`
+	URLRepo     *string         `json:"url_repo"`
+	Featured    bool            `json:"featured"`
+	SortOrder   int32           `json:"sort_order"`
+}
+
+// localizedBytes validates a localized field is present, valid JSON; defaults
+// missing description to an empty object.
+func localizedBytes(raw json.RawMessage, allowEmpty bool) ([]byte, bool) {
+	if len(raw) == 0 {
+		if allowEmpty {
+			return []byte(`{}`), true
+		}
+		return nil, false
+	}
+	if !json.Valid(raw) {
+		return nil, false
+	}
+	return []byte(raw), true
 }
 
 // CreateProject adds a portfolio project.
@@ -34,15 +51,17 @@ func (h *Handler) CreateProject(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid slug"})
 		return
 	}
-	if req.Title == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "title required"})
+	title, ok := localizedBytes(req.Title, false)
+	if !ok {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "title required (localized object)"})
 		return
 	}
+	desc, _ := localizedBytes(req.Description, true)
 	if req.Tags == nil {
 		req.Tags = []string{}
 	}
 	p, err := h.Q.CreateProject(c.Request.Context(), store.CreateProjectParams{
-		Slug: req.Slug, Title: req.Title, Description: req.Description, Tags: req.Tags,
+		Slug: req.Slug, Title: title, Description: desc, Tags: req.Tags,
 		UrlLive: req.URLLive, UrlRepo: req.URLRepo, Featured: req.Featured, SortOrder: req.SortOrder,
 	})
 	if err != nil {
@@ -60,11 +79,17 @@ func (h *Handler) UpdateProject(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid body"})
 		return
 	}
+	title, ok := localizedBytes(req.Title, false)
+	if !ok {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "title required (localized object)"})
+		return
+	}
+	desc, _ := localizedBytes(req.Description, true)
 	if req.Tags == nil {
 		req.Tags = []string{}
 	}
 	p, err := h.Q.UpdateProject(c.Request.Context(), store.UpdateProjectParams{
-		Slug: slug, Title: req.Title, Description: req.Description, Tags: req.Tags,
+		Slug: slug, Title: title, Description: desc, Tags: req.Tags,
 		UrlLive: req.URLLive, UrlRepo: req.URLRepo, Featured: req.Featured, SortOrder: req.SortOrder,
 	})
 	if err != nil {

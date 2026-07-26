@@ -1,0 +1,119 @@
+{
+  "nav": {
+    "home": "bosh sahifa",
+    "blog": "blog",
+    "work": "ishlar",
+    "about": "men haqimda",
+    "profile": "profil"
+  },
+  "home": {
+    "kickerRole": "full-stack muhandis",
+    "kickerStack": "· typescript · node · react · go",
+    "headlinePre": "Men",
+    "headlineAccent": "ko'zga ko'rinmas mexanizmlar",
+    "headlinePost": "quraman — odamlar har kuni ishonadigan mahsulotlar ortidagi.",
+    "intro": "Hozir O'zbekistonning eng yirik sug'urta kompaniyalaridan birining veb-ilovasiga funksiyalar qo'shyapman. Undan oldin ~3 yil davomida noldan transport qonunchiligi va ELD talablariga muvofiqlikni boshqarish platformasini qurdim. Frontenddan backendgacha: Node.js va Express, React va Next, Vue va Nuxt, shuningdek PHP/Yii va Go — hamda ko'plab interaktiv xaritalar va joylashuv funksiyalari. Bu mening portfoliom va ish blogim.",
+    "ctaReadLog": "blogni o'qish",
+    "ctaSeeWork": "ishlarni ko'rish",
+    "nowLabel": "~/now — hozir ustida ishlayapman",
+    "nowBody": "Gross Insurance'da — gross.uz uchun funksiyalar ishlab chiqyapman (Vue, Nuxt, PrimeVue + PHP/Yii).",
+    "latestTitle": "So'nggi yozuvlar",
+    "allPosts": "barcha yozuvlar →",
+    "noPosts": "Hozircha yozuvlar yo'q. Birinchisi yozilyapti."
+  },
+  "blog": {
+    "kicker": "ish blogim",
+    "title": "Amaliyot yozuvlari",
+    "subtitle": "Real ishdan olingan yozuvlar — qarorlar, tupiklar va oxir-oqibat ishlagan yechimlar.",
+    "nothingPublished": "Hozircha hech narsa e'lon qilinmagan.",
+    "backToLog": "← blogga qaytish",
+    "minRead": "{minutes} daq o'qish",
+    "min": "{minutes} daq",
+    "newer": "← yangiroq",
+    "older": "eskiroq →",
+    "taggedPre": "Teg",
+    "allPostsLink": "← barcha yozuvlar",
+    "noTagPosts": "Bu tegda yozuvlar yo'q."
+  },
+  "projects": {
+    "kicker": "tanlangan ishlar",
+    "title": "Men yaratgan narsalar",
+    "subtitlePre": "Ko'rsatishga arziydigan bir nechta loyiha. To'liq keyslar mening",
+    "subtitleLink": "batafsil profilimda",
+    "featured": "tanlangan",
+    "live": "demo ↗",
+    "code": "kod ↗",
+    "none": "Hozircha loyihalar yo'q."
+  },
+  "about": {
+    "kicker": "qisqacha",
+    "title": "Ko'zga ko'rinmaydigan qismlarga e'tibor beradigan muhandis.",
+    "intro": "Men TypeScript'da yashaydigan full-stack muhandisman — backendda Node.js / Express xizmatlari, frontendda Vue/Nuxt yoki React/Next — shuningdek PHP/Yii2 va Go'da ham real mahsulot yozaman. Hozir O'zbekistonning yetakchi sug'urta kompaniyalaridan biri — Gross'ning texnik jamoasidaman va gross.uz veb-ilovasiga funksiyalar qo'shyapman. Undan oldin ~3 yil davomida noldan transport qonunchiligi va ELD talablariga muvofiqlikni boshqarish platformasini qurdim — avtoparklar yashaydigan panellar va ular ortidagi Node.js xizmatlari. Menga xaritalar, real vaqt ma'lumotlari va o'qish uchun yozilgandek o'qiladigan kod bilan ishlash eng yoqadi. Bu yerda ish tajribamni yozib boraman.",
+    "stackHeading": "// stek",
+    "trajectoryHeading": "// yo'l",
+    "timeline": [
+      {
+        "when": "hozir",
+        "what": "Full-stack muhandis · Gross Insurance",
+        "detail": "O'zbekistonning yetakchi sug'urta kompaniyalaridan birining texnik jamoasida — gross.uz veb-ilovasi va mijozlar kabineti uchun funksiyalarni boshidan oxirigacha ishlab chiqaman. Frontendda Vue 3 + Nuxt + PrimeVue, backendda PHP/Yii2 + PostgreSQL."
+      },
+      {
+        "when": "~3 yil",
+        "what": "Full-stack muhandis · Primex",
+        "detail": "Avtopark nazorati uchun ELD platformasini noldan qurdim — boshqaruv paneli, lending va backend. Panelning yetakchi frontend-dasturchisi (№1 hissa qo'shuvchi); Node.js/Express'da pochta/hujjat va integratsiya xizmatlarini yaratdim."
+      },
+      {
+        "when": "yo'nalish",
+        "what": "Xaritalar, real vaqt va full-stack",
+        "detail": "Hamma joyda TypeScript — Node.js/Express xizmatlari va Vue/Nuxt hamda React/Next frontendlari; shuningdek PHP/Yii2 va Go'da yozaman. Real vaqtda kuzatuv, ORS marshrutlash, Nominatim geokodlash, geozonalar; mobilda ozgina Flutter/Dart."
+      }
+    ],
+    "ctaKicker": "rekruterlar va yaqin aloqalar uchun",
+    "ctaTitle": "Batafsil versiyani xohlaysizmi?",
+    "ctaBody": "To'liq rezyume, loyihalarning chuqur tahlili, bandlik holati va tavsiyalar — mening batafsil profilimda. U yopiq — havola so'rang, men shaxsan tasdiqlayman.",
+    "ctaButton": "profilimni ochish →"
+  },
+  "requestAccess": {
+    "kicker": "mening batafsil profilim",
+    "title": "To'liq hikoya",
+    "intro1": "Ushbu saytdagilardan tashqari men batafsil profil yuritaman: to'liq karyera tarixi, loyihalarning batafsil hikoyalari, bandlik holati va tavsiyalar. Har kimning maxfiyligini hurmat qilib, u ochiq emas — lekin men uni bajonidil ulashaman. U asosan rekruterlar, ishga oluvchi menejerlar va men taniydigan odamlar uchun.",
+    "intro2": "Quyida ma'lumotlaringizni qoldiring, men sizga yopiq havola yuboraman.",
+    "step1": "quyidagi qisqa shaklni to'ldirasiz",
+    "step2": "menga bildirishnoma keladi va men tezda ko'rib chiqaman",
+    "step3": "men sizga profilga yopiq havolani pochta orqali yuboraman",
+    "form": {
+      "name": "ism",
+      "namePlaceholder": "Ali Valiyev",
+      "email": "pochta",
+      "emailPlaceholder": "you@company.com",
+      "reason": "nega kirish huquqini istaysiz?",
+      "reasonPlaceholder": "masalan, Acme'da HR, sizni backend lavozimiga ko'ryapman.",
+      "submit": "havolani yuboring →",
+      "submitting": "yuborilmoqda…",
+      "error": "Nimadir xato ketdi.",
+      "doneTitle": "So'rov qabul qilindi",
+      "doneBody": "Agar u tasdiqlansa, siz yopiq havola bilan xat olasiz. Tasdiqlash qo'lda amalga oshiriladi, shuning uchun biroz vaqt olishi mumkin."
+    }
+  },
+  "footer": {
+    "builtWith": "go · next.js · postgres · r2 asosida qurilgan",
+    "rights": "barcha huquqlar himoyalangan",
+    "rss": "rss",
+    "profile": "profil",
+    "github": "github",
+    "linkedin": "linkedin",
+    "telegram": "telegram",
+    "instagram": "instagram"
+  },
+  "notFound": {
+    "title": "Bu yerda hech narsa yo'q.",
+    "terminal": "$ cat page.txt · bunday fayl yoki katalog yo'q",
+    "back": "← bosh sahifaga"
+  },
+  "lang": {
+    "label": "Til",
+    "ru": "Русский",
+    "en": "English",
+    "uz": "O'zbekcha"
+  }
+}

@@ -1,5 +1,6 @@
-import Link from "next/link";
 import type { Metadata } from "next";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { apiGet } from "@/lib/api";
 import type { PostList, TagCount } from "@/lib/types";
 import { PostCard } from "@/components/blog/post-card";
@@ -26,10 +27,15 @@ async function getData(page: number) {
 }
 
 export default async function BlogPage({
+  params,
   searchParams,
 }: {
+  params: Promise<{ locale: string }>;
   searchParams: Promise<{ page?: string }>;
 }) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations("blog");
   const sp = await searchParams;
   const page = Math.max(1, parseInt(sp.page ?? "1", 10) || 1);
   const { list, tags } = await getData(page);
@@ -38,26 +44,25 @@ export default async function BlogPage({
   return (
     <div className="wrap pt-14 sm:pt-20">
       <header className="max-w-2xl">
-        <p className="kicker">the working log</p>
+        <p className="kicker">{t("kicker")}</p>
         <h1 className="mt-4 font-serif text-4xl tracking-tightest text-foreground sm:text-5xl">
-          Field notes
+          {t("title")}
         </h1>
         <p className="mt-4 text-base text-foreground-dim sm:text-lg">
-          Raw entries from real work — decisions, dead ends, and the fixes that
-          stuck.
+          {t("subtitle")}
         </p>
       </header>
 
       {tags.length > 0 && (
         <div className="mt-10 flex flex-wrap gap-2">
-          {tags.map((t) => (
+          {tags.map((tag) => (
             <Link
-              key={t.tag}
-              href={`/blog/tags/${encodeURIComponent(t.tag)}`}
+              key={tag.tag}
+              href={`/blog/tags/${encodeURIComponent(tag.tag)}`}
               className="rounded-full border border-border px-3 py-1 font-mono text-xs text-foreground-dim transition-colors hover:border-accent hover:text-accent"
             >
-              #{t.tag}
-              <span className="ml-1.5 text-foreground-faint">{t.count}</span>
+              #{tag.tag}
+              <span className="ml-1.5 text-foreground-faint">{tag.count}</span>
             </Link>
           ))}
         </div>
@@ -65,7 +70,7 @@ export default async function BlogPage({
 
       {list.posts.length === 0 ? (
         <p className="mt-16 font-mono text-sm text-foreground-faint">
-          Nothing published yet.
+          {t("nothingPublished")}
         </p>
       ) : (
         <div className="mt-10 grid gap-px overflow-hidden rounded-xl border border-border bg-border">
@@ -82,10 +87,10 @@ export default async function BlogPage({
               href={`/blog?page=${page - 1}`}
               className="text-foreground-dim hover:text-accent"
             >
-              ← newer
+              {t("newer")}
             </Link>
           ) : (
-            <span className="text-foreground-faint/40">← newer</span>
+            <span className="text-foreground-faint/40">{t("newer")}</span>
           )}
           <span className="text-foreground-faint">
             {page} / {totalPages}
@@ -95,10 +100,10 @@ export default async function BlogPage({
               href={`/blog?page=${page + 1}`}
               className="text-foreground-dim hover:text-accent"
             >
-              older →
+              {t("older")}
             </Link>
           ) : (
-            <span className="text-foreground-faint/40">older →</span>
+            <span className="text-foreground-faint/40">{t("older")}</span>
           )}
         </nav>
       )}

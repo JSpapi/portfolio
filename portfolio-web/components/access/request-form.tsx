@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { api, ApiError } from "@/lib/api";
 
 type State = "idle" | "submitting" | "done" | "error";
 
 export function RequestForm() {
+  const t = useTranslations("requestAccess.form");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [reason, setReason] = useState("");
@@ -21,9 +23,7 @@ export function RequestForm() {
       setState("done");
     } catch (err) {
       setState("error");
-      setError(
-        err instanceof ApiError ? err.message : "Something went wrong."
-      );
+      setError(err instanceof ApiError ? err.message : t("error"));
     }
   }
 
@@ -33,10 +33,11 @@ export function RequestForm() {
         <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-highlight/50 font-mono text-xl text-highlight">
           ✓
         </div>
-        <h2 className="mt-5 font-serif text-2xl text-foreground">Request received</h2>
+        <h2 className="mt-5 font-serif text-2xl text-foreground">
+          {t("doneTitle")}
+        </h2>
         <p className="mx-auto mt-3 max-w-sm text-foreground-dim">
-          If it&apos;s approved, you&apos;ll get an email with a private link.
-          Approvals are manual, so it may take a little while.
+          {t("doneBody")}
         </p>
       </div>
     );
@@ -48,38 +49,38 @@ export function RequestForm() {
       className="rounded-xl border border-border bg-surface p-6 sm:p-8"
     >
       <div className="space-y-5">
-        <Field label="name" htmlFor="name">
+        <Field label={t("name")} htmlFor="name">
           <input
             id="name"
             required
             maxLength={200}
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Jane Doe"
+            placeholder={t("namePlaceholder")}
             className="input"
           />
         </Field>
 
-        <Field label="email" htmlFor="email">
+        <Field label={t("email")} htmlFor="email">
           <input
             id="email"
             type="email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@company.com"
+            placeholder={t("emailPlaceholder")}
             className="input"
           />
         </Field>
 
-        <Field label="why do you want access?" htmlFor="reason">
+        <Field label={t("reason")} htmlFor="reason">
           <textarea
             id="reason"
             rows={4}
             maxLength={2000}
             value={reason}
             onChange={(e) => setReason(e.target.value)}
-            placeholder="e.g. HR at Acme, considering you for a backend role."
+            placeholder={t("reasonPlaceholder")}
             className="input resize-none"
           />
         </Field>
@@ -94,7 +95,7 @@ export function RequestForm() {
         disabled={state === "submitting"}
         className="mt-7 w-full rounded-full bg-accent px-6 py-3 font-mono text-sm text-background transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {state === "submitting" ? "sending…" : "request access →"}
+        {state === "submitting" ? t("submitting") : t("submit")}
       </button>
 
       <style jsx>{`

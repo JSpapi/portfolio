@@ -1,31 +1,32 @@
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 export function Footer() {
+  const t = useTranslations("footer");
   const year = new Date().getFullYear();
   return (
     <footer className="mt-20 border-t border-border/70 sm:mt-32">
       <div className="wrap flex flex-col gap-6 py-10 sm:flex-row sm:items-center sm:justify-between sm:py-12">
         <div className="font-mono text-xs leading-relaxed text-foreground-faint">
-          <span className="text-accent">$</span> built with go · next.js · postgres
-          · r2
+          <span className="text-accent">$</span> {t("builtWith")}
           <br />© {year}{" "}
           <span className="text-foreground">
             <span className="text-accent">JS</span>papi.dev
           </span>{" "}
-          — all rights reserved
+          — {t("rights")}
         </div>
         <div className="flex flex-wrap items-center gap-x-5 gap-y-3 font-mono text-xs">
           <a
             href="/api/feed.rss"
             className="text-foreground-dim transition-colors hover:text-accent"
           >
-            rss
+            {t("rss")}
           </a>
           <Link
             href="/request-access"
             className="text-foreground-dim transition-colors hover:text-accent"
           >
-            private profile
+            {t("profile")}
           </Link>
           <a
             href="https://github.com/JSpapi"

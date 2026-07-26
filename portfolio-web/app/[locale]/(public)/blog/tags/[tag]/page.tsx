@@ -1,5 +1,6 @@
-import Link from "next/link";
 import type { Metadata } from "next";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { apiGet } from "@/lib/api";
 import type { PostList } from "@/lib/types";
 import { PostCard } from "@/components/blog/post-card";
@@ -10,7 +11,7 @@ export const dynamicParams = true;
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ tag: string }>;
+  params: Promise<{ locale: string; tag: string }>;
 }): Promise<Metadata> {
   const { tag } = await params;
   return { title: `#${decodeURIComponent(tag)}` };
@@ -19,9 +20,11 @@ export async function generateMetadata({
 export default async function TagPage({
   params,
 }: {
-  params: Promise<{ tag: string }>;
+  params: Promise<{ locale: string; tag: string }>;
 }) {
-  const { tag } = await params;
+  const { locale, tag } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations("blog");
   const decoded = decodeURIComponent(tag);
   let list: PostList = { posts: [], page: 1, limit: 50, total: 0 };
   try {
@@ -39,15 +42,15 @@ export default async function TagPage({
         href="/blog"
         className="font-mono text-sm text-foreground-dim transition-colors hover:text-accent"
       >
-        ← all posts
+        {t("allPostsLink")}
       </Link>
       <h1 className="mt-6 font-serif text-3xl tracking-tightest text-foreground sm:text-4xl">
-        Tagged <span className="text-accent">#{decoded}</span>
+        {t("taggedPre")} <span className="text-accent">#{decoded}</span>
       </h1>
 
       {list.posts.length === 0 ? (
         <p className="mt-12 font-mono text-sm text-foreground-faint">
-          No posts under this tag.
+          {t("noTagPosts")}
         </p>
       ) : (
         <div className="mt-10 grid gap-px overflow-hidden rounded-xl border border-border bg-border">

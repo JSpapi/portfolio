@@ -19,8 +19,8 @@ RETURNING id, slug, title, description, tags, url_live, url_repo, featured, sort
 
 type CreateProjectParams struct {
 	Slug        string   `json:"slug"`
-	Title       string   `json:"title"`
-	Description string   `json:"description"`
+	Title       []byte   `json:"title"`
+	Description []byte   `json:"description"`
 	Tags        []string `json:"tags"`
 	UrlLive     *string  `json:"url_live"`
 	UrlRepo     *string  `json:"url_repo"`
@@ -145,8 +145,8 @@ RETURNING id, slug, title, description, tags, url_live, url_repo, featured, sort
 
 type UpdateProjectParams struct {
 	Slug        string   `json:"slug"`
-	Title       string   `json:"title"`
-	Description string   `json:"description"`
+	Title       []byte   `json:"title"`
+	Description []byte   `json:"description"`
 	Tags        []string `json:"tags"`
 	UrlLive     *string  `json:"url_live"`
 	UrlRepo     *string  `json:"url_repo"`

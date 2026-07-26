@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { Link, usePathname } from "@/i18n/navigation";
 
 /**
  * Fixed bottom tab bar shown on phones (hidden on lg+). Thumb-friendly, with
@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation";
 
 type Item = {
   href: string;
-  label: string;
+  key: string;
   icon: (active: boolean) => React.ReactNode;
   match: (path: string) => boolean;
 };
@@ -26,7 +26,7 @@ const stroke = {
 const items: Item[] = [
   {
     href: "/",
-    label: "Home",
+    key: "home",
     match: (p) => p === "/",
     icon: () => (
       <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" {...stroke}>
@@ -37,7 +37,7 @@ const items: Item[] = [
   },
   {
     href: "/blog",
-    label: "Log",
+    key: "blog",
     match: (p) => p.startsWith("/blog"),
     icon: () => (
       <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" {...stroke}>
@@ -48,7 +48,7 @@ const items: Item[] = [
   },
   {
     href: "/projects",
-    label: "Work",
+    key: "work",
     match: (p) => p.startsWith("/projects"),
     icon: () => (
       <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" {...stroke}>
@@ -59,7 +59,7 @@ const items: Item[] = [
   },
   {
     href: "/about",
-    label: "About",
+    key: "about",
     match: (p) => p.startsWith("/about"),
     icon: () => (
       <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" {...stroke}>
@@ -70,7 +70,7 @@ const items: Item[] = [
   },
   {
     href: "/request-access",
-    label: "Access",
+    key: "profile",
     match: (p) => p.startsWith("/request-access") || p.startsWith("/private"),
     icon: () => (
       <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" {...stroke}>
@@ -83,6 +83,7 @@ const items: Item[] = [
 
 export function MobileNav() {
   const pathname = usePathname();
+  const t = useTranslations("nav");
 
   return (
     <nav
@@ -105,7 +106,7 @@ export function MobileNav() {
                 <span className={active ? "text-accent" : "text-foreground-dim"}>
                   {it.icon(active)}
                 </span>
-                {it.label}
+                {t(it.key)}
               </Link>
             </li>
           );
