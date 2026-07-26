@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"encoding/json"
 	"errors"
 	"net/http"
 
@@ -26,7 +27,7 @@ func (h *Handler) GetPostAdmin(c *gin.Context) {
 	detail := postDetail{
 		postSummary: summaryFromRow(p.ID.String(), p.Slug, string(p.Type), p.Title, p.Summary,
 			p.Tags, p.ReadingTime, tsToPtr(p.PublishedAt), tsToPtr(p.CreatedAt), tsToPtr(p.UpdatedAt)),
-		Body: p.Body,
+		Body: localized(p.Body),
 	}
 	c.JSON(http.StatusOK, detail)
 }
@@ -46,13 +47,14 @@ func (h *Handler) ListPostsAdmin(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"posts": out})
 }
 
+// Title, Summary & Body are localized objects: { "en": ..., "ru": ..., "uz": ... }.
 type postWriteReq struct {
-	Slug    string   `json:"slug"`
-	Type    string   `json:"type"`
-	Title   string   `json:"title"`
-	Summary string   `json:"summary"`
-	Body    string   `json:"body"`
-	Tags    []string `json:"tags"`
+	Slug    string          `json:"slug"`
+	Type    string          `json:"type"`
+	Title   json.RawMessage `json:"title"`
+	Summary json.RawMessage `json:"summary"`
+	Body    json.RawMessage `json:"body"`
+	Tags    []string        `json:"tags"`
 }
 
 func validType(t string) bool {
@@ -81,10 +83,17 @@ func (h *Handler) CreatePost(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid type"})
 		return
 	}
-	if req.Title == "" || req.Summary == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "title and summary required"})
+	title, ok := localizedBytes(req.Title, false)
+	if !ok {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "title required (localized object)"})
 		return
 	}
+	summary, ok := localizedBytes(req.Summary, false)
+	if !ok {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "summary required (localized object)"})
+		return
+	}
+	body, _ := localizedBytes(req.Body, true)
 	if req.Tags == nil {
 		req.Tags = []string{}
 	}
@@ -92,11 +101,11 @@ func (h *Handler) CreatePost(c *gin.Context) {
 	p, err := h.Q.CreatePost(c.Request.Context(), store.CreatePostParams{
 		Slug:        req.Slug,
 		Type:        store.PostType(req.Type),
-		Title:       req.Title,
-		Summary:     req.Summary,
-		Body:        req.Body,
+		Title:       title,
+		Summary:     summary,
+		Body:        body,
 		Tags:        req.Tags,
-		ReadingTime: int32(service.ComputeReadingTime(req.Body)),
+		ReadingTime: int32(service.ReadingTimeFromLocalized(body)),
 	})
 	if err != nil {
 		c.JSON(http.StatusConflict, gin.H{"error": "could not create post (slug may already exist)"})
@@ -120,6 +129,17 @@ func (h *Handler) UpdatePost(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid type"})
 		return
 	}
+	title, ok := localizedBytes(req.Title, false)
+	if !ok {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "title required (localized object)"})
+		return
+	}
+	summary, ok := localizedBytes(req.Summary, false)
+	if !ok {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "summary required (localized object)"})
+		return
+	}
+	body, _ := localizedBytes(req.Body, true)
 	if req.Tags == nil {
 		req.Tags = []string{}
 	}
@@ -127,11 +147,11 @@ func (h *Handler) UpdatePost(c *gin.Context) {
 	p, err := h.Q.UpdatePost(c.Request.Context(), store.UpdatePostParams{
 		Slug:        slug,
 		Type:        store.PostType(req.Type),
-		Title:       req.Title,
-		Summary:     req.Summary,
-		Body:        req.Body,
+		Title:       title,
+		Summary:     summary,
+		Body:        body,
 		Tags:        req.Tags,
-		ReadingTime: int32(service.ComputeReadingTime(req.Body)),
+		ReadingTime: int32(service.ReadingTimeFromLocalized(body)),
 	})
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {

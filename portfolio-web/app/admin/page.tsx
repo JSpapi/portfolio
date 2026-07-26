@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { api } from "@/lib/api";
-import type { PostSummary } from "@/lib/types";
+import { pickLocalized, type PostSummary } from "@/lib/types";
 
 export default function AdminDashboard() {
   const [posts, setPosts] = useState<PostSummary[]>([]);
@@ -89,7 +89,7 @@ export default function AdminDashboard() {
               />
               <div className="min-w-0 flex-1">
                 <div className="truncate font-serif text-lg text-foreground">
-                  {p.title}
+                  {pickLocalized(p.title, "en")}
                 </div>
                 <div className="font-mono text-xs text-foreground-faint">
                   {p.slug} · {p.type}

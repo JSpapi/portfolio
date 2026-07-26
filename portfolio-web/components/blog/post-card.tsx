@@ -1,6 +1,6 @@
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import type { PostSummary } from "@/lib/types";
+import { pickLocalized, type PostSummary } from "@/lib/types";
 import { TypeBadge } from "./type-badge";
 
 const dateLocale: Record<string, string> = {
@@ -34,11 +34,11 @@ export function PostCard({ post }: { post: PostSummary }) {
       </div>
 
       <h3 className="mt-3 font-serif text-2xl leading-snug tracking-tight text-foreground transition-colors group-hover:text-accent">
-        {post.title}
+        {pickLocalized(post.title, locale)}
       </h3>
 
       <p className="mt-2 max-w-2xl text-[15px] leading-relaxed text-foreground-dim">
-        {post.summary}
+        {pickLocalized(post.summary, locale)}
       </p>
 
       {post.tags.length > 0 && (

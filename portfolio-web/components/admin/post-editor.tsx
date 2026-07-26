@@ -3,11 +3,55 @@
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api, ApiError } from "@/lib/api";
-import type { Post, PostType } from "@/lib/types";
+import {
+  type Localized,
+  type LocalizedField,
+  type Post,
+  type PostType,
+} from "@/lib/types";
+import type { Locale } from "@/i18n/routing";
 import { MDRenderer } from "@/components/blog/md-renderer";
 import { MediaUploader } from "./media-uploader";
 
 const types: PostType[] = ["weekly", "daily", "deep-dive", "til"];
+
+type Lang = Locale;
+// Authoring order (English first) differs from the URL locale order in
+// routing.ts on purpose. The assertion below pins LANGS to Locale, so an
+// invalid OR missing locale is a compile error — routing.ts stays the single
+// source of truth without a second hardcoded list.
+const LANGS = ["en", "ru", "uz"] as const;
+type _AssertLangsMatchLocale =
+  [Lang] extends [(typeof LANGS)[number]]
+    ? [(typeof LANGS)[number]] extends [Lang]
+      ? true
+      : ["LANGS has a value that is not a Locale"]
+    : ["LANGS is missing a Locale"];
+const _langsCoverAllLocales: _AssertLangsMatchLocale = true;
+void _langsCoverAllLocales;
+
+const emptyLoc: Record<Lang, string> = { en: "", ru: "", uz: "" };
+
+/** Strip empty locales so we never persist { "uz": "" } — lets fallback work. */
+function locToObj(v: Record<Lang, string>): Localized {
+  const o: Localized = {};
+  for (const l of LANGS) {
+    const t = v[l].trim();
+    if (t) o[l] = t;
+  }
+  return o;
+}
+
+/** Hydrate the per-language form state from a wire value (object or legacy string). */
+function objToLoc(v: LocalizedField): Record<Lang, string> {
+  const o: Record<Lang, string> = { ...emptyLoc };
+  if (typeof v === "string") {
+    o.en = v;
+  } else if (v) {
+    for (const l of LANGS) o[l] = v[l] ?? "";
+  }
+  return o;
+}
 
 export function PostEditor({ existing }: { existing?: Post }) {
   const router = useRouter();
@@ -16,23 +60,38 @@ export function PostEditor({ existing }: { existing?: Post }) {
 
   const [slug, setSlug] = useState(existing?.slug ?? "");
   const [type, setType] = useState<PostType>(existing?.type ?? "weekly");
-  const [title, setTitle] = useState(existing?.title ?? "");
-  const [summary, setSummary] = useState(existing?.summary ?? "");
-  const [body, setBody] = useState(existing?.body ?? "");
+  const [title, setTitle] = useState<Record<Lang, string>>(
+    objToLoc(existing?.title)
+  );
+  const [summary, setSummary] = useState<Record<Lang, string>>(
+    objToLoc(existing?.summary)
+  );
+  const [body, setBody] = useState<Record<Lang, string>>(
+    objToLoc(existing?.body)
+  );
   const [tags, setTags] = useState((existing?.tags ?? []).join(", "));
+  const [lang, setLang] = useState<Lang>("en");
   const [preview, setPreview] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
+  function setField(
+    set: React.Dispatch<React.SetStateAction<Record<Lang, string>>>,
+    value: string
+  ) {
+    set((prev) => ({ ...prev, [lang]: value }));
+  }
+
   function insertAtCursor(snippet: string) {
     const ta = bodyRef.current;
+    const current = body[lang];
     if (!ta) {
-      setBody((b) => b + snippet);
+      setBody((b) => ({ ...b, [lang]: b[lang] + snippet }));
       return;
     }
     const start = ta.selectionStart;
-    const next = body.slice(0, start) + snippet + body.slice(ta.selectionEnd);
-    setBody(next);
+    const next = current.slice(0, start) + snippet + current.slice(ta.selectionEnd);
+    setBody((b) => ({ ...b, [lang]: next }));
   }
 
   async function save(publish: boolean) {
@@ -41,9 +100,9 @@ export function PostEditor({ existing }: { existing?: Post }) {
     const payload = {
       slug: slug.trim(),
       type,
-      title: title.trim(),
-      summary: summary.trim(),
-      body,
+      title: locToObj(title),
+      summary: locToObj(summary),
+      body: locToObj(body),
       tags: tags
         .split(",")
         .map((t) => t.trim())
@@ -65,6 +124,11 @@ export function PostEditor({ existing }: { existing?: Post }) {
       setSaving(false);
     }
   }
+
+  // Which languages already have any title text — a hint so you can see at a
+  // glance what still needs translating. (title is the required field.)
+  const filled = (v: Record<Lang, string>) =>
+    LANGS.filter((l) => v[l].trim().length > 0);
 
   return (
     <div>
@@ -96,39 +160,72 @@ export function PostEditor({ existing }: { existing?: Post }) {
         </div>
       </div>
 
+      {/* Language tabs — title/summary/body are edited per language. */}
+      <div className="mt-6 flex items-center gap-2">
+        <div className="flex gap-1 rounded-lg border border-border bg-surface p-1">
+          {LANGS.map((l) => {
+            const has = filled(title).includes(l);
+            return (
+              <button
+                key={l}
+                type="button"
+                onClick={() => setLang(l)}
+                className={`flex items-center gap-1.5 rounded px-3 py-1.5 font-mono text-xs uppercase transition-colors ${
+                  lang === l
+                    ? "bg-accent/15 text-accent"
+                    : "text-foreground-faint hover:text-foreground"
+                }`}
+              >
+                {l}
+                <span
+                  className={`h-1.5 w-1.5 rounded-full ${
+                    has ? "bg-highlight" : "bg-foreground-faint/40"
+                  }`}
+                  title={has ? "has content" : "empty"}
+                />
+              </button>
+            );
+          })}
+        </div>
+        <span className="font-mono text-xs text-foreground-faint">
+          editing <span className="text-accent">{lang.toUpperCase()}</span> ·
+          English is the fallback, so fill EN first
+        </span>
+      </div>
+
       {error && (
         <p className="mt-4 rounded-lg border border-[#ff6b6b]/40 bg-[#ff6b6b]/10 px-4 py-2 font-mono text-sm text-[#ff6b6b]">
           {error}
         </p>
       )}
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_320px]">
+      <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">
         {/* Left: main editing surface */}
         <div className="space-y-4">
           <input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Post title"
+            value={title[lang]}
+            onChange={(e) => setField(setTitle, e.target.value)}
+            placeholder={`Post title (${lang})`}
             className="w-full bg-transparent font-serif text-3xl text-foreground placeholder:text-foreground-faint focus:outline-none"
           />
           <textarea
-            value={summary}
-            onChange={(e) => setSummary(e.target.value)}
-            placeholder="Short summary (shown on the list page)…"
+            value={summary[lang]}
+            onChange={(e) => setField(setSummary, e.target.value)}
+            placeholder={`Short summary (${lang}) — shown on the list page…`}
             rows={2}
             className="w-full resize-none rounded-lg border border-border bg-surface px-4 py-3 text-foreground placeholder:text-foreground-faint focus:border-accent focus:outline-none"
           />
 
           {preview ? (
             <div className="min-h-[400px] rounded-lg border border-border bg-surface p-6">
-              <MDRenderer body={body || "_Nothing to preview yet._"} />
+              <MDRenderer body={body[lang] || "_Nothing to preview yet._"} />
             </div>
           ) : (
             <textarea
               ref={bodyRef}
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
-              placeholder="Write in Markdown…"
+              value={body[lang]}
+              onChange={(e) => setField(setBody, e.target.value)}
+              placeholder={`Write in Markdown (${lang})…`}
               rows={22}
               className="w-full resize-y rounded-lg border border-border bg-surface px-4 py-3 font-mono text-sm leading-relaxed text-foreground placeholder:text-foreground-faint focus:border-accent focus:outline-none"
             />
@@ -174,7 +271,7 @@ export function PostEditor({ existing }: { existing?: Post }) {
             />
           </Panel>
 
-          <Panel label="media">
+          <Panel label="media (shared across languages)">
             <MediaUploader slug={slug} onInsert={insertAtCursor} />
           </Panel>
         </aside>

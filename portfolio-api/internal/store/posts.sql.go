@@ -41,9 +41,9 @@ RETURNING id, slug, type, title, summary, body, tags, reading_time, published_at
 type CreatePostParams struct {
 	Slug        string   `json:"slug"`
 	Type        PostType `json:"type"`
-	Title       string   `json:"title"`
-	Summary     string   `json:"summary"`
-	Body        string   `json:"body"`
+	Title       []byte   `json:"title"`
+	Summary     []byte   `json:"summary"`
+	Body        []byte   `json:"body"`
 	Tags        []string `json:"tags"`
 	ReadingTime int32    `json:"reading_time"`
 }
@@ -141,8 +141,8 @@ type ListAllPostsAdminRow struct {
 	ID          uuid.UUID          `json:"id"`
 	Slug        string             `json:"slug"`
 	Type        PostType           `json:"type"`
-	Title       string             `json:"title"`
-	Summary     string             `json:"summary"`
+	Title       []byte             `json:"title"`
+	Summary     []byte             `json:"summary"`
 	Tags        []string           `json:"tags"`
 	ReadingTime int32              `json:"reading_time"`
 	PublishedAt pgtype.Timestamptz `json:"published_at"`
@@ -202,8 +202,8 @@ type ListPublishedPostsRow struct {
 	ID          uuid.UUID          `json:"id"`
 	Slug        string             `json:"slug"`
 	Type        PostType           `json:"type"`
-	Title       string             `json:"title"`
-	Summary     string             `json:"summary"`
+	Title       []byte             `json:"title"`
+	Summary     []byte             `json:"summary"`
 	Tags        []string           `json:"tags"`
 	ReadingTime int32              `json:"reading_time"`
 	PublishedAt pgtype.Timestamptz `json:"published_at"`
@@ -259,8 +259,8 @@ type ListRecentPublishedRow struct {
 	ID          uuid.UUID          `json:"id"`
 	Slug        string             `json:"slug"`
 	Type        PostType           `json:"type"`
-	Title       string             `json:"title"`
-	Summary     string             `json:"summary"`
+	Title       []byte             `json:"title"`
+	Summary     []byte             `json:"summary"`
 	Tags        []string           `json:"tags"`
 	ReadingTime int32              `json:"reading_time"`
 	PublishedAt pgtype.Timestamptz `json:"published_at"`
@@ -394,9 +394,9 @@ RETURNING id, slug, type, title, summary, body, tags, reading_time, published_at
 type UpdatePostParams struct {
 	Slug        string   `json:"slug"`
 	Type        PostType `json:"type"`
-	Title       string   `json:"title"`
-	Summary     string   `json:"summary"`
-	Body        string   `json:"body"`
+	Title       []byte   `json:"title"`
+	Summary     []byte   `json:"summary"`
+	Body        []byte   `json:"body"`
 	Tags        []string `json:"tags"`
 	ReadingTime int32    `json:"reading_time"`
 }

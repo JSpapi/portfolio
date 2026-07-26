@@ -46,8 +46,10 @@ func (h *Handler) FeedRSS(c *gin.Context) {
 			pub = t.UTC().Format(time.RFC1123Z)
 		}
 		link := base + "/blog/" + p.Slug
+		// RSS is language-agnostic; use the English variant (with fallback).
 		items = append(items, rssItem{
-			Title: p.Title, Link: link, GUID: link, PubDate: pub, Desc: p.Summary,
+			Title: pickLang(p.Title, "en"), Link: link, GUID: link, PubDate: pub,
+			Desc: pickLang(p.Summary, "en"),
 		})
 	}
 

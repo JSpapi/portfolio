@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { apiGet, ApiError } from "@/lib/api";
-import type { Post } from "@/lib/types";
+import { pickLocalized, type Post } from "@/lib/types";
 import { MDRenderer } from "@/components/blog/md-renderer";
 import { TypeBadge } from "@/components/blog/type-badge";
 
@@ -31,10 +31,13 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const post = await getPost(slug);
   if (!post) return { title: "Not found" };
-  return { title: post.title, description: post.summary };
+  return {
+    title: pickLocalized(post.title, locale),
+    description: pickLocalized(post.summary, locale),
+  };
 }
 
 function formatDate(iso: string | null, locale: string): string {
@@ -74,15 +77,15 @@ export default async function PostPage({
           <span>{t("minRead", { minutes: post.reading_time })}</span>
         </div>
         <h1 className="mt-5 font-serif text-3xl leading-tight tracking-tightest text-foreground sm:text-5xl">
-          {post.title}
+          {pickLocalized(post.title, locale)}
         </h1>
         <p className="mt-4 text-base leading-relaxed text-foreground-dim sm:text-lg">
-          {post.summary}
+          {pickLocalized(post.summary, locale)}
         </p>
       </header>
 
       <div className="mt-8 sm:mt-10">
-        <MDRenderer body={post.body} />
+        <MDRenderer body={pickLocalized(post.body, locale)} />
       </div>
 
       {post.tags.length > 0 && (

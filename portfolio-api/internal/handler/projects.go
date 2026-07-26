@@ -35,6 +35,32 @@ func localized(b []byte) json.RawMessage {
 	return json.RawMessage(b)
 }
 
+// pickLang extracts a single language from a localized field
+// ({ "en": ..., "ru": ..., "uz": ... }), preferring `want`, then English, then
+// any available value. Used where one plain string is needed (e.g. the RSS
+// feed, which is language-agnostic). Falls back to treating b as a plain string.
+func pickLang(b []byte, want string) string {
+	if len(b) == 0 {
+		return ""
+	}
+	var m map[string]string
+	if err := json.Unmarshal(b, &m); err != nil {
+		return string(b) // not a JSON object — treat as a plain string
+	}
+	if v := m[want]; v != "" {
+		return v
+	}
+	if v := m["en"]; v != "" {
+		return v
+	}
+	for _, v := range m {
+		if v != "" {
+			return v
+		}
+	}
+	return ""
+}
+
 func projectToOut(p store.Project) projectOut {
 	tags := p.Tags
 	if tags == nil {

@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"encoding/json"
 	"errors"
 	"net/http"
 	"strconv"
@@ -12,32 +13,34 @@ import (
 	"github.com/axror/portfolio-api/internal/store"
 )
 
-// postSummary is the list-page shape (no body).
+// postSummary is the list-page shape (no body). Title & summary are localized
+// objects { "en": ..., "ru": ..., "uz": ... }; the frontend picks the active
+// language (with fallback).
 type postSummary struct {
-	ID          string     `json:"id"`
-	Slug        string     `json:"slug"`
-	Type        string     `json:"type"`
-	Title       string     `json:"title"`
-	Summary     string     `json:"summary"`
-	Tags        []string   `json:"tags"`
-	ReadingTime int32      `json:"reading_time"`
-	PublishedAt *time.Time `json:"published_at"`
-	CreatedAt   *time.Time `json:"created_at"`
-	UpdatedAt   *time.Time `json:"updated_at"`
+	ID          string          `json:"id"`
+	Slug        string          `json:"slug"`
+	Type        string          `json:"type"`
+	Title       json.RawMessage `json:"title"`
+	Summary     json.RawMessage `json:"summary"`
+	Tags        []string        `json:"tags"`
+	ReadingTime int32           `json:"reading_time"`
+	PublishedAt *time.Time      `json:"published_at"`
+	CreatedAt   *time.Time      `json:"created_at"`
+	UpdatedAt   *time.Time      `json:"updated_at"`
 }
 
-// postDetail is the full post including body.
+// postDetail is the full post including the localized body.
 type postDetail struct {
 	postSummary
-	Body string `json:"body"`
+	Body json.RawMessage `json:"body"`
 }
 
-func summaryFromRow(id, slug, typ, title, summary string, tags []string, rt int32, pub, created, updated *time.Time) postSummary {
+func summaryFromRow(id, slug, typ string, title, summary []byte, tags []string, rt int32, pub, created, updated *time.Time) postSummary {
 	if tags == nil {
 		tags = []string{}
 	}
 	return postSummary{
-		ID: id, Slug: slug, Type: typ, Title: title, Summary: summary,
+		ID: id, Slug: slug, Type: typ, Title: localized(title), Summary: localized(summary),
 		Tags: tags, ReadingTime: rt, PublishedAt: pub, CreatedAt: created, UpdatedAt: updated,
 	}
 }
@@ -103,7 +106,7 @@ func (h *Handler) GetPost(c *gin.Context) {
 	detail := postDetail{
 		postSummary: summaryFromRow(p.ID.String(), p.Slug, string(p.Type), p.Title, p.Summary,
 			p.Tags, p.ReadingTime, tsToPtr(p.PublishedAt), tsToPtr(p.CreatedAt), tsToPtr(p.UpdatedAt)),
-		Body: p.Body,
+		Body: localized(p.Body),
 	}
 	c.JSON(http.StatusOK, detail)
 }

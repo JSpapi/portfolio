@@ -6,8 +6,8 @@ export interface PostSummary {
   id: string;
   slug: string;
   type: PostType;
-  title: string;
-  summary: string;
+  title: LocalizedField;
+  summary: LocalizedField;
   tags: string[];
   reading_time: number;
   published_at: string | null;
@@ -16,7 +16,7 @@ export interface PostSummary {
 }
 
 export interface Post extends PostSummary {
-  body: string;
+  body: LocalizedField;
 }
 
 export interface PostList {
