@@ -1,8 +1,42 @@
 import { MDRenderer } from "@/components/blog/md-renderer";
-import type { PrivateProfile } from "@/lib/types";
+import type { LocalizedField, PrivateProfile } from "@/lib/types";
 
-export function PrivateProfileView({ profile }: { profile: PrivateProfile }) {
+// Resume button/link labels per language. The private page UI itself is
+// English-only by design; only the resume artifact is language-aware.
+const RESUME_LABELS: Record<string, { button: string; short: string }> = {
+  en: { button: "↓ download resume (pdf) — english", short: "english" },
+  ru: { button: "↓ скачать резюме (pdf) — русский", short: "русский" },
+  uz: { button: "↓ rezyumeni yuklab olish (pdf) — o'zbekcha", short: "o'zbekcha" },
+};
+const RESUME_ORDER = ["en", "ru", "uz"] as const;
+
+/** Normalize the wire value (object | legacy string | null) to lang → url. */
+function resumeMap(value: LocalizedField): Partial<Record<string, string>> {
+  if (!value) return {};
+  if (typeof value === "string") return { en: value };
+  return value;
+}
+
+export function PrivateProfileView({
+  profile,
+  locale,
+}: {
+  profile: PrivateProfile;
+  /** Visitor's site language from the NEXT_LOCALE cookie; "en" when unknown. */
+  locale: string;
+}) {
   const refs = Array.isArray(profile.references) ? profile.references : [];
+
+  const resumes = resumeMap(profile.resume_url);
+  const available = RESUME_ORDER.filter((l) => resumes[l]);
+  // Main button: the visitor's language when we have that PDF, else English,
+  // else whatever exists.
+  const primary = available.includes(locale as (typeof RESUME_ORDER)[number])
+    ? locale
+    : available.includes("en")
+    ? "en"
+    : available[0];
+  const others = available.filter((l) => l !== primary);
 
   return (
     <div className="wrap max-w-3xl py-10 sm:py-16">
@@ -13,15 +47,35 @@ export function PrivateProfileView({ profile }: { profile: PrivateProfile }) {
         </form>
       </div>
 
-      {profile.resume_url && (
-        <a
-          href={profile.resume_url}
-          target="_blank"
-          rel="noreferrer"
-          className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-5 py-3 font-mono text-sm text-accent transition-colors hover:bg-accent hover:text-background sm:w-auto sm:py-2.5"
-        >
-          ↓ download resume (pdf)
-        </a>
+      {primary && (
+        <div className="mt-8">
+          <a
+            href={resumes[primary]}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-accent/40 bg-accent/10 px-5 py-3 font-mono text-sm text-accent transition-colors hover:bg-accent hover:text-background sm:w-auto sm:py-2.5"
+          >
+            {RESUME_LABELS[primary]?.button ?? "↓ download resume (pdf)"}
+          </a>
+          {others.length > 0 && (
+            <p className="mt-3 font-mono text-xs text-foreground-faint">
+              also available:{" "}
+              {others.map((l, i) => (
+                <span key={l}>
+                  {i > 0 && " · "}
+                  <a
+                    href={resumes[l]}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-foreground-dim underline underline-offset-4 transition-colors hover:text-accent"
+                  >
+                    {RESUME_LABELS[l]?.short ?? l}
+                  </a>
+                </span>
+              ))}
+            </p>
+          )}
+        </div>
       )}
 
       <Section title="Career">

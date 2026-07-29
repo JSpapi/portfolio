@@ -10,11 +10,13 @@ import (
 	"github.com/axror/portfolio-api/internal/store"
 )
 
+// ResumeURL is a localized object: { "en": ..., "ru": ..., "uz": ... }. The
+// frontend picks the visitor's language (with fallback).
 type privateProfileOut struct {
 	CVMarkdown       string          `json:"cv_markdown"`
 	ProjectsMarkdown string          `json:"projects_markdown"`
 	ContactMarkdown  string          `json:"contact_markdown"`
-	ResumeURL        *string         `json:"resume_url"`
+	ResumeURL        json.RawMessage `json:"resume_url"`
 	References       json.RawMessage `json:"references"`
 	UpdatedAt        *time.Time      `json:"updated_at"`
 }
@@ -26,7 +28,7 @@ func privateToOut(p store.PrivateProfile) privateProfileOut {
 	}
 	return privateProfileOut{
 		CVMarkdown: p.CvMarkdown, ProjectsMarkdown: p.ProjectsMarkdown,
-		ContactMarkdown: p.ContactMarkdown, ResumeURL: p.ResumeUrl,
+		ContactMarkdown: p.ContactMarkdown, ResumeURL: localized(p.ResumeUrl),
 		References: refs, UpdatedAt: tsToPtr(p.UpdatedAt),
 	}
 }
@@ -49,7 +51,7 @@ type privateProfileWriteReq struct {
 	CVMarkdown       string          `json:"cv_markdown"`
 	ProjectsMarkdown string          `json:"projects_markdown"`
 	ContactMarkdown  string          `json:"contact_markdown"`
-	ResumeURL        *string         `json:"resume_url"`
+	ResumeURL        json.RawMessage `json:"resume_url"`
 	References       json.RawMessage `json:"references"`
 }
 
@@ -77,12 +79,17 @@ func (h *Handler) UpdatePrivateProfileAdmin(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "references must be valid JSON"})
 		return
 	}
+	resume, ok := localizedBytes(req.ResumeURL, true)
+	if !ok {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "resume_url must be a localized object"})
+		return
+	}
 
 	p, err := h.Q.UpdatePrivateProfile(c.Request.Context(), store.UpdatePrivateProfileParams{
 		CvMarkdown:       req.CVMarkdown,
 		ProjectsMarkdown: req.ProjectsMarkdown,
 		ContactMarkdown:  req.ContactMarkdown,
-		ResumeUrl:        req.ResumeURL,
+		ResumeUrl:        resume,
 		ReferencesJson:   refs,
 	})
 	if err != nil {

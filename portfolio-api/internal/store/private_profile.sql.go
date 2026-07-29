@@ -41,11 +41,11 @@ RETURNING id, cv_markdown, projects_markdown, contact_markdown, resume_url, refe
 `
 
 type UpdatePrivateProfileParams struct {
-	CvMarkdown       string  `json:"cv_markdown"`
-	ProjectsMarkdown string  `json:"projects_markdown"`
-	ContactMarkdown  string  `json:"contact_markdown"`
-	ResumeUrl        *string `json:"resume_url"`
-	ReferencesJson   []byte  `json:"references_json"`
+	CvMarkdown       string `json:"cv_markdown"`
+	ProjectsMarkdown string `json:"projects_markdown"`
+	ContactMarkdown  string `json:"contact_markdown"`
+	ResumeUrl        []byte `json:"resume_url"`
+	ReferencesJson   []byte `json:"references_json"`
 }
 
 func (q *Queries) UpdatePrivateProfile(ctx context.Context, arg UpdatePrivateProfileParams) (PrivateProfile, error) {

@@ -154,7 +154,7 @@ type PrivateProfile struct {
 	CvMarkdown       string             `json:"cv_markdown"`
 	ProjectsMarkdown string             `json:"projects_markdown"`
 	ContactMarkdown  string             `json:"contact_markdown"`
-	ResumeUrl        *string            `json:"resume_url"`
+	ResumeUrl        []byte             `json:"resume_url"`
 	ReferencesJson   []byte             `json:"references_json"`
 	UpdatedAt        pgtype.Timestamptz `json:"updated_at"`
 }

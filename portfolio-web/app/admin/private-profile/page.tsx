@@ -5,11 +5,16 @@ import { api, ApiError } from "@/lib/api";
 import type { PrivateProfile, Reference } from "@/lib/types";
 import { MediaUploader } from "@/components/admin/media-uploader";
 
+const RESUME_LANGS = ["en", "ru", "uz"] as const;
+type ResumeLang = (typeof RESUME_LANGS)[number];
+const emptyResumes: Record<ResumeLang, string> = { en: "", ru: "", uz: "" };
+
 export default function PrivateProfileAdminPage() {
   const [cv, setCv] = useState("");
   const [projects, setProjects] = useState("");
   const [contact, setContact] = useState("");
-  const [resumeUrl, setResumeUrl] = useState("");
+  const [resumes, setResumes] =
+    useState<Record<ResumeLang, string>>(emptyResumes);
   const [refs, setRefs] = useState<Reference[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -20,7 +25,12 @@ export default function PrivateProfileAdminPage() {
       setCv(p.cv_markdown);
       setProjects(p.projects_markdown);
       setContact(p.contact_markdown);
-      setResumeUrl(p.resume_url ?? "");
+      // resume_url is localized ({en,ru,uz}); legacy rows may be a bare string.
+      const r = { ...emptyResumes };
+      if (typeof p.resume_url === "string") r.en = p.resume_url;
+      else if (p.resume_url)
+        for (const l of RESUME_LANGS) r[l] = p.resume_url[l] ?? "";
+      setResumes(r);
       setRefs(Array.isArray(p.references) ? p.references : []);
       setLoaded(true);
     });
@@ -30,11 +40,16 @@ export default function PrivateProfileAdminPage() {
     setSaving(true);
     setNote("");
     try {
+      const resumeOut: Partial<Record<ResumeLang, string>> = {};
+      for (const l of RESUME_LANGS) {
+        const v = resumes[l].trim();
+        if (v) resumeOut[l] = v;
+      }
       await api.put("/api/admin/private-profile", {
         cv_markdown: cv,
         projects_markdown: projects,
         contact_markdown: contact,
-        resume_url: resumeUrl.trim() || null,
+        resume_url: resumeOut,
         references: refs.filter((r) => r.name.trim()),
       });
       setNote("✓ saved");
@@ -84,27 +99,40 @@ export default function PrivateProfileAdminPage() {
         <Area v={contact} set={setContact} rows={6} />
       </Block>
 
-      <Block label="Resume PDF">
-        <input
-          value={resumeUrl}
-          onChange={(e) => setResumeUrl(e.target.value)}
-          placeholder="https://…/resume.pdf (or upload below)"
-          className="w-full rounded-lg border border-border bg-background px-3 py-2 font-mono text-sm text-foreground placeholder:text-foreground-faint focus:border-accent focus:outline-none"
-        />
-        <div className="mt-3">
-          <MediaUploader
-            slug="private/resume"
-            accept="application/pdf"
-            onInsert={(snippet) => {
-              // Extract the URL from the generated markdown/HTML snippet.
-              const m = /\((https?:[^)]+)\)|src="([^"]+)"/.exec(snippet);
-              const url = m?.[1] || m?.[2];
-              if (url) setResumeUrl(url);
-            }}
-          />
-          <p className="mt-1 font-mono text-[11px] text-foreground-faint">
-            Upload a PDF (max 20MB) or paste a URL above.
-          </p>
+      <Block label="Resume PDFs (per language)">
+        <p className="mb-4 font-mono text-[11px] leading-relaxed text-foreground-faint">
+          Visitors get the resume matching their site language; English is the
+          fallback, and the other languages show as secondary links. Upload a
+          PDF (max 20MB) into each slot, or paste a URL.
+        </p>
+        <div className="space-y-5">
+          {RESUME_LANGS.map((l) => (
+            <div key={l}>
+              <div className="mb-1.5 font-mono text-xs uppercase tracking-wider text-accent">
+                {l}
+              </div>
+              <input
+                value={resumes[l]}
+                onChange={(e) =>
+                  setResumes((r) => ({ ...r, [l]: e.target.value }))
+                }
+                placeholder={`https://…/resume-${l}.pdf (or upload below)`}
+                className="w-full rounded-lg border border-border bg-background px-3 py-2 font-mono text-sm text-foreground placeholder:text-foreground-faint focus:border-accent focus:outline-none"
+              />
+              <div className="mt-2">
+                <MediaUploader
+                  slug="private/resume"
+                  accept="application/pdf"
+                  onInsert={(snippet) => {
+                    // Extract the URL from the generated markdown/HTML snippet.
+                    const m = /\((https?:[^)]+)\)|src="([^"]+)"/.exec(snippet);
+                    const url = m?.[1] || m?.[2];
+                    if (url) setResumes((r) => ({ ...r, [l]: url }));
+                  }}
+                />
+              </div>
+            </div>
+          ))}
         </div>
       </Block>
 

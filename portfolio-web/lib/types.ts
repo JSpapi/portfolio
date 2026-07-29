@@ -90,7 +90,8 @@ export interface PrivateProfile {
   cv_markdown: string;
   projects_markdown: string;
   contact_markdown: string;
-  resume_url: string | null;
+  /** Localized resume PDF links: { en, ru, uz } (legacy rows may be a string). */
+  resume_url: LocalizedField;
   references: Reference[];
   updated_at: string | null;
 }

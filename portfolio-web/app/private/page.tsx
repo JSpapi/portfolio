@@ -14,8 +14,15 @@ export const metadata: Metadata = {
 };
 
 export default async function PrivatePage() {
-  const session = (await cookies()).get("access_session")?.value;
+  const cookieStore = await cookies();
+  const session = cookieStore.get("access_session")?.value;
   if (!session) redirect("/request-access");
+
+  // The visitor's last-chosen site language (set by next-intl on the public
+  // pages). Absent for recruiters who open the magic link directly — the view
+  // falls back to the English resume and lists the other languages as links.
+  const rawLocale = cookieStore.get("NEXT_LOCALE")?.value;
+  const locale = rawLocale === "ru" || rawLocale === "uz" ? rawLocale : "en";
 
   const res = await fetch(`${API_URL}/api/private/profile`, {
     headers: { cookie: `access_session=${session}` },
@@ -34,5 +41,5 @@ export default async function PrivatePage() {
   }
 
   const profile = (await res.json()) as PrivateProfile;
-  return <PrivateProfileView profile={profile} />;
+  return <PrivateProfileView profile={profile} locale={locale} />;
 }
