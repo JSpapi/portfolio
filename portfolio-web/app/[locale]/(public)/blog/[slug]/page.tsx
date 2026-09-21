@@ -80,8 +80,6 @@ export default async function PostPage({
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-xs text-foreground-faint">
           <TypeBadge type={post.type} />
           <span>{formatDate(post.published_at, locale)}</span>
-          <span className="text-border">/</span>
-          <span>{t("minRead", { minutes: post.reading_time })}</span>
         </div>
         <h1 className="mt-5 font-serif text-3xl leading-tight tracking-tightest text-foreground sm:text-5xl">
           {pickLocalized(post.title, locale)}

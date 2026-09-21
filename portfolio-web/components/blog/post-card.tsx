@@ -1,4 +1,4 @@
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { pickLocalized, type PostSummary } from "@/lib/types";
 import { TypeBadge } from "./type-badge";
@@ -19,7 +19,6 @@ function formatDate(iso: string | null, locale: string): string {
 }
 
 export function PostCard({ post }: { post: PostSummary }) {
-  const t = useTranslations("blog");
   const locale = useLocale();
   return (
     <Link
@@ -29,8 +28,6 @@ export function PostCard({ post }: { post: PostSummary }) {
       <div className="flex flex-wrap items-center gap-3 font-mono text-xs text-foreground-faint">
         <TypeBadge type={post.type} />
         <span>{formatDate(post.published_at, locale)}</span>
-        <span className="text-border">/</span>
-        <span>{t("min", { minutes: post.reading_time })}</span>
       </div>
 
       <h3 className="mt-3 font-serif text-2xl leading-snug tracking-tight text-foreground transition-colors group-hover:text-accent">
