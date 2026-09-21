@@ -61,7 +61,7 @@ export default function RootLayout({
 }) {
   return (
     <html
-      lang="ru"
+      lang="en"
       className={`${serif.variable} ${mono.variable} ${sans.variable}`}
     >
       <body className="min-h-screen antialiased">
