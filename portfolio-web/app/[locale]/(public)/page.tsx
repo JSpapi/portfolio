@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { apiGet } from "@/lib/api";
@@ -31,7 +32,23 @@ export default async function HomePage({
     <div className="wrap">
       {/* Hero */}
       <section className="relative pt-14 pb-14 sm:pt-24 lg:pt-32 sm:pb-16">
-        <p className="kicker animate-fade-up">
+        {/* Portrait sits directly above the role line, left-aligned. */}
+        <div className="animate-fade-up">
+          <Image
+            src="/avatar.jpg"
+            alt="Axror Kurbanov"
+            width={320}
+            height={320}
+            priority
+            sizes="(min-width: 1024px) 160px, (min-width: 640px) 128px, 96px"
+            className="h-24 w-24 rounded-full object-cover ring-1 ring-border sm:h-32 sm:w-32 lg:h-40 lg:w-40"
+          />
+        </div>
+
+        <p
+          className="kicker mt-6 animate-fade-up"
+          style={{ animationDelay: "40ms" }}
+        >
           {t("kickerRole")}{" "}
           <span className="text-foreground-faint">{t("kickerStack")}</span>
         </p>
