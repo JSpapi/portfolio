@@ -78,21 +78,21 @@ export default async function HomePage({
         className="relative my-8 animate-fade-up"
         style={{ animationDelay: "320ms" }}
       >
-          <div className="overflow-hidden rounded-xl border border-border bg-surface">
-            <div className="flex items-center gap-2 border-b border-border px-4 py-2.5">
-              <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]" />
-              <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />
-              <span className="h-2.5 w-2.5 rounded-full bg-[#27c93f]" />
-              <span className="ml-2 font-mono text-xs text-foreground-faint">
-                {t("nowLabel")}
-              </span>
-            </div>
-            <div className="px-5 py-5 font-mono text-sm leading-relaxed text-foreground">
-              <span className="text-highlight">➜</span>{" "}
-              <span className="text-foreground-dim">{t("nowBody")}</span>
-              <span className="animate-blink ml-1 text-accent">▊</span>
-            </div>
+        <div className="overflow-hidden rounded-xl border border-border bg-surface">
+          <div className="flex items-center gap-2 border-b border-border px-4 py-2.5">
+            <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#27c93f]" />
+            <span className="ml-2 font-mono text-xs text-foreground-faint">
+              {t("nowLabel")}
+            </span>
           </div>
+          <div className="px-5 py-5 font-mono text-sm leading-relaxed text-foreground">
+            <span className="text-highlight">➜</span>{" "}
+            <span className="text-foreground-dim">{t("nowBody")}</span>
+            <span className="animate-blink ml-1 text-accent">▊</span>
+          </div>
+        </div>
       </section>
 
       {/* Latest posts */}
