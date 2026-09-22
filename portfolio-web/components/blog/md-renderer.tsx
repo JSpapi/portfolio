@@ -7,6 +7,24 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const components: Components = {
+  // Links to other sites open in a new tab, so the reader keeps this page.
+  // rel is required with target="_blank" — without it the new tab can
+  // rewrite this one. Relative, anchor and mailto links stay put.
+  a: ({ href, children, node, ...props }) => {
+    void node; // react-markdown passes the AST node; keep it out of the DOM
+    const url = typeof href === "string" ? href : "";
+    const external = /^https?:\/\//i.test(url);
+    return (
+      <a
+        href={url}
+        {...(external && { target: "_blank", rel: "noopener noreferrer" })}
+        {...props}
+      >
+        {children}
+      </a>
+    );
+  },
+
   // Plain <img> (not next/image) so arbitrary R2 hosts work without config;
   // ISR pages still ship them lazily.
   img: ({ src, alt }) => (
