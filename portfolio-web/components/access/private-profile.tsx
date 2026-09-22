@@ -10,6 +10,18 @@ const RESUME_LABELS: Record<string, { button: string; short: string }> = {
 };
 const RESUME_ORDER = ["en", "ru", "uz"] as const;
 
+// Temp: hardcoded until the video gets its own admin field. Swap this line
+// when the real recording is up.
+const VIDEO_URL = "https://www.youtube.com/watch?v=nra3rPF87vw";
+
+/** Pull the video id out of a watch, youtu.be, shorts or embed URL. */
+function youtubeId(url: string): string | null {
+  const m = url.match(
+    /(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/
+  );
+  return m ? m[1] : null;
+}
+
 /** Normalize the wire value (object | legacy string | null) to lang → url. */
 function resumeMap(value: LocalizedField): Partial<Record<string, string>> {
   if (!value) return {};
@@ -26,6 +38,8 @@ export function PrivateProfileView({
   locale: string;
 }) {
   const refs = Array.isArray(profile.references) ? profile.references : [];
+
+  const videoId = youtubeId(VIDEO_URL);
 
   const resumes = resumeMap(profile.resume_url);
   const available = RESUME_ORDER.filter((l) => resumes[l]);
@@ -46,6 +60,21 @@ export function PrivateProfileView({
           <LogoutButton />
         </form>
       </div>
+
+      {videoId && (
+        <Section title="Intro video">
+          <div className="aspect-video w-full overflow-hidden rounded-lg border border-border bg-surface">
+            <iframe
+              src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+              title="Intro video"
+              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              loading="lazy"
+              className="h-full w-full"
+            />
+          </div>
+        </Section>
+      )}
 
       {primary && (
         <div className="mt-8">
