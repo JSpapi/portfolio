@@ -1,10 +1,9 @@
-"use client";
-
+// No "use client": pages render markdown on the server, so the parser never
+// ships to readers. The admin editor imports it from a client component,
+// which still bundles it there for the live preview.
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const components: Components = {
   // Links to other sites open in a new tab, so the reader keeps this page.
@@ -46,32 +45,6 @@ const components: Components = {
       {...(props as React.VideoHTMLAttributes<HTMLVideoElement>)}
     />
   ),
-
-  code({ className, children, ...props }) {
-    const match = /language-(\w+)/.exec(className || "");
-    const isBlock = Boolean(match);
-    if (!isBlock) {
-      return (
-        <code className={className} {...props}>
-          {children}
-        </code>
-      );
-    }
-    return (
-      <SyntaxHighlighter
-        language={match![1]}
-        style={oneDark}
-        customStyle={{
-          margin: 0,
-          background: "transparent",
-          fontSize: "0.86rem",
-        }}
-        codeTagProps={{ style: { fontFamily: "var(--font-mono)" } }}
-      >
-        {String(children).replace(/\n$/, "")}
-      </SyntaxHighlighter>
-    );
-  },
 };
 
 export function MDRenderer({ body }: { body: string }) {
