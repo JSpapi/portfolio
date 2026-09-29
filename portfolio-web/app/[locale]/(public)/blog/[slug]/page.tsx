@@ -3,13 +3,30 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { apiGet, ApiError } from "@/lib/api";
-import { pickLocalized, type Post } from "@/lib/types";
+import { pickLocalized, type Post, type PostList } from "@/lib/types";
 import { extractCover } from "@/lib/cover-image";
 import { MDRenderer } from "@/components/blog/md-renderer";
 import { TypeBadge } from "@/components/blog/type-badge";
 
-export const revalidate = 60;
+export const revalidate = 3600;
 export const dynamicParams = true;
+
+// Prerender every published post at build, once per locale (the [locale]
+// layout supplies those). Posts added later still render on first visit.
+export async function generateStaticParams() {
+  try {
+    const slugs: string[] = [];
+    for (let page = 1; ; page++) {
+      const list = await apiGet<PostList>(`/api/posts?limit=50&page=${page}`);
+      slugs.push(...list.posts.map((p) => p.slug));
+      if (list.posts.length === 0 || slugs.length >= list.total) break;
+    }
+    return slugs.map((slug) => ({ slug }));
+  } catch {
+    // API unreachable at build: don't fail the deploy, render on demand.
+    return [];
+  }
+}
 
 // Map our locale codes to Intl date locales.
 const dateLocale: Record<string, string> = {
@@ -20,7 +37,9 @@ const dateLocale: Record<string, string> = {
 
 async function getPost(slug: string): Promise<Post | null> {
   try {
-    return await apiGet<Post>(`/api/posts/${slug}`, { next: { revalidate: 60 } });
+    return await apiGet<Post>(`/api/posts/${slug}`, {
+      next: { revalidate: 3600 },
+    });
   } catch (e) {
     if (e instanceof ApiError && e.status === 404) return null;
     throw e;
@@ -64,7 +83,7 @@ export default async function PostPage({
   // Lift the first image out of the body → render it as a cover below the
   // summary, at a moderate size, and drop it from the inline body.
   const { coverUrl, coverAlt, body } = extractCover(
-    pickLocalized(post.body, locale)
+    pickLocalized(post.body, locale),
   );
 
   return (

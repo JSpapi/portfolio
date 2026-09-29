@@ -3,22 +3,19 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { apiGet } from "@/lib/api";
 import { pickLocalized, type Project } from "@/lib/types";
 
-export const revalidate = 300;
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Work",
   description: "Selected projects — what they do, how they're built.",
 };
 
+// Throws on API failure so a background refresh keeps the last good page.
 async function getProjects(): Promise<Project[]> {
-  try {
-    const r = await apiGet<{ projects: Project[] }>("/api/projects", {
-      next: { revalidate: 300 },
-    });
-    return r.projects;
-  } catch {
-    return [];
-  }
+  const r = await apiGet<{ projects: Project[] }>("/api/projects", {
+    next: { revalidate: 3600 },
+  });
+  return r.projects;
 }
 
 export default async function ProjectsPage({
@@ -40,7 +37,10 @@ export default async function ProjectsPage({
         </h1>
         <p className="mt-4 text-base text-foreground-dim sm:text-lg">
           {t("subtitlePre")}{" "}
-          <a href="/request-access" className="text-accent underline underline-offset-4">
+          <a
+            href="/request-access"
+            className="text-accent underline underline-offset-4"
+          >
             {t("subtitleLink")}
           </a>
           .

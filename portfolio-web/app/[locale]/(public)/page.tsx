@@ -7,15 +7,13 @@ import { PostCard } from "@/components/blog/post-card";
 
 // Homepage is static, rebuilt on deploy; the latest posts tolerate a short
 // revalidation window.
-export const revalidate = 60;
+export const revalidate = 3600;
 
+// Throws on API failure so a background refresh keeps the last good page
+// instead of caching an empty list for an hour.
 async function getLatestPosts() {
-  try {
-    const list = await apiGet<PostList>("/api/posts?limit=3");
-    return list.posts;
-  } catch {
-    return [];
-  }
+  const list = await apiGet<PostList>("/api/posts?limit=3");
+  return list.posts;
 }
 
 export default async function HomePage({
