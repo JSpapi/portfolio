@@ -8,12 +8,17 @@ import { defineRouting } from "next-intl/routing";
  * localeDetection is off so everyone lands on English, whatever their
  * browser language says. Switching language still works; it just isn't
  * remembered between visits.
+ *
+ * localeCookie is off because a Set-Cookie on every response made every
+ * page uncacheable. The cookie /private needs is written in the browser
+ * instead (components/layout/locale-cookie.tsx).
  */
 export const routing = defineRouting({
   locales: ["en", "ru", "uz"],
   defaultLocale: "en",
   localePrefix: "as-needed",
   localeDetection: false,
+  localeCookie: false,
 });
 
 export type Locale = (typeof routing.locales)[number];

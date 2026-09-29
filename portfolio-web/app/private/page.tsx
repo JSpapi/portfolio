@@ -18,8 +18,8 @@ export default async function PrivatePage() {
   const session = cookieStore.get("access_session")?.value;
   if (!session) redirect("/request-access");
 
-  // The visitor's last-chosen site language (set by next-intl on the public
-  // pages). Absent for recruiters who open the magic link directly — the view
+  // The visitor's last site language (set in the browser by LocaleCookie on
+  // the public pages). Absent for recruiters who open the magic link directly — the view
   // falls back to the English resume and lists the other languages as links.
   const rawLocale = cookieStore.get("NEXT_LOCALE")?.value;
   const locale = rawLocale === "ru" || rawLocale === "uz" ? rawLocale : "en";

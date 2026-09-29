@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import { LocaleCookie } from "@/components/layout/locale-cookie";
 
 // Pre-generate the three locale segments at build time (enables static rendering).
 export function generateStaticParams() {
@@ -21,5 +22,10 @@ export default async function LocaleLayout({
   // Opt this segment into static rendering for the active locale.
   setRequestLocale(locale);
 
-  return <NextIntlClientProvider>{children}</NextIntlClientProvider>;
+  return (
+    <NextIntlClientProvider>
+      <LocaleCookie locale={locale} />
+      {children}
+    </NextIntlClientProvider>
+  );
 }
