@@ -9,10 +9,9 @@ export const config = {
    * excluded below is intentionally NOT localized:
    *  - /admin           (private CMS, single-language, only the owner uses it)
    *  - /api             (JSON + revalidation endpoints)
-   *  - /private         (gated-profile flow: unlock/logout/expired routes)
    *  - /_next, static assets, files with an extension (og-image.png, etc.)
    */
   matcher: [
-    "/((?!admin|api|private|_next|_vercel|.*\\..*).*)",
+    "/((?!admin|api|_next|_vercel|.*\\..*).*)",
   ],
 };

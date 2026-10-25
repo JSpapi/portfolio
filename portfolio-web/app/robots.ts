@@ -7,8 +7,8 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        // Keep the gated page and admin out of indexes.
-        disallow: ["/private", "/private/", "/admin", "/admin/"],
+        // Keep admin out of indexes.
+        disallow: ["/admin", "/admin/"],
       },
     ],
     sitemap: `${base}/sitemap.xml`,

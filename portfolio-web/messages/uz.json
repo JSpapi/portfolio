@@ -4,7 +4,7 @@
     "blog": "blog",
     "work": "ishlar",
     "about": "men haqimda",
-    "profile": "profil"
+    "cv": "rezyume"
   },
   "home": {
     "kickerRole": "full-stack muhandis",
@@ -36,8 +36,8 @@
   "projects": {
     "kicker": "tanlangan ishlar",
     "title": "Men yaratgan narsalar",
-    "subtitlePre": "Ko'rsatishga arziydigan bir nechta loyiha. To'liq keyslar mening",
-    "subtitleLink": "batafsil profilimda",
+    "subtitlePre": "Ko'rsatishga arziydigan bir nechta loyiha. To'liq tajriba va loyiha tafsilotlari mening",
+    "subtitleLink": "rezyumemda",
     "featured": "tanlangan",
     "live": "demo ↗",
     "code": "kod ↗",
@@ -66,38 +66,16 @@
         "detail": "Hamma joyda TypeScript — Node.js/Express xizmatlari va Vue/Nuxt hamda React/Next frontendlari; shuningdek PHP/Yii2 va Go'da yozaman. Real vaqtda kuzatuv, ORS marshrutlash, Nominatim geokodlash, geozonalar; mobilda ozgina Flutter/Dart."
       }
     ],
-    "ctaKicker": "rekruterlar va yaqin aloqalar uchun",
+    "ctaKicker": "rekruterlar va ishga oluvchi menejerlar uchun",
     "ctaTitle": "Batafsil versiyani xohlaysizmi?",
-    "ctaBody": "To'liq rezyume, loyihalarning chuqur tahlili, bandlik holati va tavsiyalar — mening batafsil profilimda. U yopiq — havola so'rang, men shaxsan tasdiqlayman.",
-    "ctaButton": "profilimni ochish →"
-  },
-  "requestAccess": {
-    "kicker": "mening batafsil profilim",
-    "title": "To'liq hikoya",
-    "intro1": "Ushbu saytdagilardan tashqari men batafsil profil yuritaman: to'liq karyera tarixi, loyihalarning batafsil hikoyalari, bandlik holati va tavsiyalar. Har kimning maxfiyligini hurmat qilib, u ochiq emas — lekin men uni bajonidil ulashaman. U asosan rekruterlar, ishga oluvchi menejerlar va men taniydigan odamlar uchun.",
-    "intro2": "Quyida ma'lumotlaringizni qoldiring, men sizga yopiq havola yuboraman.",
-    "step1": "quyidagi qisqa shaklni to'ldirasiz",
-    "step2": "menga bildirishnoma keladi va men tezda ko'rib chiqaman",
-    "step3": "men sizga profilga yopiq havolani pochta orqali yuboraman",
-    "form": {
-      "name": "ism",
-      "namePlaceholder": "Ali Valiyev",
-      "email": "pochta",
-      "emailPlaceholder": "you@company.com",
-      "reason": "nega kirish huquqini istaysiz?",
-      "reasonPlaceholder": "masalan, Acme'da HR, sizni backend lavozimiga ko'ryapman.",
-      "submit": "havolani yuboring →",
-      "submitting": "yuborilmoqda…",
-      "error": "Nimadir xato ketdi.",
-      "doneTitle": "So'rov qabul qilindi",
-      "doneBody": "Agar u tasdiqlansa, siz yopiq havola bilan xat olasiz. Tasdiqlash qo'lda amalga oshiriladi, shuning uchun biroz vaqt olishi mumkin."
-    }
+    "ctaBody": "To'liq rezyume — tajriba, loyihalar, ko'nikmalar va hozirgi loyiham bo'yicha video sharh — hamda ingliz, rus yoki o'zbek tilida PDF.",
+    "ctaButton": "rezyumeni ochish →"
   },
   "footer": {
     "builtWith": "go · next.js · postgres · r2 asosida qurilgan",
     "rights": "barcha huquqlar himoyalangan",
     "rss": "rss",
-    "profile": "profil",
+    "cv": "rezyume",
     "github": "github",
     "linkedin": "linkedin",
     "telegram": "telegram",

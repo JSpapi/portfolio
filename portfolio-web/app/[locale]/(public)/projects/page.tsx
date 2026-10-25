@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { apiGet } from "@/lib/api";
 import { pickLocalized, type Project } from "@/lib/types";
 
@@ -37,12 +38,9 @@ export default async function ProjectsPage({
         </h1>
         <p className="mt-4 text-base text-foreground-dim sm:text-lg">
           {t("subtitlePre")}{" "}
-          <a
-            href="/request-access"
-            className="text-accent underline underline-offset-4"
-          >
+          <Link href="/cv" className="text-accent underline underline-offset-4">
             {t("subtitleLink")}
-          </a>
+          </Link>
           .
         </p>
       </header>

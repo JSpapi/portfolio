@@ -23,10 +23,10 @@ export function Footer() {
             {t("rss")}
           </a>
           <Link
-            href="/request-access"
+            href="/cv"
             className="text-foreground-dim transition-colors hover:text-accent"
           >
-            {t("profile")}
+            {t("cv")}
           </Link>
           <a
             href="https://github.com/JSpapi"

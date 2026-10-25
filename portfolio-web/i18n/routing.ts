@@ -10,8 +10,7 @@ import { defineRouting } from "next-intl/routing";
  * remembered between visits.
  *
  * localeCookie is off because a Set-Cookie on every response made every
- * page uncacheable. The cookie /private needs is written in the browser
- * instead (components/layout/locale-cookie.tsx).
+ * page uncacheable.
  */
 export const routing = defineRouting({
   locales: ["en", "ru", "uz"],

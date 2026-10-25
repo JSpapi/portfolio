@@ -4,7 +4,7 @@
     "blog": "blog",
     "work": "work",
     "about": "about",
-    "profile": "profile"
+    "cv": "cv"
   },
   "home": {
     "kickerRole": "full-stack engineer",
@@ -36,8 +36,8 @@
   "projects": {
     "kicker": "selected work",
     "title": "Things I've built",
-    "subtitlePre": "A few projects worth showing. The full case studies live on my",
-    "subtitleLink": "detailed profile",
+    "subtitlePre": "A few projects worth showing. Full experience and project details are in my",
+    "subtitleLink": "CV",
     "featured": "featured",
     "live": "live ↗",
     "code": "code ↗",
@@ -66,38 +66,16 @@
         "detail": "TypeScript everywhere — Node.js/Express services and Vue/Nuxt & React/Next front-ends; also ship in PHP/Yii2 and Go. Live tracking, ORS routing, Nominatim geocoding, geofencing; a bit of Flutter/Dart on mobile."
       }
     ],
-    "ctaKicker": "for recruiters & close contacts",
+    "ctaKicker": "for recruiters & hiring managers",
     "ctaTitle": "Want the detailed version?",
-    "ctaBody": "My full CV, deep project breakdowns, availability, and references live on my detailed profile. It's private — ask for a link and I'll approve it personally.",
-    "ctaButton": "view my profile →"
-  },
-  "requestAccess": {
-    "kicker": "my detailed profile",
-    "title": "The full story",
-    "intro1": "Beyond what's on this site, I keep a detailed profile with my full career history, in-depth project stories, availability, and references. To respect everyone's privacy, it's not public — but I'm happy to share it. It's mainly for recruiters, hiring managers, and people I know.",
-    "intro2": "Just leave your details below and I'll send you a private link.",
-    "step1": "you fill in the short form below",
-    "step2": "I get notified and take a quick look",
-    "step3": "I email you a private link to the profile",
-    "form": {
-      "name": "name",
-      "namePlaceholder": "Jane Doe",
-      "email": "email",
-      "emailPlaceholder": "you@company.com",
-      "reason": "why do you want access?",
-      "reasonPlaceholder": "e.g. HR at Acme, considering you for a backend role.",
-      "submit": "send me the link →",
-      "submitting": "sending…",
-      "error": "Something went wrong.",
-      "doneTitle": "Request received",
-      "doneBody": "If it's approved, you'll get an email with a private link. Approvals are manual, so it may take a little while."
-    }
+    "ctaBody": "My full CV — experience, projects, skills, and a video walkthrough of my current project — with a PDF you can download in English, Russian, or Uzbek.",
+    "ctaButton": "view my cv →"
   },
   "footer": {
     "builtWith": "built with go · next.js · postgres · r2",
     "rights": "all rights reserved",
     "rss": "rss",
-    "profile": "profile",
+    "cv": "cv",
     "github": "github",
     "linkedin": "linkedin",
     "telegram": "telegram",

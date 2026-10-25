@@ -12,12 +12,15 @@ const config: NextConfig = {
       // { protocol: "https", hostname: "assets.yourdomain.com" },
     ],
   },
-  async headers() {
+  // The profile used to be gated behind a request form; it's public at /cv now.
+  async redirects() {
     return [
+      { source: "/private/:path*", destination: "/cv", permanent: true },
+      { source: "/request-access", destination: "/cv", permanent: true },
       {
-        // Keep the gated page out of search indexes.
-        source: "/private/:path*",
-        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+        source: "/:locale(ru|uz)/request-access",
+        destination: "/:locale/cv",
+        permanent: true,
       },
     ];
   },

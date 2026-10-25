@@ -21,8 +21,7 @@ const links = [
 export function NavLinks() {
   const t = useTranslations("nav");
   const pathname = usePathname();
-  const profileActive =
-    pathname.startsWith("/request-access") || pathname.startsWith("/private");
+  const cvActive = pathname.startsWith("/cv");
 
   return (
     <>
@@ -44,15 +43,15 @@ export function NavLinks() {
         );
       })}
       <Link
-        href="/request-access"
-        aria-current={profileActive ? "page" : undefined}
+        href="/cv"
+        aria-current={cvActive ? "page" : undefined}
         className={`ml-2 rounded border px-3 py-1.5 transition-colors ${
-          profileActive
+          cvActive
             ? "border-accent bg-accent text-background"
             : "border-accent/40 bg-accent/10 text-accent hover:bg-accent hover:text-background"
         }`}
       >
-        {t("profile")}
+        {t("cv")}
       </Link>
     </>
   );

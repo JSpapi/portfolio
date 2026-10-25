@@ -98,7 +98,7 @@ export default async function AboutPage({
         </ol>
       </section>
 
-      {/* CTA to private profile */}
+      {/* CTA to the CV */}
       <section className="mt-14 overflow-hidden rounded-2xl border border-accent/30 bg-gradient-to-br from-accent/[0.08] to-transparent p-6 sm:mt-20 sm:p-10">
         <p className="kicker">{t("ctaKicker")}</p>
         <h2 className="mt-3 font-serif text-2xl tracking-tight text-foreground sm:text-3xl">
@@ -106,7 +106,7 @@ export default async function AboutPage({
         </h2>
         <p className="mt-3 max-w-xl text-foreground-dim">{t("ctaBody")}</p>
         <Link
-          href="/request-access"
+          href="/cv"
           className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-accent px-6 py-3.5 font-mono text-sm text-background transition-transform hover:-translate-y-0.5 sm:w-auto sm:py-3"
         >
           {t("ctaButton")}
