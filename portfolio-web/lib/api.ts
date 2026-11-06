@@ -43,9 +43,21 @@ async function request<T>(path: string, opts: FetchOpts = {}): Promise<T> {
   return (await res.json()) as T;
 }
 
-/** Server-side GET for public/ISR data. */
-export function apiGet<T>(path: string, opts: FetchOpts = {}): Promise<T> {
-  return request<T>(path, { method: "GET", ...opts });
+/**
+ * Server-side GET for public/ISR data. Retries twice: the API sleeps when idle
+ * and the first calls can fail while it wakes up, which used to break builds.
+ */
+export async function apiGet<T>(path: string, opts: FetchOpts = {}): Promise<T> {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      return await request<T>(path, { method: "GET", ...opts });
+    } catch (err) {
+      // 4xx (like a missing post) is a real answer, not a wake-up glitch.
+      const retry = !(err instanceof ApiError) || err.status >= 500;
+      if (!retry || attempt >= 3) throw err;
+      await new Promise((r) => setTimeout(r, attempt * 1500));
+    }
+  }
 }
 
 /** Client-side helpers — always include credentials so cookies flow. */
