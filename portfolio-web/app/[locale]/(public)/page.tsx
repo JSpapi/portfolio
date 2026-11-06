@@ -34,7 +34,7 @@ export default async function HomePage({
         <div className="animate-fade-up">
           <Image
             src="/avatar.jpg"
-            alt="Axror Kurbanov"
+            alt="Ahrorjon Kurbanov"
             width={320}
             height={320}
             priority
