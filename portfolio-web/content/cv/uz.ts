@@ -208,7 +208,7 @@ export const uz: Cv = {
     kicker: "rezyume",
     metaTitle: "Rezyume",
     metaDescription:
-      "Ahrorjon Kurbanov — full-stack dasturchi. Tajriba, loyihalar, ko'nikmalar va PDF rezyume.",
+      "Axrorjon Kurbanov — full-stack dasturchi. Tajriba, loyihalar, ko'nikmalar va PDF rezyume.",
     portfolio: "Portfolio",
     video: "Loyiha sharhi",
     download: "Rezyumeni yuklab olish (PDF)",

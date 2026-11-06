@@ -26,13 +26,13 @@ const sans = Instrument_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "Ahror — Full-Stack Engineer",
-    template: "%s · Ahror",
+    default: "Axror — Full-Stack Engineer",
+    template: "%s · Axror",
   },
   description:
     "Full-stack engineer — TypeScript, Node, React, Go. Field notes from real work: weekly logs, deep dives, and shipped projects.",
   openGraph: {
-    title: "Ahror — Full-Stack Engineer",
+    title: "Axror — Full-Stack Engineer",
     description:
       "Full-stack engineer — TypeScript, Node, React, Go, and a lot of maps. Field notes from real work.",
     type: "website",
@@ -41,13 +41,13 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Ahror — Full-Stack Engineer",
+        alt: "Axror — Full-Stack Engineer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ahror — Full-Stack Engineer",
+    title: "Axror — Full-Stack Engineer",
     description:
       "Full-stack engineer — TypeScript, Node, React, Go, and a lot of maps.",
     images: ["/og-image.png"],

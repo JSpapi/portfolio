@@ -12,7 +12,7 @@ export function Navbar() {
         >
           <span className="text-accent">~/</span>
           <span className="text-foreground transition-colors group-hover:text-accent">
-            Ahror
+            Axror
           </span>
           <span className="animate-blink text-accent">▊</span>
         </Link>
