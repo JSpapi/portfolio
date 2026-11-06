@@ -22,6 +22,12 @@ const config: NextConfig = {
         destination: "/:locale/cv",
         permanent: true,
       },
+      // Resume PDFs were renamed to the passport spelling of the name.
+      ...["EN", "RU", "UZ"].map((lang) => ({
+        source: `/resume/Akhrorjon-Kurbanov-Resume-${lang}.pdf`,
+        destination: `/resume/Axrorjon-Kurbanov-Resume-${lang}.pdf`,
+        permanent: true,
+      })),
     ];
   },
 };

@@ -104,7 +104,7 @@ export const uz: Cv = {
     {
       title: "Full-Stack muhandis",
       company: "Primex-Services LLC",
-      dates: "Iyun 2024 – iyul 2026",
+      dates: "Oktabr 2023 – iyul 2026",
       place: "Toshkent",
       intro:
         "Elektron jurnal yuritish, Hours-of-Service talablariga muvofiqlik, avtoparkni boshqarish, transportni real vaqtda kuzatish, telemetriya, hisobotlar, tartibga soluvchi organlar bilan integratsiyalar va hujjatlarni avtomatlashtirishni qamrab olgan ishlab chiqarish darajasidagi **ko'p tenantli ELD / fleet-compliance SaaS platformasi** ustida ishladim.",
@@ -208,7 +208,7 @@ export const uz: Cv = {
     kicker: "rezyume",
     metaTitle: "Rezyume",
     metaDescription:
-      "Akhrorjon Kurbanov — full-stack dasturchi. Tajriba, loyihalar, ko'nikmalar va PDF rezyume.",
+      "Axrorjon Kurbanov — full-stack dasturchi. Tajriba, loyihalar, ko'nikmalar va PDF rezyume.",
     portfolio: "Portfolio",
     video: "Loyiha sharhi",
     download: "Rezyumeni yuklab olish (PDF)",

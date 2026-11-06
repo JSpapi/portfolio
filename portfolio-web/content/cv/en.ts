@@ -104,7 +104,7 @@ export const en: Cv = {
     {
       title: "Full-Stack Engineer",
       company: "Primex-Services LLC",
-      dates: "Jun 2024 – Jul 2026",
+      dates: "Oct 2023 – Jul 2026",
       place: "Tashkent",
       intro:
         "Worked on a production **multi-tenant ELD / fleet-compliance SaaS platform** covering electronic logging, Hours-of-Service compliance, fleet management, live vehicle tracking, telemetry, reporting, regulatory integrations, and document automation.",
@@ -208,7 +208,7 @@ export const en: Cv = {
     kicker: "cv",
     metaTitle: "CV",
     metaDescription:
-      "Akhrorjon Kurbanov — full-stack developer. Experience, projects, skills, and a downloadable resume.",
+      "Axrorjon Kurbanov — full-stack developer. Experience, projects, skills, and a downloadable resume.",
     portfolio: "Portfolio",
     video: "Project walkthrough",
     download: "Download resume (PDF)",
