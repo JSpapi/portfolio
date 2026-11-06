@@ -208,7 +208,7 @@ export const en: Cv = {
     kicker: "cv",
     metaTitle: "CV",
     metaDescription:
-      "Axrorjon Kurbanov — full-stack developer. Experience, projects, skills, and a downloadable resume.",
+      "Ahrorjon Kurbanov — full-stack developer. Experience, projects, skills, and a downloadable resume.",
     portfolio: "Portfolio",
     video: "Project walkthrough",
     download: "Download resume (PDF)",

@@ -1,7 +1,7 @@
 // Same in every language. No imports here: the PDF script loads this file too.
 
 export const cvContact = {
-  name: "Axrorjon Kurbanov",
+  name: "Ahrorjon Kurbanov",
   headline: "React · Next.js · TypeScript · Node.js · Vue · Nuxt · PHP",
   email: "axror.kurban@gmail.com",
   linkedin: "https://www.linkedin.com/in/axror-kurbanov-react-ts/",
@@ -21,5 +21,5 @@ export const CV_LANG_NAMES: Record<string, string> = {
 
 /** Public path of the resume PDF (built by scripts/resume-pdf.mjs). */
 export function resumePdf(lang: string): string {
-  return `/resume/Axrorjon-Kurbanov-Resume-${lang.toUpperCase()}.pdf`;
+  return `/resume/Ahrorjon-Kurbanov-Resume-${lang.toUpperCase()}.pdf`;
 }
